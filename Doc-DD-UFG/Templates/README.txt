@@ -1,1 +1,1 @@
-SDD UFG
+SDD UFG 1.0.0
