@@ -23,6 +23,10 @@
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="../js/login/login.js"></script>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -32,7 +36,7 @@
 
 </head>
 
-<body>
+<body ng-app="loginValidation">
 
     <div class="container">
         <div class="row">
@@ -41,14 +45,27 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Login</h3>
                     </div>
-                    <div class="panel-body">
-                        <form role="form">
+                    <div class="panel-body"  ng-controller="loginController">
+                        <form role="form" name="loginForm" ng-submit="submitForm(loginForm.$valid)" novalidate>
                             <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Matrícula" name="matricula" autofocus>
+                                <div ng-class="{ 'has-error': loginForm.matricula.$invalid && !loginForm.matricula.$pristine}" class="form-group">
+                                    <input  ng-model="user.matricula" 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Matrícula" 
+                                            name="matricula" 
+                                            autofocus 
+                                            required>
+                                    <p  class="help-block" ng-show="loginForm.matricula.$error.required && !loginForm.matricula.$pristine">Insira sua matrícula!</p>
                                 </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Senha" name="senha" type="password" value="">
+                                <div ng-class="{ 'has-error': loginForm.senha.$invalid && !loginForm.senha.$pristine}" class="form-group">
+                                    <input ng-model="user.senha" 
+                                           class="form-control" 
+                                           placeholder="Senha" 
+                                           name="senha" 
+                                           type="password" 
+                                           required>
+                                    <p  class="help-block" ng-show="loginForm.senha.$error.required && !loginForm.senha.$pristine">Insira sua senha!</p>
                                 </div>
                                 <div class="checkbox">
                                     <label>
@@ -56,7 +73,7 @@
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <button class="btn btn-lg btn-success btn-block">Login</button>
+                                <button class="btn btn-lg btn-success btn-block" type="submit" ng-disabled="loginForm.$invalid">Login</button>
                             </fieldset>
                         </form>
                         <br/>
