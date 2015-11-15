@@ -58,7 +58,7 @@
                                             required>
                                     <p  class="help-block" ng-show="loginForm.matricula.$error.required && !loginForm.matricula.$pristine">Insira sua matrícula!</p>
                                 </div>
-                                <div ng-class="{ 'has-error': loginForm.senha.$invalid && !loginForm.senha.$pristine}" class="form-group">
+                                <div ng-class="{ 'has-error': loginForm.senha.$error.required && !loginForm.senha.$pristine}" class="form-group">
                                     <input ng-model="user.senha" 
                                            class="form-control" 
                                            placeholder="Senha" 
