@@ -1,7 +1,5 @@
-server:
-  applicationConnectors:
-    - type: http
-      port: 8090
-  adminConnectors:
-    - type: http
-      port: 8091
+database:
+  driverClass: org.postgresql.Driver
+  user: postgres
+  password: postgres
+  url: jdbc:postgresql://localhost/sddufg      
