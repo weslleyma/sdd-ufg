@@ -31,7 +31,7 @@
 
         <link href="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
         <link href="../bower_components/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
-        
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -151,7 +151,7 @@
                 <!-- /.navbar-static-side -->
             </nav>
 
-            <div id="page-wrapper">
+            <div id="page-wrapper" ng-controller="processoDistribuicaoDisciplinaController">
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Processos Distribuição de Disciplinas <small>Zero Inscritos</small></h1>
@@ -171,76 +171,85 @@
                 </ol>
                 <!-- /.row -->
                 <div class="row">
-                    <div class="col-lg-12" ng-controller="processoDistribuicaoDisciplinaController">
-                        <div>
+                    <div class="col-lg-12">
+                        <div class="col-lg-4">
                             <label>Processo seletivo: </label>
-                            <select id="processo_seletivo" ng-model="processo_seletivo">
+                            <select class="form-control" id="processo_seletivo" ng-model="processo_seletivo">
                                 <option></option>
                                 <option id="1">2016-1</option>
                                 <option id="2">2015-2</option>
                                 <option id="3">2015-1</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="col-lg-4">
                             <label>Status: </label>
-                            <select id="processo_seletivo" ng-model="conflito">
+                            <select class="form-control" id="processo_seletivo" ng-model="conflito">
                                 <option id="Sim">Com Conflito</option>
                                 <option id="Não">Sem Conflito</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="col-lg-4">
                             <label>Nucleo: </label>
-                            <select id="processo_seletivo" ng-model="disciplina">
+                            <select class="form-control" id="processo_seletivo" ng-model="disciplina">
                                 <option></option>
                                 <option id="1">Engenharia de Software</option>
                                 <option id="2">Banco de Dados</option>
                                 <option id="3">Algoritmos em Grafos</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Somente processos sem inscritos?</label>
-                            <label class="radio-inline">
-                                <input ng-model="sem_inscritos" type="radio" name="sem_inscritos" id="optionsRadiosInline1" value="1" checked>Sim
-                            </label>
-                            <label class="radio-inline">
-                                <input ng-model="sem_inscritos" type="radio" name="sem_inscritos" id="optionsRadiosInline2" value="0">Não
-                            </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>Disciplina</label>
+                                <input class="form-control" ng-model="disciplina" type="text" name="disciplina" id="disciplina" />
+                            </div>
+                            <div class="form-group">
+                                <label>Somente processos sem inscritos?</label>
+                                <label class="radio-inline">
+                                    <input ng-model="sem_inscritos" type="radio" name="sem_inscritos" id="optionsRadiosInline1" value="1" checked>Sim
+                                </label>
+                                <label class="radio-inline">
+                                    <input ng-model="sem_inscritos" type="radio" name="sem_inscritos" id="optionsRadiosInline2" value="0">Não
+                                </label>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Disciplina</label>
-                            <input ng-model="disciplina" type="text" name="disciplina" id="disciplina" />
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th>Disciplina</th>
-                                        <th>Horário</th>
-                                        <th>Conflito</th>
-                                        <th>Quantidade Inscritos</th>
-                                        <th>Editar</th>
-                                        <th>Deletar</th>
-                                    </tr>
-                                </thead>
-                                <tbody ng-repeat="processo in processos | filter: processo_seletivo 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Disciplina</th>
+                                    <th>Horário</th>
+                                    <th>Conflito</th>
+                                    <th>Quantidade Inscritos</th>
+                                    <th>Editar</th>
+                                    <th>Deletar</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="processo in processos| filter: processo_seletivo 
                                        | filter: status
                                        | filter: nucleo
                                        | filter: sem_inscritos
                                        | filter: disciplina">
-                                    <tr>
-                                        <td>{{ processo.disciplina }}</td>
-                                        <td>{{ processo.horario }}</td>
-                                        <td>{{ processo.conflito }}</td>
-                                        <td>{{ processo.qtde_inscritos }}</td>
-                                        <td><button ng-click="editarItem(processo)">Editar</button></td>
-                                        <td><button ng-click="deletarItem(processo)">Deletar</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                <tr>
+                                    <td>{{ processo.disciplina}}</td>
+                                    <td>{{ processo.horario}}</td>
+                                    <td>{{ processo.conflito}}</td>
+                                    <td>{{ processo.qtde_inscritos}}</td>
+                                    <td><button ng-click="editarItem(processo)">Editar</button></td>
+                                    <td><button ng-click="deletarItem(processo)">Deletar</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <!-- /#page-wrapper -->
+                </div>
             </div>
         </div>
         <!-- /#wrapper -->
@@ -259,16 +268,11 @@
         <script src="../dist/js/sb-admin-2.js"></script>
 
         <!-- AngularJS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
-    <script src="../js/lista-processos-distribuicao-disciplina/lista-processos-distribuicao-disciplina.js"></script>
-    <script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-    <script>
-        $(function() {
-//            $('.table-responsive').DataTable();
-        });
-    </script>
-    
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+        <script src="../js/lista-processos-distribuicao-disciplina/lista-processos-distribuicao-disciplina.js"></script>
+        <script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+        <script src="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
     </body>
 
 </html>
