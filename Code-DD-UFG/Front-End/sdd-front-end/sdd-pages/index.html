@@ -23,171 +23,321 @@
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
+    <!-- CSS criado -->
+    <link href="../css/style.css" rel="stylesheet">
+
     <!-- Morris Charts CSS -->
     <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- Bootstrap Datepicker -->
+    <link href="../bower_components/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        <![endif]-->
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-    <div id="wrapper">
+        <div id="wrapper">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">SDD - Sistema de Distribuição de Disciplinas</a>
-            </div>
-            <!-- /.navbar-header -->
-
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> Perfil do Usuário</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configurações</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="index.html"><i class="fa fa-home fa-fw"></i> Início</a>
-                        </li>
-                        <li>
-                            <a href="configuracoes.html"><i class="fa fa-gear fa-fw"></i> Configurações</a>
-                        </li>
-                        <li>
-                            <a href="_"><i class="fa fa-sitemap fa-fw"></i> Distribuição de Disciplinas</a>
-                        </li>
-                        <li>
-                            <a href="_"><i class="fa fa-users fa-fw"></i> Usuários<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="pagina1.html">Página 1</a>
-                                </li>
-                                <li>
-                                    <a href="pagina2.html">Página 2</a>
-                                </li>
-                                <li>
-                                    <a href="pagina3.html">Página 3</a>
-                                </li>
-                                <li>
-                                    <a href="pagina4.html">Página 4</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="_"><i class="fa fa-book fa-fw"></i> Disciplinas<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="pagina1.html">Página 1</a>
-                                </li>
-                                <li>
-                                    <a href="pagina2.html">Página 2</a>
-                                </li>
-                                <li>
-                                    <a href="pagina3.html">Página 3</a>
-                                </li>
-                                <li>
-                                    <a href="pagina4.html">Página 4</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="_"><i class="fa fa-graduation-cap fa-fw"></i> Núcleos de Conhecimeto<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="pagina1.html">Página 1</a>
-                                </li>
-                                <li>
-                                    <a href="pagina2.html">Página 2</a>
-                                </li>
-                                <li>
-                                    <a href="pagina3.html">Página 3</a>
-                                </li>
-                                <li>
-                                    <a href="pagina4.html">Página 4</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                    </ul>
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">SDD - Sistema de Distribuição de Disciplinas</a>
                 </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        </nav>
+                <!-- /.navbar-header -->
 
-        <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Página base <small>Subtítulo</small></h1>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#" id="btnEditarInformacoes"><i class="fa fa-user fa-fw"></i> Editar informações</a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Configurações</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+                <!-- /.navbar-top-links -->
+
+                <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                            <li>
+                                <a href="index.html"><i class="fa fa-home fa-fw"></i> Início</a>
+                            </li>
+                            <li>
+                                <a href="configuracoes.html"><i class="fa fa-gear fa-fw"></i> Configurações</a>
+                            </li>
+                            <li>
+                                <a href="_"><i class="fa fa-sitemap fa-fw"></i> Distribuição de Disciplinas</a>
+                            </li>
+                            <li>
+                                <a href="_"><i class="fa fa-users fa-fw"></i> Usuários<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="pagina1.html">Página 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="pagina2.html">Página 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="pagina3.html">Página 3</a>
+                                    </li>
+                                    <li>
+                                        <a href="pagina4.html">Página 4</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="_"><i class="fa fa-book fa-fw"></i> Disciplinas<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="pagina1.html">Página 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="pagina2.html">Página 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="pagina3.html">Página 3</a>
+                                    </li>
+                                    <li>
+                                        <a href="pagina4.html">Página 4</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                            <li>
+                                <a href="_"><i class="fa fa-graduation-cap fa-fw"></i> Núcleos de Conhecimeto<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a href="pagina1.html">Página 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="pagina2.html">Página 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="pagina3.html">Página 3</a>
+                                    </li>
+                                    <li>
+                                        <a href="pagina4.html">Página 4</a>
+                                    </li>
+                                </ul>
+                                <!-- /.nav-second-level -->
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.sidebar-collapse -->
                 </div>
-                <!-- /.col-lg-12 -->
+                <!-- /.navbar-static-side -->
+            </nav>
+
+            <div id="page-wrapper">
+                <form id="formEdicaoDadosDocente">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Perfil do docente <small></small></h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>  <a href="index.html">Início</a>
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-edit"></i> Perfil do docente
+                        </li>
+                    </ol>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <img class="imagem-perfil" src="http://simpleicon.com/wp-content/uploads/user1.png">
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="nome">Nome</label><input name="nome" id="nome" class="form-control input-margin" type="text" value="Fulano de tal" required disabled>
+                            <label for="nome">Matrícula</label><input name="matricula" id="matricula" class="form-control input-margin" type="text" value="9999999" required disabled>
+                            <label for="nome">Data de ingresso</label><input name="dataIngresso" id="dataIngresso" class="form-control input-margin" type="text" value="02/02/2012" required disabled>
+                            <label for="nome">Formação</label><input name="formacao" id="formacao" class="form-control input-margin" type="text" value="Doutor em Engenharia Eletrica" required disabled>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="nome">Núcleo acadêmico</label><input name="nucleoAcademico" id="nucleoAcademico" class="form-control input-margin" type="text" value="Instituto de Informática" required disabled>
+                            <label for="nome">Regime</label><input name="regime" id="regime" class="form-control input-margin" type="text" value="Efetivo (DE)" required disabled>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3>Universidade Federal de Goiás</h3>
+                            <br>
+                            <p><strong>Semestre letivo</strong>: 2015/2</p>
+                            <p><strong>Carga horaria executada no semestre</strong>: 128h</p>
+                            <p><strong>Carga horaria semanal</strong>: 12h</p>
+                            <p><strong>Disciplina(s) ministrada(s)</strong>: 4</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#quadroHorariosPanel" aria-controls="quadroHorarios" role="tab" data-toggle="tab">Quadro de horários</a></li>
+                            <li role="presentation"><a href="#descricaoPanel" aria-controls="descricaoPanel" role="tab" data-toggle="tab">Descrição</a></li>
+                            <li role="presentation"><a href="#nucleosConhecimentoPanel" aria-controls="nucleosConhecimentoPanel" role="tab" data-toggle="tab">Núcleos de conhecimento</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active inside-tab-margin" id="quadroHorariosPanel">
+                                <table class="table table-striped">
+                                    <th>Codigo</th>
+                                    <th>Disciplina</th>
+                                    <th>Curso</th>
+                                    <th>Turma</th>
+                                    <th>Local</th>
+                                    <th>Horario</th>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane inside-tab-margin" id="descricaoPanel">
+                                <h4><strong>Descrição do docente</strong></h4>
+                                <textarea class="form-control" id="descricao" rows="5" disabled>Fulano de tal, especializado em tal área e possui uma carreira assim e assim.</textarea>
+                                <h4><strong>Observações</strong></h4>
+                                <textarea class="form-control" id="observacoes" rows="5" disabled>No semestre 2015/02, eu gostaria de contar com isso e isso porque sim.</textarea>
+                            </div>
+                            <div role="tabpanel" class="tab-pane inside-tab-margin" id="nucleosConhecimentoPanel">
+                                <table class="table table-striped">
+                                    <th>Banco de dados<br>
+                                        <select id="disciplina1" class="form-control select-tabela">
+                                            <option>Apto</option>
+                                            <option>Não apto</option>
+                                            <option>Desejável</option>
+                                        </select>
+                                    </th>
+                                    <th>Engenharia de software<br>
+                                        <select id="disciplina2" class="form-control select-tabela">
+                                            <option>Apto</option>
+                                            <option>Não apto</option>
+                                            <option>Desejável</option>
+                                        </select>
+                                    </th>
+                                    <th>Redes<br>
+                                        <select id="disciplina3" class="form-control select-tabela">
+                                            <option>Apto</option>
+                                            <option>Não apto</option>
+                                            <option>Desejável</option>
+                                        </select>
+                                    </th>
+                                    <th>Dispositivos móveis<br>
+                                        <select id="disciplina4" class="form-control select-tabela">
+                                            <option>Apto</option>
+                                            <option>Não apto</option>
+                                            <option>Desejável</option>
+                                        </select>
+                                    </th>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input type="submit" id="btnEnviarInformacoes" class="btn btn-primary botao-atualiza-informacoes botao-invisivel" value="Atualizar informações">
+                    </div>
+                </form>
             </div>
-            <ol class="breadcrumb">
-                <li>
-                    <i class="fa fa-home"></i>  <a href="index.html">Início</a>
-                </li>
-                <li class="active">
-                    <i class="fa fa-edit"></i> Página base
-                </li>
-            </ol>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Conteúdo da página...</p>
-                </div>
-            </div>
+            <!-- /#page-wrapper -->
+
         </div>
-        <!-- /#page-wrapper -->
+        <!-- /#wrapper -->
 
-    </div>
-    <!-- /#wrapper -->
+        <!-- jQuery -->
+        <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 
-    <!-- jQuery -->
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+        <!-- JS criado -->
+        <script src="../js/perfil-docente/perfil-docente.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
+        <!-- Bootstrap Datepicker -->
+        <script src="../bower_components/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="../bower_components/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
+        <!-- Custom Theme JavaScript -->
+        <script src="../dist/js/sb-admin-2.js"></script>
 
-</body>
+    </body>
 
-</html>
+    </html>
