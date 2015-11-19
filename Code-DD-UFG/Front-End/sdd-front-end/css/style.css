@@ -19,6 +19,12 @@
 	margin: 0 auto;
 }
 
+.botao-inscrever-disciplina {
+	width: 35%;
+	display: block;
+	margin: 0 auto;
+}
+
 .botao-invisivel {
 	display: none;
 }
