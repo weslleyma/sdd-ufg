@@ -1,23 +1,19 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @javax.persistence.Entity
 @Table(name = "COURSE")
 public class Course extends Entity<Course> {
 
-	private Integer code;
 	private String name;
-
-	@Column(name = "CODE")
-	public Integer getCode() {
-		return code;
-	}
-
-	public void setCode(Integer code) {
-		this.code = code;
-	}
+	private List<Grade> grades;
 
 	@Column(name = "NAME")
 	public String getName() {
@@ -28,4 +24,12 @@ public class Course extends Entity<Course> {
 		this.name = name;
 	}
 
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="course", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<Grade> getGrades() {
+		return grades;
+	}
+
+	public void setGrades(List<Grade> grades) {
+		this.grades = grades;
+	}
 }

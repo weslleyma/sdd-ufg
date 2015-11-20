@@ -80,13 +80,19 @@ public class EntityDaoJpa<E extends Entity<E>> implements EntityDao<E> {
     
     @Transactional
 	public void delete(Long id) {
-    	getEntityManager().remove(findById(id, 0));
+    	E entity = findById(id, 0);
+    	if (entity == null) {
+    		throw new IllegalArgumentException();
+    	}
+    	getEntityManager().remove(entity);
     }
     
 
 	public E findById(Long id, Integer depth) {
 		E entity = getEntityManager().find(entityClass, id);
-		entity = treatEntityDepth(entity, 0, depth);
+		if (entity != null) {
+			entity = treatEntityDepth(entity, 0, depth);
+		}
 		return entity;
 	}
 

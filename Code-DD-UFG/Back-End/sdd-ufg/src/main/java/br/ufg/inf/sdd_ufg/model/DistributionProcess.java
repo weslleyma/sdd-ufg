@@ -1,21 +1,27 @@
 package br.ufg.inf.sdd_ufg.model;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import java.util.Date;
+import java.util.List;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @javax.persistence.Entity
 @Table(name = "DISTRIBUTION_PROCESS")
 public class DistributionProcess extends Entity<DistributionProcess> {
     
 	private String semester;
-	private LocalDate clazzRegistryDate;
-	private LocalDate teacherIntentDate;
-	private LocalDate firstResolutionDate;
-	private LocalDate substituteDistribuitionDate;
-	private LocalDate finishDate;
+	private List<Clazz> clazzes;
+	private Date clazzRegistryDate;
+	private Date teacherIntentDate;
+	private Date firstResolutionDate;
+	private Date substituteDistribuitionDate;
+	private Date finishDate;
 	
 	@Column(name = "SEMESTER")
 	public String getSemester() {
@@ -26,53 +32,62 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 		this.semester = semester;
 	}
 	
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="distributionProcess", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<Clazz> getClazzes() {
+		return clazzes;
+	}
+
+	public void setClazzes(List<Clazz> clazzes) {
+		this.clazzes = clazzes;
+	}
+
 	@Column(name="CLAZZ_REGISTRY_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateUserType")
-	public LocalDate getClazzRegistryDate() {
+	@Temporal(value=TemporalType.DATE)
+	public Date getClazzRegistryDate() {
 		return clazzRegistryDate;
 	}
 	
-	public void setClazzRegistryDate(LocalDate clazzRegistryDate) {
+	public void setClazzRegistryDate(Date clazzRegistryDate) {
 		this.clazzRegistryDate = clazzRegistryDate;
 	}
 	
 	@Column(name="TEACHER_INTENT_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateUserType")
-	public LocalDate getTeacherIntentDate() {
+	@Temporal(value=TemporalType.DATE)
+	public Date getTeacherIntentDate() {
 		return teacherIntentDate;
 	}
 	
-	public void setTeacherIntentDate(LocalDate teacherIntentDate) {
+	public void setTeacherIntentDate(Date teacherIntentDate) {
 		this.teacherIntentDate = teacherIntentDate;
 	}
 	
 	@Column(name="FIRST_RESOLUTION_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateUserType")
-	public LocalDate getFirstResolutionDate() {
+	@Temporal(value=TemporalType.DATE)
+	public Date getFirstResolutionDate() {
 		return firstResolutionDate;
 	}
 	
-	public void setFirstResolutionDate(LocalDate firstResolutionDate) {
+	public void setFirstResolutionDate(Date firstResolutionDate) {
 		this.firstResolutionDate = firstResolutionDate;
 	}
 	
 	@Column(name="SUBSTITUTE_DIST_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateUserType")
-	public LocalDate getSubstituteDistribuitionDate() {
+	@Temporal(value=TemporalType.DATE)
+	public Date getSubstituteDistribuitionDate() {
 		return substituteDistribuitionDate;
 	}
 	
-	public void setSubstituteDistribuitionDate(LocalDate substituteDistribuitionDate) {
+	public void setSubstituteDistribuitionDate(Date substituteDistribuitionDate) {
 		this.substituteDistribuitionDate = substituteDistribuitionDate;
 	}
 	
 	@Column(name="FINISH_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateUserType")
-	public LocalDate getFinishDate() {
+	@Temporal(value=TemporalType.DATE)
+	public Date getFinishDate() {
 		return finishDate;
 	}
 	
-	public void setFinishDate(LocalDate finishDate) {
+	public void setFinishDate(Date finishDate) {
 		this.finishDate = finishDate;
 	}
 	

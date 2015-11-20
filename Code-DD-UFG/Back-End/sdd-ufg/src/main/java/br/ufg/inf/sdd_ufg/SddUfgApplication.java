@@ -17,6 +17,7 @@ import br.ufg.inf.sdd_ufg.jpa.GradeDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.KnowledgeGroupDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.TeacherDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.UserDaoJpa;
+import br.ufg.inf.sdd_ufg.resource.CourseResource;
 import br.ufg.inf.sdd_ufg.resource.UserResource;
 
 import com.google.inject.AbstractModule;
@@ -61,6 +62,7 @@ public class SddUfgApplication extends Service<SddUfgConfiguration> {
         
     	environment.addFilter(injector.getInstance(PersistFilter.class), "/*");
     	environment.addResource(injector.getInstance(UserResource.class));
+    	environment.addResource(injector.getInstance(CourseResource.class));
     }
 
 }

@@ -1,5 +1,7 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -14,8 +18,6 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,9 +26,9 @@ public abstract class Entity<E extends Entity<E>> {
 	
 	private Long id;
 	@JsonIgnore
-    private LocalDateTime createdAt;
+    private Date createdAt;
 	@JsonIgnore
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 
 	@Id
 	@Column(name="ID", precision=18, scale=0)
@@ -41,23 +43,23 @@ public abstract class Entity<E extends Entity<E>> {
 
 	@JsonIgnore
 	@Column(name="CREATED_AT")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateTimeUserType")
-	public LocalDateTime getCreatedAt() {
+	@Temporal(value=TemporalType.TIMESTAMP)
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
-	void setCreatedAt(LocalDateTime createdAt) {
+	void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
 	@JsonIgnore
 	@Column(name="UPDATED_AT")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateTimeUserType")
-	public LocalDateTime getUpdatedAt() {
+	@Temporal(value=TemporalType.TIMESTAMP)
+	public Date getUpdatedAt() {
 		return updatedAt;
 	}
 
-	void setUpdatedAt(LocalDateTime updatedAt) {
+	void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
@@ -68,12 +70,12 @@ public abstract class Entity<E extends Entity<E>> {
 	
 	@PrePersist
 	protected void preInsert() {
-		setCreatedAt(LocalDateTime.now());
+		setCreatedAt(new Date());
 	}
 
 	@PreUpdate
 	protected void preUpdate() {
-		setUpdatedAt(LocalDateTime.now());
+		setUpdatedAt(new Date());
 	}
 	
 	@JsonIgnore

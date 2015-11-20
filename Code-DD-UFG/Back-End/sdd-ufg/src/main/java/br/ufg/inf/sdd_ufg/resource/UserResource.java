@@ -13,6 +13,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,8 +21,9 @@ import javax.ws.rs.core.Response;
 import br.ufg.inf.sdd_ufg.dao.UserDao;
 import br.ufg.inf.sdd_ufg.model.Role;
 import br.ufg.inf.sdd_ufg.model.User;
+import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 
-@Path("/user")
+@Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource extends AbstractResource {
 
@@ -44,13 +46,15 @@ public class UserResource extends AbstractResource {
 	}
     
 	@GET
-    public Response retrieveAllUsers(@Context final HttpServletRequest request) {
+    public Response retrieveAllUsers(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
 		List<User> users = userDao.findAll(0);
 		if (users == null || users.size() == 0) {
 			return Response.status(Response.Status.NOT_FOUND)
 					.build();
 		}
-		return Response.ok(users)
+		ResultSetResponse<User> rsp = new ResultSetResponse<User>(users, page);
+		
+		return Response.ok(rsp)
 				.build();
     }
 	
