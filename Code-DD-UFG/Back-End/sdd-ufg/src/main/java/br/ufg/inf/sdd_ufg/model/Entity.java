@@ -1,10 +1,12 @@
 package br.ufg.inf.sdd_ufg.model;
 
-import java.util.Date;
-
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
@@ -12,21 +14,24 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass()
 public abstract class Entity<E extends Entity<E>> {
 	
 	private Long id;
-//    private LocalDateTime includedAt;
-//    private LocalDateTime updatedAt;
+	@JsonIgnore
+    private LocalDateTime createdAt;
+	@JsonIgnore
+    private LocalDateTime updatedAt;
 
 	@Id
 	@Column(name="ID", precision=18, scale=0)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
-		if (id == null) synchronized (Entity.class) {
-    		try { Thread.sleep(1); } catch (InterruptedException e) {}
-    		id = - new Date().getTime();
-		}
 		return id;
 	}
 
@@ -34,31 +39,44 @@ public abstract class Entity<E extends Entity<E>> {
 		this.id = id;
 	}
 
-//	@Column(name="INF_DATA_INCLUSAO")
-//	@Type(type="br.com.infraestrutura.domain.hibernate.type.LocalDateTimeUserType")
-//	public LocalDateTime getIncludedAt() {
-//		return includedAt;
-//	}
-//
-//	void setIncludedAt(LocalDateTime includedAt) {
-//		this.includedAt = includedAt;
-//	}
+	@JsonIgnore
+	@Column(name="CREATED_AT")
+	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateTimeUserType")
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-//	@Column(name="INF_DATA_ALTERACAO")
-//	@Type(type="br.com.infraestrutura.domain.hibernate.type.LocalDateTimeUserType")
-//	public LocalDateTime getUpdatedAt() {
-//		return updatedAt;
-//	}
+	void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
-//	void setUpdatedAt(LocalDateTime updatedAt) {
-//		this.updatedAt = updatedAt;
-//	}
+	@JsonIgnore
+	@Column(name="UPDATED_AT")
+	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateTimeUserType")
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
 	@SuppressWarnings("unchecked")
 	public E consist() {
 		return (E) this;
 	}
 	
+	@PrePersist
+	protected void preInsert() {
+		setCreatedAt(LocalDateTime.now());
+	}
+
+	@PreUpdate
+	protected void preUpdate() {
+		setUpdatedAt(LocalDateTime.now());
+	}
+	
+	@JsonIgnore
 	@Transient
 	public Boolean getPersistent() {
 		return getId() != null && getId().compareTo(0L) > 0;
@@ -68,8 +86,8 @@ public abstract class Entity<E extends Entity<E>> {
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
 			.append("id", getId())
-//			.append("dataInclusao", getIncludedAt())
-//			.append("dataAlteracao", getUpdatedAt())
+			.append("dataInclusao", getCreatedAt())
+			.append("dataAlteracao", getUpdatedAt())
 			.toString();
 	}
 	
