@@ -1,0 +1,24 @@
+.imagem-perfil {
+	max-width: 100%;
+}
+
+.inside-tab-margin {
+	margin: 1.5em 1.5em 1.5em 1.5em;
+}
+
+.input-margin {
+	margin: 0 0 1em;
+}
+
+.select-tabela {
+	font-weight: 300 !important;
+}
+
+.botao-atualiza-informacoes {
+	width: 35%;
+	margin: 0 auto;
+}
+
+.botao-invisivel {
+	display: none;
+}
