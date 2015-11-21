@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,7 +12,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
 
 @javax.persistence.Entity
 @Table(name = "TEACHER")
@@ -22,13 +22,13 @@ public class Teacher extends Entity<Teacher> {
     private String name;
     private String registry;
     private String urlLattes;
-    private LocalDate entryDate;
+    private Date entryDate;
     private String formation;
     private Integer workload;
     private String about;
     private String rg;
     private String cpf;
-    private LocalDate birthDate;
+    private Date birthDate;
     
     @OneToOne
     @JoinColumn(name = "USER_ID")
@@ -76,12 +76,12 @@ public class Teacher extends Entity<Teacher> {
 	}
 	
 	@Column(name = "ENTRY_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateUserType")
-	public LocalDate getEntryDate() {
+	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.DateUserType")
+	public Date getEntryDate() {
 		return entryDate;
 	}
 	
-	public void setEntryDate(LocalDate entryDate) {
+	public void setEntryDate(Date entryDate) {
 		this.entryDate = entryDate;
 	}
 	
@@ -131,12 +131,12 @@ public class Teacher extends Entity<Teacher> {
 	}
 	
 	@Column(name = "BIRTH_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateUserType")
-	public LocalDate getBirthDate() {
+	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.DateUserType")
+	public Date getBirthDate() {
 		return birthDate;
 	}
 	
-	public void setBirthDate(LocalDate birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
     

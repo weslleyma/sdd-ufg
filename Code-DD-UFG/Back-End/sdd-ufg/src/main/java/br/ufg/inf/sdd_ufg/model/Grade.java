@@ -10,6 +10,7 @@ import javax.persistence.Table;
 public class Grade extends Entity<Grade> {
 
 	private Course course;
+	private KnowledgeGroup knowledgeGroup;
 	private String name;
 
 	@ManyToOne
@@ -20,6 +21,16 @@ public class Grade extends Entity<Grade> {
 
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "KNOWLEDGE_ID")
+	public KnowledgeGroup getKnowledgeGroup() {
+		return knowledgeGroup;
+	}
+
+	public void setKnowledgeGroup(KnowledgeGroup knowledgeGroup) {
+		this.knowledgeGroup = knowledgeGroup;
 	}
 
 	@Column(name = "NAME")

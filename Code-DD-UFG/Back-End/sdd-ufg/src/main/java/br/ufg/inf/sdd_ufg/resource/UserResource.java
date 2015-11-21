@@ -35,8 +35,8 @@ public class UserResource extends AbstractResource {
     }
 	
     @GET
-	@Path("/{user_id}")
-	public Response retrieveUserById(@PathParam("user_id") Long id, @Context final HttpServletRequest request) {
+	@Path("/{id}")
+	public Response retrieveUserById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
 		User user = userDao.findById(id, 1);
 		if (user == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
@@ -72,8 +72,8 @@ public class UserResource extends AbstractResource {
 	}
 	
 	@PUT
-	@Path("/{user_id}")
-	public Response updateUser(@PathParam("user_id") Long id, @Context final HttpServletRequest request) {
+	@Path("/{id}")
+	public Response updateUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
 		try {
 			User user = retrieveUserFromJson(request);
 			user.setId(id);
@@ -110,8 +110,8 @@ public class UserResource extends AbstractResource {
 	}
 	
 	@DELETE
-	@Path("/{user_id}")
-	public Response deleteUser(@PathParam("user_id") Long id, @Context final HttpServletRequest request) {
+	@Path("/{id}")
+	public Response deleteUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
 		try {
 			userDao.delete(id);
 		} catch (IllegalArgumentException iae) {

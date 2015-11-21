@@ -33,8 +33,8 @@ public class CourseResource extends AbstractResource {
     }
 	
     @GET
-	@Path("/{course_id}")
-	public Response retrieveCourseById(@PathParam("course_id") Long id, @Context final HttpServletRequest request) {
+	@Path("/{id}")
+	public Response retrieveCourseById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
 		Course course = courseDao.findById(id, 1);
 		if (course == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
@@ -61,22 +61,24 @@ public class CourseResource extends AbstractResource {
 	
 	@POST
 	public Response insertCourse(@Context final HttpServletRequest request) {
+		Course course;
 		try {
-			Course course = retrieveCourseFromJson(request);
+			course = retrieveCourseFromJson(request);
 			courseDao.insert(course);
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.build();
 		}
-		return Response.status(Response.Status.NO_CONTENT)
+		return Response.ok(course)
 				.build();
 	}
 	
 	@PUT
-	@Path("/{course_id}")
-	public Response updateCourse(@PathParam("course_id") Long id, @Context final HttpServletRequest request) {
+	@Path("/{id}")
+	public Response updateCourse(@PathParam("id") Long id, @Context final HttpServletRequest request) {
+		Course course;
 		try {
-			Course course = retrieveCourseFromJson(request);
+			course = retrieveCourseFromJson(request);
 			course.setId(id);
 			courseDao.update(course);
 		} catch (IllegalArgumentException iae) {
@@ -86,7 +88,7 @@ public class CourseResource extends AbstractResource {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.build();
 		}
-		return Response.status(Response.Status.NO_CONTENT)
+		return Response.ok(course)
 				.build();
 	}
 	
@@ -100,8 +102,8 @@ public class CourseResource extends AbstractResource {
 	}
 	
 	@DELETE
-	@Path("/{course_id}")
-	public Response deleteCourse(@PathParam("course_id") Long id, @Context final HttpServletRequest request) {
+	@Path("/{id}")
+	public Response deleteCourse(@PathParam("id") Long id, @Context final HttpServletRequest request) {
 		try {
 			courseDao.delete(id);
 		} catch (IllegalArgumentException iae) {

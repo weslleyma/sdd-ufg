@@ -24,7 +24,7 @@ public class KnowledgeLevel extends Entity<KnowledgeLevel> {
 	}
 	
 	@ManyToOne
-    @JoinColumn(name = "KNOWLEDGE_GROUP_ID")
+    @JoinColumn(name = "KNOWLEDGE_ID")
 	public KnowledgeGroup getKnowledgeGroup() {
 		return knowledgeGroup;
 	}
