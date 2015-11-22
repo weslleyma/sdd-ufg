@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import br.ufg.inf.sdd_ufg.dao.EntityDao;
 import br.ufg.inf.sdd_ufg.jpa.exception.FailedInstantiationDaoException;
 import br.ufg.inf.sdd_ufg.model.Entity;
+import br.ufg.inf.sdd_ufg.model.User;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -61,21 +62,14 @@ public class EntityDaoJpa<E extends Entity<E>> implements EntityDao<E> {
     @Transactional
     public E insert(E entity) {
     	entity.setId(null);
-    	getEntityManager().persist(consist(entity));
-    	return entity;
-    };
-    
-    @Transactional
-    public E remove(E entity) {
-    	getEntityManager().remove(entity);
-    	entity.setId(null);
+    	getEntityManager().persist(preInsert(consist(entity)));
     	return entity;
     };
 
     
     @Transactional
     public void delete(E entity) {
-    	getEntityManager().remove(entity);
+    	getEntityManager().remove(preDelete(entity));
     }
     
     @Transactional
@@ -84,7 +78,7 @@ public class EntityDaoJpa<E extends Entity<E>> implements EntityDao<E> {
     	if (entity == null) {
     		throw new IllegalArgumentException();
     	}
-    	getEntityManager().remove(entity);
+    	getEntityManager().remove(preDelete(entity));
     }
     
 
@@ -111,11 +105,11 @@ public class EntityDaoJpa<E extends Entity<E>> implements EntityDao<E> {
 		for (int i = 0; i < fields.length; i++) {
 			fields[i].setAccessible(true);
 			try {
-				if (Entity.class.isAssignableFrom(fields[i].getType()) && maxDepth >= depth) {
+				if ((Entity.class.isAssignableFrom(fields[i].getType()) || List.class.isAssignableFrom(fields[i].getType())) && maxDepth >= depth) {
 					if (fields[i].get(entity) != null) {
 						fields[i].set(entity, treatEntityDepth(entity, depth + 1, maxDepth));
 					}
-				} else if (fields[i].getType().equals(Entity.class)) {
+				} else if (fields[i].getType().equals(Entity.class) || List.class.isAssignableFrom(fields[i].getType())) {
 					fields[i].set(entity, null);
 				}
 			} catch (IllegalAccessException iae) {}
@@ -136,6 +130,18 @@ public class EntityDaoJpa<E extends Entity<E>> implements EntityDao<E> {
 
 	@Transactional
 	public E update(E entity) {
-		return getEntityManager().merge(consist(entity));
+		return getEntityManager().merge(preUpdate(consist(entity)));
 	};
+	
+	public E preInsert(E entity) {
+		return entity;
+	}
+	
+	public E preUpdate(E entity) {
+		return entity;
+	}
+	
+	public E preDelete(E entity) {
+		return entity;
+	}
 }

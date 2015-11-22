@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.persistence.EntityExistsException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -37,9 +38,13 @@ public class UserResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveUserById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		User user = userDao.findById(id, 1);
+    	if (validateSession(request)) {
+			return getAuthenticationErrorResponse();
+		}
+    	
+    	User user = userDao.findById(id, 1);
 		if (user == null) {
-			return Response.status(Response.Status.NOT_FOUND).build();
+			return getResourceNotFoundResponse();
 		}
 		return Response.ok(user)
 				.build();
@@ -47,11 +52,11 @@ public class UserResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllUsers(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		List<User> users = userDao.findAll(0);
-		if (users == null || users.size() == 0) {
-			return Response.status(Response.Status.NOT_FOUND)
-					.build();
+		if (validateSession(request)) {
+			return getAuthenticationErrorResponse();
 		}
+		
+		List<User> users = userDao.findAll(0);
 		ResultSetResponse<User> rsp = new ResultSetResponse<User>(users, page);
 		
 		return Response.ok(rsp)
@@ -63,9 +68,10 @@ public class UserResource extends AbstractResource {
 		try {
 			User user = retrieveUserFromJson(request);
 			userDao.insert(user);
+		} catch (EntityExistsException eee) {
+			return getInsertErrorResponse();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.build();
+			return getBadRequestResponse();
 		}
 		return Response.status(Response.Status.NO_CONTENT)
 				.build();
@@ -74,16 +80,20 @@ public class UserResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
+		if (validateSession(request)) {
+			return getAuthenticationErrorResponse();
+		}
+		
 		try {
 			User user = retrieveUserFromJson(request);
 			user.setId(id);
 			userDao.update(user);
+		} catch (EntityExistsException eee) {
+			return getInsertErrorResponse();
 		} catch (IllegalArgumentException iae) {
-			return Response.status(Response.Status.NOT_FOUND)
-					.build();
+			return getResourceNotFoundResponse();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.build();
+			return getBadRequestResponse();
 		}
 		return Response.status(Response.Status.NO_CONTENT)
 				.build();
@@ -112,11 +122,14 @@ public class UserResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
+		if (validateSession(request)) {
+			return getAuthenticationErrorResponse();
+		}
+		
 		try {
 			userDao.delete(id);
 		} catch (IllegalArgumentException iae) {
-			return Response.status(Response.Status.NOT_FOUND)
-					.build();
+			return getResourceNotFoundResponse();
 		}
 		return Response.status(Response.Status.NO_CONTENT)
 				.build();

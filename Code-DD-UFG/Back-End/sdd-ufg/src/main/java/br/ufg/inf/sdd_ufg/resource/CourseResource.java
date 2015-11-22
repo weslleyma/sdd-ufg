@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.persistence.EntityExistsException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -35,9 +36,13 @@ public class CourseResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveCourseById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		Course course = courseDao.findById(id, 1);
+		if (validateSession(request)) {
+			return getAuthenticationErrorResponse();
+		}
+    	
+    	Course course = courseDao.findById(id, 1);
 		if (course == null) {
-			return Response.status(Response.Status.NOT_FOUND).build();
+			return getResourceNotFoundResponse();
 		}
 		return Response.ok(course)
 				.build();
@@ -45,11 +50,11 @@ public class CourseResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllCourses(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		List<Course> courses = courseDao.findAll(0);
-		if (courses == null || courses.size() == 0) {
-			return Response.status(Response.Status.NOT_FOUND)
-					.build();
+		if (validateSession(request)) {
+			return getAuthenticationErrorResponse();
 		}
+		
+		List<Course> courses = courseDao.findAll(0);
 		if (page == null) {
 			page = 1;
 		}
@@ -61,13 +66,18 @@ public class CourseResource extends AbstractResource {
 	
 	@POST
 	public Response insertCourse(@Context final HttpServletRequest request) {
+		if (validateSession(request)) {
+			return getAuthenticationErrorResponse();
+		}
+		
 		Course course;
 		try {
 			course = retrieveCourseFromJson(request);
 			courseDao.insert(course);
+		} catch (EntityExistsException eee) {
+			return getInsertErrorResponse();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.build();
+			return getBadRequestResponse();
 		}
 		return Response.ok(course)
 				.build();
@@ -76,17 +86,21 @@ public class CourseResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateCourse(@PathParam("id") Long id, @Context final HttpServletRequest request) {
+		if (validateSession(request)) {
+			return getAuthenticationErrorResponse();
+		}
+		
 		Course course;
 		try {
 			course = retrieveCourseFromJson(request);
 			course.setId(id);
 			courseDao.update(course);
+		} catch (EntityExistsException eee) {
+			return getInsertErrorResponse();
 		} catch (IllegalArgumentException iae) {
-			return Response.status(Response.Status.NOT_FOUND)
-					.build();
+			return getResourceNotFoundResponse();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.build();
+			return getBadRequestResponse();
 		}
 		return Response.ok(course)
 				.build();
@@ -104,14 +118,16 @@ public class CourseResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteCourse(@PathParam("id") Long id, @Context final HttpServletRequest request) {
+		if (validateSession(request)) {
+			return getAuthenticationErrorResponse();
+		}
+		
 		try {
 			courseDao.delete(id);
 		} catch (IllegalArgumentException iae) {
-			return Response.status(Response.Status.NOT_FOUND)
-					.build();
+			return getResourceNotFoundResponse();
 		}
 		return Response.status(Response.Status.NO_CONTENT)
 				.build();
 	}
-	
 }

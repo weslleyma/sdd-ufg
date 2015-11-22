@@ -15,8 +15,9 @@ import javax.persistence.Table;
 public class Clazz extends Entity<Clazz> {
 
 	private DistributionProcess distributionProcess;
-	private Grade grade;
 	private List<ClazzSchedule> clazzSchedules;
+	private Teacher teacher;
+	private Grade grade;
 	private Integer workload;
 	private Integer code;
 
@@ -30,6 +31,16 @@ public class Clazz extends Entity<Clazz> {
 		this.distributionProcess = distributionProcess;
 	}
 	
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="clazz", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<ClazzSchedule> getClazzSchedules() {
+		return clazzSchedules;
+	}
+
+	public void setClazzSchedules(List<ClazzSchedule> clazzSchedules) {
+		this.clazzSchedules = clazzSchedules;
+	}
+	
+
 	@ManyToOne
     @JoinColumn(name = "GRADE_ID")
     public Grade getGrade() {
@@ -38,15 +49,6 @@ public class Clazz extends Entity<Clazz> {
 
 	public void setGrade(Grade grade) {
 		this.grade = grade;
-	}
-	
-	@OneToMany( fetch = FetchType.EAGER,  mappedBy="clazz", cascade=CascadeType.ALL, orphanRemoval=true )
-	public List<ClazzSchedule> getClazzSchedules() {
-		return clazzSchedules;
-	}
-
-	public void setClazzSchedules(List<ClazzSchedule> clazzSchedules) {
-		this.clazzSchedules = clazzSchedules;
 	}
 
 	@Column(name = "WORKLOAD")
