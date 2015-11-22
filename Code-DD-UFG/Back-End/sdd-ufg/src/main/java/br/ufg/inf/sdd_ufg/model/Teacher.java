@@ -6,18 +6,20 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @javax.persistence.Entity
 @Table(name = "TEACHER")
 public class Teacher extends Entity<Teacher> {
 
-	private User user;
     private List<KnowledgeLevel> knowledgeLevels;
     private String name;
     private String registry;
@@ -29,16 +31,8 @@ public class Teacher extends Entity<Teacher> {
     private String rg;
     private String cpf;
     private Date birthDate;
-    
-    @OneToOne
-    @JoinColumn(name = "USER_ID")
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
 	
+    @JsonInclude(Include.NON_NULL)
 	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
 	public List<KnowledgeLevel> getKnowledgeLevels() {
 		return knowledgeLevels;
@@ -131,7 +125,7 @@ public class Teacher extends Entity<Teacher> {
 	}
 	
 	@Column(name = "BIRTH_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.DateUserType")
+	@Temporal(value=TemporalType.DATE)
 	public Date getBirthDate() {
 		return birthDate;
 	}

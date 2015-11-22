@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.persistence.EntityExistsException;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,7 +20,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.ufg.inf.sdd_ufg.dao.KnowledgeGroupDao;
 import br.ufg.inf.sdd_ufg.dao.TeacherDao;
+import br.ufg.inf.sdd_ufg.model.KnowledgeGroup;
+import br.ufg.inf.sdd_ufg.model.KnowledgeLevel;
 import br.ufg.inf.sdd_ufg.model.Teacher;
 import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 
@@ -28,16 +32,18 @@ import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 public class TeacherResource extends AbstractResource {
 
 	private final TeacherDao teacherDao;
+	private final KnowledgeGroupDao knowledgeGroupDao;
 
     @Inject
-    public TeacherResource(final TeacherDao teacherDao) {
+    public TeacherResource(final TeacherDao teacherDao, final KnowledgeGroupDao knowledgeGroupDao) {
         this.teacherDao = teacherDao;
+        this.knowledgeGroupDao = knowledgeGroupDao;
     }
 	
     @GET
 	@Path("/{id}")
 	public Response retrieveTeacherById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		Teacher teacher = teacherDao.findById(id, 1);
+		Teacher teacher = teacherDao.findById(id, 2);
 		if (teacher == null) {
 			return Response.status(Response.Status.NOT_FOUND).build();
 		}
@@ -66,13 +72,29 @@ public class TeacherResource extends AbstractResource {
 		Teacher teacher;
 		try {
 			teacher = retrieveTeacherFromJson(request);
+			fillKnowledgeLevels(teacher);
+
 			teacherDao.insert(teacher);
+		} catch (EntityExistsException eee) {
+			return getInsertErrorResponse();
 		} catch (Exception e) {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.build();
 		}
 		return Response.ok(teacher)
 				.build();
+	}
+	
+	private void fillKnowledgeLevels(Teacher teacher) {
+		List<KnowledgeGroup> knowledgeGroups = knowledgeGroupDao.findAll(0);
+		for (KnowledgeGroup kg : knowledgeGroups) {
+			KnowledgeLevel kl = new KnowledgeLevel();
+			kl.setLevel(3);
+			kl.setTeacher(teacher);
+			kl.setKnowledgeGroup(kg);
+			
+			teacher.getKnowledgeLevels().add(kl);
+		}
 	}
 	
 	@PUT
@@ -83,6 +105,8 @@ public class TeacherResource extends AbstractResource {
 			teacher = retrieveTeacherFromJson(request);
 			teacher.setId(id);
 			teacherDao.update(teacher);
+		} catch (EntityExistsException eee) {
+			return getInsertErrorResponse();
 		} catch (IllegalArgumentException iae) {
 			return Response.status(Response.Status.NOT_FOUND)
 					.build();
@@ -110,7 +134,6 @@ public class TeacherResource extends AbstractResource {
 		teacher.setRg(content.get("rg").toString());
 		teacher.setCpf(content.get("cpf").toString());
 		teacher.setBirthDate(df.parse(content.get("birth_date").toString()));
-		//teacher.setUser(content.get("cpf").toString());
 		
 		return teacher;
 	}
