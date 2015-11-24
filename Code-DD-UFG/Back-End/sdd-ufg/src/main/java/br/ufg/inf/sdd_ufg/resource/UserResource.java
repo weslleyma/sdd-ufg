@@ -110,8 +110,10 @@ public class UserResource extends AbstractResource {
 		user.setEmail(content.get("email").toString());
 		user.setIsAdmin(new Boolean(content.get("is_admin").toString()));
 
-		Teacher teacher = teacherDao.findById(new Long(content.get("teacher_id").toString()), 0);
-		user.setTeacher(teacher);
+		if (content.get("teacher_id") != null) {
+			Teacher teacher = teacherDao.findById(new Long(content.get("teacher_id").toString()), 0);
+			user.setTeacher(teacher);
+		}
 		
 		return user;
 	}
