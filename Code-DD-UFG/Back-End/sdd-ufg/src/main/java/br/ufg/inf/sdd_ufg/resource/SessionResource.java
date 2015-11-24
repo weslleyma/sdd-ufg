@@ -58,7 +58,7 @@ public class SessionResource extends AbstractResource {
 	private User retrieveUserFromLogin(final HttpServletRequest request) throws Exception {
 		Map<String, Object> content = getJSONContent(request);
 		
-		String userName = content.get("user_name").toString();
+		String userName = content.get("username").toString();
 		String authPass = content.get("auth_pass").toString();
 		
 		User user = userDao.findUserByUsername(userName);

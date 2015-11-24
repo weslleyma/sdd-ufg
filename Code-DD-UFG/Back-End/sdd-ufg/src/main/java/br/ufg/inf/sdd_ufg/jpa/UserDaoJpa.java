@@ -13,7 +13,7 @@ public class UserDaoJpa extends EntityDaoJpa<User> implements UserDao {
 	@SuppressWarnings("unchecked")
 	public User findUserByUsername(String userName) {
 		Query query = getEntityManager().createQuery("from " + entityClass.getSimpleName() + " " +  entityClass.getSimpleName().substring(0,1)
-				+ " where " + entityClass.getSimpleName().substring(0,1) + ".username = ?");
+				+ " where " + entityClass.getSimpleName().substring(0,1) + ".username = ?1");
 		query.setParameter(1, userName);
 		List<User> users = (List<User>) query.getResultList();
 		if (users.size() == 1) {
