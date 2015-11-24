@@ -8,6 +8,7 @@ import br.ufg.inf.sdd_ufg.dao.CourseDao;
 import br.ufg.inf.sdd_ufg.dao.DistributionProcessDao;
 import br.ufg.inf.sdd_ufg.dao.GradeDao;
 import br.ufg.inf.sdd_ufg.dao.KnowledgeGroupDao;
+import br.ufg.inf.sdd_ufg.dao.KnowledgeLevelDao;
 import br.ufg.inf.sdd_ufg.dao.TeacherDao;
 import br.ufg.inf.sdd_ufg.dao.UserDao;
 import br.ufg.inf.sdd_ufg.jpa.ClazzDaoJpa;
@@ -17,6 +18,7 @@ import br.ufg.inf.sdd_ufg.jpa.CourseDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.DistributionProcessDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.GradeDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.KnowledgeGroupDaoJpa;
+import br.ufg.inf.sdd_ufg.jpa.KnowledgeLevelDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.TeacherDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.UserDaoJpa;
 import br.ufg.inf.sdd_ufg.model.ClazzSchedule;
@@ -58,6 +60,7 @@ public class SddUfgApplication extends Service<SddUfgConfiguration> {
                 bind(DistributionProcessDao.class).to(DistributionProcessDaoJpa.class);
                 bind(GradeDao.class).to(GradeDaoJpa.class);
                 bind(KnowledgeGroupDao.class).to(KnowledgeGroupDaoJpa.class);
+                bind(KnowledgeLevelDao.class).to(KnowledgeLevelDaoJpa.class);
                 bind(TeacherDao.class).to(TeacherDaoJpa.class);
                 bind(UserDao.class).to(UserDaoJpa.class);
             }

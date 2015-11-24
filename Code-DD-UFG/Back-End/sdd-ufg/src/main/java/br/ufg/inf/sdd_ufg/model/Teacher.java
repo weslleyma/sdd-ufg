@@ -32,7 +32,7 @@ public class Teacher extends Entity<Teacher> {
     private List<Clazz> clazzes;
     private List<KnowledgeLevel> knowledgeLevels;
 	
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 100)
 	public String getName() {
 		return name;
 	}
@@ -41,7 +41,7 @@ public class Teacher extends Entity<Teacher> {
 		this.name = name;
 	}
 	
-	@Column(name = "REGISTRY")
+	@Column(name = "REGISTRY", length = 30)
 	public String getRegistry() {
 		return registry;
 	}
@@ -50,7 +50,7 @@ public class Teacher extends Entity<Teacher> {
 		this.registry = registry;
 	}
 	
-	@Column(name = "URL_LATTES")
+	@Column(name = "URL_LATTES", length=255)
 	public String getUrlLattes() {
 		return urlLattes;
 	}
@@ -69,7 +69,7 @@ public class Teacher extends Entity<Teacher> {
 		this.entryDate = entryDate;
 	}
 	
-	@Column(name = "FORMATION")
+	@Column(name = "FORMATION", length = 30)
 	public String getFormation() {
 		return formation;
 	}
@@ -78,7 +78,7 @@ public class Teacher extends Entity<Teacher> {
 		this.formation = formation;
 	}
 	
-	@Column(name = "WORKLOAD")
+	@Column(name = "WORKLOAD", length = 3)
 	public Integer getWorkload() {
 		return workload;
 	}
