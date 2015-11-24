@@ -3,6 +3,7 @@ package br.ufg.inf.sdd_ufg;
 import br.ufg.inf.sdd_ufg.config.JpaConfiguration;
 import br.ufg.inf.sdd_ufg.dao.ClazzDao;
 import br.ufg.inf.sdd_ufg.dao.ClazzIntentDao;
+import br.ufg.inf.sdd_ufg.dao.ClazzScheduleDao;
 import br.ufg.inf.sdd_ufg.dao.CourseDao;
 import br.ufg.inf.sdd_ufg.dao.DistributionProcessDao;
 import br.ufg.inf.sdd_ufg.dao.GradeDao;
@@ -11,6 +12,7 @@ import br.ufg.inf.sdd_ufg.dao.TeacherDao;
 import br.ufg.inf.sdd_ufg.dao.UserDao;
 import br.ufg.inf.sdd_ufg.jpa.ClazzDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.ClazzIntentDaoJpa;
+import br.ufg.inf.sdd_ufg.jpa.ClazzScheduleDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.CourseDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.DistributionProcessDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.GradeDaoJpa;
@@ -51,6 +53,7 @@ public class SddUfgApplication extends Service<SddUfgConfiguration> {
             protected void configure() {
                 bind(ClazzDao.class).to(ClazzDaoJpa.class);
                 bind(ClazzIntentDao.class).to(ClazzIntentDaoJpa.class);
+                bind(ClazzScheduleDao.class).to(ClazzScheduleDaoJpa.class);
                 bind(CourseDao.class).to(CourseDaoJpa.class);
                 bind(DistributionProcessDao.class).to(DistributionProcessDaoJpa.class);
                 bind(GradeDao.class).to(GradeDaoJpa.class);
