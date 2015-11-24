@@ -17,7 +17,13 @@ import br.ufg.inf.sdd_ufg.jpa.GradeDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.KnowledgeGroupDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.TeacherDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.UserDaoJpa;
+import br.ufg.inf.sdd_ufg.model.ClazzSchedule;
 import br.ufg.inf.sdd_ufg.resource.CourseResource;
+import br.ufg.inf.sdd_ufg.resource.GradeResource;
+import br.ufg.inf.sdd_ufg.resource.KnowledgeGroupResource;
+import br.ufg.inf.sdd_ufg.resource.KnowledgeLevelResource;
+import br.ufg.inf.sdd_ufg.resource.SessionResource;
+import br.ufg.inf.sdd_ufg.resource.TeacherResource;
 import br.ufg.inf.sdd_ufg.resource.UserResource;
 
 import com.google.inject.AbstractModule;
@@ -63,6 +69,12 @@ public class SddUfgApplication extends Service<SddUfgConfiguration> {
     	environment.addFilter(injector.getInstance(PersistFilter.class), "/*");
     	environment.addResource(injector.getInstance(UserResource.class));
     	environment.addResource(injector.getInstance(CourseResource.class));
+    	environment.addResource(injector.getInstance(ClazzSchedule.class));
+    	environment.addResource(injector.getInstance(GradeResource.class));
+    	environment.addResource(injector.getInstance(KnowledgeGroupResource.class));
+    	environment.addResource(injector.getInstance(KnowledgeLevelResource.class));
+    	environment.addResource(injector.getInstance(TeacherResource.class));
+    	environment.addResource(injector.getInstance(SessionResource.class));
     }
 
 }
