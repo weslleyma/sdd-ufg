@@ -24,8 +24,8 @@ public class UserDaoJpa extends EntityDaoJpa<User> implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	public User findUserByToken(String token) {
-		Query query = getEntityManager().createQuery("from " + entityClass.getSimpleName() + " " +  entityClass.getSimpleName().substring(0,1)
-				+ " where " + entityClass.getSimpleName().substring(0,1) + ".sessionToken = ?");
+		Query query = getEntityManager().createQuery("from " + entityClass.getSimpleName() + " u "
+				+ " where u.sessionToken = ?1");
 		query.setParameter(1, token);
 		List<User> users = (List<User>) query.getResultList();
 		if (users.size() == 1) {
@@ -37,11 +37,16 @@ public class UserDaoJpa extends EntityDaoJpa<User> implements UserDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public User preInsert(User user) {
-		Query query = getEntityManager().createQuery("from " + entityClass.getSimpleName() + " " +  entityClass.getSimpleName().substring(0,1)
-				+ " where " + entityClass.getSimpleName().substring(0,1) + ".username = ?"
-				+ " or    " + entityClass.getSimpleName().substring(0,1) + ".teacher = ?");
-		query.setParameter(1, user.getUserName());
-		query.setParameter(2, user.getTeacher());
+		String jpql = "from " + entityClass.getSimpleName() + " u where u.username = ?1";
+		if (user.getTeacher() != null) {
+			jpql += " or u.teacher = ?2 ";
+		}
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter(1, user.getUsername());
+		if (user.getTeacher() != null) {
+			query.setParameter(2, user.getTeacher());
+		}
 		List<User> users = (List<User>) query.getResultList();
 		if (users.size() == 1) {
 			throw new EntityExistsException();

@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "USR")
 public class User extends Entity<User> {
 
-	private String userName;
+	private String username;
     private String password;
     private String email;
     private Teacher teacher;
@@ -27,16 +27,16 @@ public class User extends Entity<User> {
     private Date tokenCreatedAt;
 
 	@Column(name="USRNAME", length = 50)
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 	
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	@JsonIgnore
-	@Column(name="PSSWORD", length = 20)
+	@Column(name="PSSWORD", length = 255)
 	public String getPassword() {
 		return password;
 	}

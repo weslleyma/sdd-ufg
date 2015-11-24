@@ -105,11 +105,12 @@ public class UserResource extends AbstractResource {
 		Map<String, Object> content = getJSONContent(request);
 		
 		User user = new User();
-		user.setUserName(content.get("username").toString());
+		user.setUsername(content.get("username").toString());
 		user.setPassword(content.get("password").toString());
 		user.setEmail(content.get("email").toString());
-		user.setIsAdmin(new Boolean(content.get("is_admin").toString()));
-
+		if (content.get("is_admin") != null) {
+			user.setIsAdmin(new Boolean(content.get("is_admin").toString()));
+		}
 		if (content.get("teacher_id") != null) {
 			Teacher teacher = teacherDao.findById(new Long(content.get("teacher_id").toString()), 0);
 			user.setTeacher(teacher);
