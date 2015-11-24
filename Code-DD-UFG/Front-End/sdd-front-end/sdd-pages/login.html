@@ -48,40 +48,32 @@
                     <div class="panel-body"  ng-controller="loginController">
                         <form role="form" name="loginForm" ng-submit="submitForm(loginForm.$valid)" novalidate>
                             <fieldset>
-                                <div ng-class="{ 'has-error': loginForm.matricula.$invalid && !loginForm.matricula.$pristine}" class="form-group">
-                                    <input  ng-model="user.matricula" 
+                                <div ng-class="{ 'has-error': loginForm.username.$invalid && !loginForm.username.$pristine}" class="form-group">
+                                    <input  ng-model="user.username" 
                                             type="text" 
                                             class="form-control" 
-                                            placeholder="Matrícula" 
-                                            name="matricula" 
+                                            placeholder="Usuário" 
+                                            id="username"
+                                            name="username" 
                                             autofocus 
                                             required>
-                                    <p  class="help-block" ng-show="loginForm.matricula.$error.required && !loginForm.matricula.$pristine">Insira sua matrícula!</p>
+                                    <p  class="help-block" ng-show="loginForm.username.$error.required && !loginForm.username.$pristine">Insira seu usuário!</p>
                                 </div>
                                 <div ng-class="{ 'has-error': loginForm.senha.$error.required && !loginForm.senha.$pristine}" class="form-group">
                                     <input ng-model="user.senha" 
                                            class="form-control" 
                                            placeholder="Senha" 
-                                           name="senha" 
+                                           name="senha"
+                                           id="senha" 
                                            type="password" 
                                            required>
                                     <p  class="help-block" ng-show="loginForm.senha.$error.required && !loginForm.senha.$pristine">Insira sua senha!</p>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Manter-me conectado">Manter-me conectado
-                                    </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button class="btn btn-lg btn-success btn-block" type="submit" ng-disabled="loginForm.$invalid">Login</button>
                             </fieldset>
                         </form>
                         <br/>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <a href="#">Esqueci a senha</a>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-lg-12">
                                 <a href="cadastro-de-docente.html">Novo cadastro</a>
@@ -104,6 +96,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+
+    <!-- SHA1 Plugin -->
+    <script src="https://rawgit.com/emn178/js-sha1/master/build/sha1.min.js"></script>
 
 </body>
 
