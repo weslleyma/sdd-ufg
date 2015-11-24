@@ -1,0 +1,72 @@
+  <div class="navbar-default sidebar" role="navigation">
+                    <div class="sidebar-nav navbar-collapse">
+                        <ul class="nav" id="side-menu">
+                        <sidebar-search></sidebar-search>
+                        
+                            <li ui-sref-active="active">
+                                <a ui-sref="dashboard.inicio"><i class="fa fa-home fa-fw"></i> Inicio</a>
+                            </li>
+                            <li ui-sref-active="active">
+                                <a><i class="fa fa-gear fa-fw"></i> Configuracoes</a>
+                            </li>
+                            <li ui-sref-active="active">
+                                <a ui-sref="dashboard.distribuicao"><i class="fa fa-sitemap fa-fw"></i> Distribuicao de Disciplinas</a>
+                            </li>
+                            <li ng-class="{active: collapseVar==1}">
+                                <a ng-click="check(1)"><i class="fa fa-users fa-fw"></i> Usuarios<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level" collapse="collapseVar!=1">
+                                    <li>
+                                        <a href="">Pagina 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Pagina 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Pagina 3</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Pagina 4</a>
+                                    </li>
+                                </ul>
+                                
+                            </li>
+                            <li ng-class="{active: collapseVar==2}">
+                                <a ng-click="check(2)"><i class="fa fa-book fa-fw"></i> Disciplinas<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level" collapse="collapseVar!=2">
+                                    <li>
+                                        <a href="">Pagina 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Pagina 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Pagina 3</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Pagina 4</a>
+                                    </li>
+                                </ul>
+                               
+                            </li>
+                            <li ng-class="{active: collapseVar==3}">
+                                <a ng-click="check(3)" ui-sref="dashboard.nucleos"><i class="fa fa-graduation-cap fa-fw"></i> Nucleos de Conhecimeto<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level" collapse="collapseVar!=3">
+                                    <li>
+                                        <a href="">Pagina 1</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Pagina 2</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Pagina 3</a>
+                                    </li>
+                                    <li>
+                                        <a href="">Pagina 4</a>
+                                    </li>
+                                </ul>
+                              
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.sidebar-collapse -->
+                </div>

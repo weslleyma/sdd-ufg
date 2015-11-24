@@ -1,0 +1,172 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+</head>
+<body>
+
+             <div>
+                <form id="formEdicaoDadosDocente">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">Perfil do docente <small></small></h1>
+                        </div>
+                        <!-- /.col-lg-12 -->
+                    </div>
+                    <ol class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>  <a ui-sref="dashboard.inicio">Início</a>
+                        </li>
+                        <li class="active">
+                            <i class="fa fa-edit"></i> Perfil do docente
+                        </li>
+                    </ol>
+                    <!-- /.row -->
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <img class="imagem-perfil" src="http://simpleicon.com/wp-content/uploads/user1.png">
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="nome">Nome</label><input name="nome" id="nome" class="form-control input-margin" type="text" value="Fulano de tal" required disabled>
+                            <label for="nome">Matrícula</label><input name="matricula" id="matricula" class="form-control input-margin" type="text" value="9999999" required disabled>
+                            <label for="nome">Data de ingresso</label><input name="dataIngresso" id="dataIngresso" class="form-control input-margin" type="text" value="02/02/2012" required disabled>
+                            <label for="nome">Formação</label><input name="formacao" id="formacao" class="form-control input-margin" type="text" value="Doutor em Engenharia Eletrica" required disabled>
+                        </div>
+                        <div class="col-lg-3">
+                            <label for="nome">Núcleo acadêmico</label><input name="nucleoAcademico" id="nucleoAcademico" class="form-control input-margin" type="text" value="Instituto de Informática" required disabled>
+                            <label for="nome">Regime</label><input name="regime" id="regime" class="form-control input-margin" type="text" value="Efetivo (DE)" required disabled>
+                        </div>
+                        <div class="col-lg-4">
+                            <h3>Universidade Federal de Goiás</h3>
+                            <br>
+                            <p><strong>Semestre letivo</strong>: 2015/2</p>
+                            <p><strong>Carga horaria executada no semestre</strong>: 128h</p>
+                            <p><strong>Carga horaria semanal</strong>: 12h</p>
+                            <p><strong>Disciplina(s) ministrada(s)</strong>: 4</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#quadroHorariosPanel" aria-controls="quadroHorarios" role="tab" data-toggle="tab">Quadro de horários</a></li>
+                            <li role="presentation"><a href="#descricaoPanel" aria-controls="descricaoPanel" role="tab" data-toggle="tab">Descrição</a></li>
+                            <li role="presentation"><a href="#nucleosConhecimentoPanel" aria-controls="nucleosConhecimentoPanel" role="tab" data-toggle="tab">Núcleos de conhecimento</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active inside-tab-margin" id="quadroHorariosPanel">
+                                <table class="table table-striped">
+                                    <th>Codigo</th>
+                                    <th>Disciplina</th>
+                                    <th>Curso</th>
+                                    <th>Turma</th>
+                                    <th>Local</th>
+                                    <th>Horario</th>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane inside-tab-margin" id="descricaoPanel">
+                                <h4><strong>Descrição do docente</strong></h4>
+                                <textarea class="form-control" id="descricao" rows="5" disabled>Fulano de tal, especializado em tal área e possui uma carreira assim e assim.</textarea>
+                                <h4><strong>Observações</strong></h4>
+                                <textarea class="form-control" id="observacoes" rows="5" disabled>No semestre 2015/02, eu gostaria de contar com isso e isso porque sim.</textarea>
+                            </div>
+                            <div role="tabpanel" class="tab-pane inside-tab-margin" id="nucleosConhecimentoPanel">
+                                <table class="table table-striped">
+                                    <th>Banco de dados<br>
+                                        <select id="disciplina1" class="form-control select-tabela">
+                                            <option>Apto</option>
+                                            <option>Não apto</option>
+                                            <option>Desejável</option>
+                                        </select>
+                                    </th>
+                                    <th>Engenharia de software<br>
+                                        <select id="disciplina2" class="form-control select-tabela">
+                                            <option>Apto</option>
+                                            <option>Não apto</option>
+                                            <option>Desejável</option>
+                                        </select>
+                                    </th>
+                                    <th>Redes<br>
+                                        <select id="disciplina3" class="form-control select-tabela">
+                                            <option>Apto</option>
+                                            <option>Não apto</option>
+                                            <option>Desejável</option>
+                                        </select>
+                                    </th>
+                                    <th>Dispositivos móveis<br>
+                                        <select id="disciplina4" class="form-control select-tabela">
+                                            <option>Apto</option>
+                                            <option>Não apto</option>
+                                            <option>Desejável</option>
+                                        </select>
+                                    </th>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                        <td>Exemplo</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input type="submit" id="btnEnviarInformacoes" class="btn btn-primary botao-atualiza-informacoes botao-invisivel" value="Atualizar informações">
+                    </div>
+                </form>
+            </div>
+</body>
+</html>
