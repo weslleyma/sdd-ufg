@@ -1,6 +1,5 @@
 package br.ufg.inf.sdd_ufg.resource;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +18,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import br.ufg.inf.sdd_ufg.dao.TeacherDao;
 import br.ufg.inf.sdd_ufg.dao.UserDao;
-import br.ufg.inf.sdd_ufg.model.Role;
+import br.ufg.inf.sdd_ufg.model.Teacher;
 import br.ufg.inf.sdd_ufg.model.User;
 import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 
@@ -29,10 +29,12 @@ import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 public class UserResource extends AbstractResource {
 
 	private final UserDao userDao;
+	private final TeacherDao teacherDao;
 
     @Inject
-    public UserResource(final UserDao userDao) {
+    public UserResource(final UserDao userDao, final TeacherDao teacherDao) {
         this.userDao = userDao;
+        this.teacherDao = teacherDao;
     }
 	
     @GET
@@ -99,7 +101,6 @@ public class UserResource extends AbstractResource {
 				.build();
 	}
 	
-	@SuppressWarnings("unchecked")
 	private User retrieveUserFromJson(final HttpServletRequest request) throws Exception {
 		Map<String, Object> content = getJSONContent(request);
 		
@@ -107,14 +108,10 @@ public class UserResource extends AbstractResource {
 		user.setUserName(content.get("username").toString());
 		user.setPassword(content.get("password").toString());
 		user.setEmail(content.get("email").toString());
-		
-		if (content.get("role") != null) {
-			Map<String, Object> roleJson = (LinkedHashMap<String, Object>) content.get("role");
-			
-			Role role = new Role();
-			role.setId(new Long(roleJson.get("id").toString()));
-			role.setRole(roleJson.get("role").toString());
-		}
+		user.setIsAdmin(new Boolean(content.get("is_admin").toString()));
+
+		Teacher teacher = teacherDao.findById(new Long(content.get("teacher_id").toString()), 0);
+		user.setTeacher(teacher);
 		
 		return user;
 	}

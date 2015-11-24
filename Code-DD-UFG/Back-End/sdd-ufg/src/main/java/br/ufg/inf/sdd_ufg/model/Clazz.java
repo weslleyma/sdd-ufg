@@ -19,7 +19,6 @@ public class Clazz extends Entity<Clazz> {
 	private Teacher teacher;
 	private Grade grade;
 	private Integer workload;
-	private Integer code;
 
 	@ManyToOne
 	@JoinColumn(name = "DIST_PROCESS_ID")
@@ -39,7 +38,16 @@ public class Clazz extends Entity<Clazz> {
 	public void setClazzSchedules(List<ClazzSchedule> clazzSchedules) {
 		this.clazzSchedules = clazzSchedules;
 	}
-	
+
+	@ManyToOne
+	@JoinColumn(name = "TEACHER_ID")
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
 
 	@ManyToOne
     @JoinColumn(name = "GRADE_ID")
@@ -51,22 +59,13 @@ public class Clazz extends Entity<Clazz> {
 		this.grade = grade;
 	}
 
-	@Column(name = "WORKLOAD")
+	@Column(name = "WORKLOAD", length = 3)
 	public Integer getWorkload() {
 		return workload;
 	}
 
 	public void setWorkload(Integer workload) {
 		this.workload = workload;
-	}
-
-	@Column(name = "CODE")
-	public Integer getCode() {
-		return code;
-	}
-
-	public void setCode(Integer code) {
-		this.code = code;
 	}
 
 }

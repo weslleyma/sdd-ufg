@@ -38,8 +38,10 @@ public class UserDaoJpa extends EntityDaoJpa<User> implements UserDao {
 	@SuppressWarnings("unchecked")
 	public User preInsert(User user) {
 		Query query = getEntityManager().createQuery("from " + entityClass.getSimpleName() + " " +  entityClass.getSimpleName().substring(0,1)
-				+ " where " + entityClass.getSimpleName().substring(0,1) + ".username = ?");
+				+ " where " + entityClass.getSimpleName().substring(0,1) + ".username = ?"
+				+ " or    " + entityClass.getSimpleName().substring(0,1) + ".teacher = ?");
 		query.setParameter(1, user.getUserName());
+		query.setParameter(2, user.getTeacher());
 		List<User> users = (List<User>) query.getResultList();
 		if (users.size() == 1) {
 			throw new EntityExistsException();

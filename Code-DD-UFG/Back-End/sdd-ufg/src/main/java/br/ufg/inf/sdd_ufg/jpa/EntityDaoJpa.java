@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import br.ufg.inf.sdd_ufg.dao.EntityDao;
 import br.ufg.inf.sdd_ufg.jpa.exception.FailedInstantiationDaoException;
 import br.ufg.inf.sdd_ufg.model.Entity;
-import br.ufg.inf.sdd_ufg.model.User;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

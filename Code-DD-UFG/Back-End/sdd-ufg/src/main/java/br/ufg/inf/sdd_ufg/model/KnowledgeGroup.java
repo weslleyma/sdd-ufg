@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @javax.persistence.Entity
 @Table(name = "KNOWLEDGE_GROUP")
 public class KnowledgeGroup extends Entity<KnowledgeGroup> {
@@ -21,10 +23,11 @@ public class KnowledgeGroup extends Entity<KnowledgeGroup> {
 		return grades;
 	}
 
-	public void setGrade(List<Grade> grades) {
+	public void setGrades(List<Grade> grades) {
 		this.grades = grades;
 	}
 	
+	@JsonProperty("knowledge_levels")
 	@OneToMany( fetch = FetchType.EAGER,  mappedBy="knowledgeGroup", cascade=CascadeType.ALL, orphanRemoval=true )
 	public List<KnowledgeLevel> getKnowledgeLevels() {
 		return knowledgeLevels;
@@ -34,7 +37,7 @@ public class KnowledgeGroup extends Entity<KnowledgeGroup> {
 		this.knowledgeLevels = knowledgeLevels;
 	}
 
-	@Column(name = "NAME")
+	@Column(name = "NAME", length=100)
 	public String getName() {
 		return name;
 	}

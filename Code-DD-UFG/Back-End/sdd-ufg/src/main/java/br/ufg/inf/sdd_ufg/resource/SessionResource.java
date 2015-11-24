@@ -1,7 +1,9 @@
 package br.ufg.inf.sdd_ufg.resource;
 
-import java.util.Base64;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.Map;
 import java.util.Random;
 
@@ -65,8 +67,8 @@ public class SessionResource extends AbstractResource {
 			long unixTime = System.currentTimeMillis() / 1000L;
 			for (int i = 0; i < 5; i++) {
 				unixTime -= i * 1L;
-				encodedPassword = Base64.getEncoder().encodeToString(user.getPassword().getBytes()) 
-						+ unixTime;
+				encodedPassword = SHAsum((user.getPassword() 
+						+ unixTime).getBytes());
 				if (encodedPassword.equals(authPass)) {
 					return user;
 				}
@@ -88,5 +90,23 @@ public class SessionResource extends AbstractResource {
     	}
     	
     	return sb.toString();
+    }
+    
+    @SuppressWarnings("resource")
+    public static String SHAsum(byte[] convertme) {
+        MessageDigest md;
+		try {
+			md = MessageDigest.getInstance("SHA-1");
+		} catch (NoSuchAlgorithmException e) {
+			return "";
+		}
+		
+        final byte[] hash = md.digest(convertme);
+		Formatter formatter = new Formatter();
+        for (byte b : hash) {
+            formatter.format("%02x", b);
+        }
+        
+        return formatter.toString();
     }
 }
