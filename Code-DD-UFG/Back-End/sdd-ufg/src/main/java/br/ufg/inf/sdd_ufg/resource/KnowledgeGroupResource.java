@@ -41,7 +41,7 @@ public class KnowledgeGroupResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveKnowledgeGroupById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-    	if (validateSession(request)) {
+    	if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
     	
@@ -55,7 +55,7 @@ public class KnowledgeGroupResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllKnowledgeGroups(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -71,7 +71,7 @@ public class KnowledgeGroupResource extends AbstractResource {
 	
 	@POST
 	public Response insertKnowledgeGroup(@Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -107,7 +107,7 @@ public class KnowledgeGroupResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateKnowledgeGroup(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -139,7 +139,7 @@ public class KnowledgeGroupResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteKnowledgeGroup(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		

@@ -36,7 +36,7 @@ public class CourseResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveCourseById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
     	
@@ -50,7 +50,7 @@ public class CourseResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllCourses(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -66,7 +66,7 @@ public class CourseResource extends AbstractResource {
 	
 	@POST
 	public Response insertCourse(@Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -86,7 +86,7 @@ public class CourseResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateCourse(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -118,7 +118,7 @@ public class CourseResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteCourse(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		

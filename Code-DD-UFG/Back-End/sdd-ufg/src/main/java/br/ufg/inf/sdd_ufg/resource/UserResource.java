@@ -40,7 +40,7 @@ public class UserResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveUserById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-    	if (validateSession(request)) {
+    	if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
     	
@@ -85,7 +85,7 @@ public class UserResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -125,7 +125,7 @@ public class UserResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		

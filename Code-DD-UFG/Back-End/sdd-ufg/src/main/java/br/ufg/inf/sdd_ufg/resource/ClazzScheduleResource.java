@@ -36,7 +36,7 @@ public class ClazzScheduleResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveClazzScheduleById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
     	
@@ -50,7 +50,7 @@ public class ClazzScheduleResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllClazzSchedules(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -66,7 +66,7 @@ public class ClazzScheduleResource extends AbstractResource {
 	
 	@POST
 	public Response insertClazzSchedule(@Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -86,7 +86,7 @@ public class ClazzScheduleResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateClazzSchedule(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -120,7 +120,7 @@ public class ClazzScheduleResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteClazzSchedule(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		
