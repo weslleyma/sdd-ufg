@@ -35,7 +35,8 @@ app.controller('loginController', function($scope){
 	            }, 
 	            statusCode: {
 	            	403: function(response){
-	            		console.log(response['status'] +": " +response['message']);
+            			console.log(response['status'] +": " +response['responseJSON']['message']);
+            			alert(response['status'] +": " +response['responseJSON']['message']);
 	            	}
 	            }
         	});
