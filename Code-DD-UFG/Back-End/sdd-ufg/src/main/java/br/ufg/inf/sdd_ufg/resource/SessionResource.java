@@ -33,7 +33,7 @@ public class SessionResource extends AbstractResource {
     }
 	
 	@POST
-	public Response insertKnowledgeGroup(@Context final HttpServletRequest request) {
+	public Response getSessionToken(@Context final HttpServletRequest request) {
 		User user;
 		try {
 			user = retrieveUserFromLogin(request);
