@@ -70,7 +70,7 @@ public abstract class AbstractResource {
 		
 		if (user != null) {
 			Long sessionDurationMs = new Date().getTime() - user.getTokenCreatedAt().getTime();
-			Long sessionDurationM = TimeUnit.MICROSECONDS.toMinutes(sessionDurationMs);
+			Long sessionDurationM = TimeUnit.MILLISECONDS.toMinutes(sessionDurationMs);
 			if (sessionDurationM.intValue() < SESSION_MAX_DURATION) {
 				return true;
 			}

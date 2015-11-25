@@ -54,7 +54,7 @@ public class UserResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllUsers(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (validateSession(request)) {
+		if (!validateSession(request)) {
 			return getAuthenticationErrorResponse();
 		}
 		

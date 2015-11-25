@@ -25,8 +25,8 @@ public class UserDaoJpa extends EntityDaoJpa<User> implements UserDao {
 	@SuppressWarnings("unchecked")
 	public User findUserByToken(String token) {
 		Query query = getEntityManager().createQuery("from " + entityClass.getSimpleName() + " u "
-				+ " where u.sessionToken = ?1");
-		query.setParameter(1, token);
+				+ " where u.sessionToken like :token");
+		query.setParameter("token", "%" + token + "%");
 		List<User> users = (List<User>) query.getResultList();
 		if (users.size() == 1) {
 			return users.get(0);
