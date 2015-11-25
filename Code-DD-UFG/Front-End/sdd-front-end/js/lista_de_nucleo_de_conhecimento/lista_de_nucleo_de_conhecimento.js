@@ -47,7 +47,7 @@ $(document).ready(function(){
         console.log("Removendo núcleo de conhecimento com id: " +selectedId);
 
         //Abrindo requisição para remoção de núcleo de conhecimento
-        var deleteUrl = "http://private-e6e9d-sddufg.apiary-mock.com/knowledges/" + selectedId;
+        var deleteUrl = 'http://private-e6e9d-sddufg.apiary-mock.com/knowledges/' +selectedId ;
         console.log("Delete URL: " +deleteUrl);
 
     	$.ajax({
@@ -56,17 +56,13 @@ $(document).ready(function(){
             headers: {
 		    	"Session-Token": token
 		    },
-            dataType: 'json',
-            data: {
-                
-            },
             success: function(response){
-            	table.row('.selected').remove().draw( false );
-            	alert("Núcleo de conhecimento deletado com sucesso!");
+            	
             }, 
             statusCode: {
             	204: function(response){
-
+            		table.row('.selected').remove().draw( false );
+            		alert("Núcleo de conhecimento deletado com sucesso!");
             	},
             	403: function(response){
             		console.log(response['status'] +": " +response['responseJSON']['message']);
