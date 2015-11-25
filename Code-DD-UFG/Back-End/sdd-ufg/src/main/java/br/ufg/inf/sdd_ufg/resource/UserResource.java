@@ -59,6 +59,9 @@ public class UserResource extends AbstractResource {
 		}
 		
 		List<User> users = userDao.findAll(0);
+		if (page == null) {
+			page = 1;
+		}
 		ResultSetResponse<User> rsp = new ResultSetResponse<User>(users, page);
 		
 		return Response.ok(rsp)
