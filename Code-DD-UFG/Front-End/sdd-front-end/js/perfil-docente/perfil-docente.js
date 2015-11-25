@@ -1,8 +1,52 @@
 $(document).ready(function() {
 
+	var session_token = sessionStorage.getItem('session_token');
+
 	$('#dataIngresso').datepicker({
 	    format: "dd/mm/yyyy",
 	    language: "pt-BR"
+	});
+
+	$('#quadroHorarios').DataTable({
+		ajax: {
+            url: 'http://private-46f19-sddufg.apiary-mock.com/grades',
+			type: 'GET',
+			dataType: 'JSON',
+			headers: {
+				'Session-Token': session_token
+			},
+			statusCode: {
+		      403: function(response){
+		       console.log(response['status'] + ": " + response['message']);
+		      }
+		    }
+        },
+        columns: [
+            { data: "id" },
+            { data: "name" },
+            { data: "course_id" },
+            { data: "knowledge_id" }
+        ]
+	});
+
+	$('#nucleosConhecimento').DataTable({
+		ajax: {
+            url: 'http://private-46f19-sddufg.apiary-mock.com/knowledges',
+			type: 'GET',
+			dataType: 'JSON',
+			headers: {
+				'Session-Token': session_token
+			},
+			statusCode: {
+		      403: function(response){
+		       console.log(response['status'] + ": " + response['message']);
+		      }
+		    }
+        },
+        columns: [
+            { data: "id" },
+            { data: "name" }
+        ]
 	});
 
 	$('#btnEditarInformacoes').click(function() {

@@ -29,6 +29,9 @@
     <!-- Morris Charts CSS -->
     <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
 
+    <!-- DataTables -->
+    <link href="../bower_components/datatables/media/css/jquery.dataTables.css" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -91,7 +94,7 @@
                                 <a href="configuracoes.html"><i class="fa fa-gear fa-fw"></i> Configurações</a>
                             </li>
                             <li>
-                                <a href="processo-distribuicao.html"><i class="fa fa-sitemap fa-fw"></i> Distribuição de Disciplinas</a>
+                                <a href="processo_distribuicao.html"><i class="fa fa-sitemap fa-fw"></i> Distribuição de Disciplinas</a>
                             </li>
                             <li>
                                 <a href="_"><i class="fa fa-users fa-fw"></i> Usuários<span class="fa arrow"></span></a>
@@ -204,45 +207,13 @@
 
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active inside-tab-margin" id="quadroHorariosPanel">
-                                <table class="table table-striped">
-                                    <th>Codigo</th>
-                                    <th>Disciplina</th>
-                                    <th>Curso</th>
-                                    <th>Turma</th>
-                                    <th>Local</th>
-                                    <th>Horario</th>
-                                    <tr>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                    </tr>
+                                <table id="quadroHorarios" class="table table-striped">
+                                    <thead>
+                                        <th>Código</th>
+                                        <th>Disciplina</th>
+                                        <th>Curso</th>
+                                        <th>Núcleo de conhecimento</th>
+                                    </thead>
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane inside-tab-margin" id="descricaoPanel">
@@ -252,59 +223,11 @@
                                 <textarea class="form-control" id="observacoes" rows="5" disabled>No semestre 2015/02, eu gostaria de contar com isso e isso porque sim.</textarea>
                             </div>
                             <div role="tabpanel" class="tab-pane inside-tab-margin" id="nucleosConhecimentoPanel">
-                                <table class="table table-striped">
-                                    <th>Banco de dados<br>
-                                        <select id="disciplina1" class="form-control select-tabela">
-                                            <option>Apto</option>
-                                            <option>Não apto</option>
-                                            <option>Desejável</option>
-                                        </select>
-                                    </th>
-                                    <th>Engenharia de software<br>
-                                        <select id="disciplina2" class="form-control select-tabela">
-                                            <option>Apto</option>
-                                            <option>Não apto</option>
-                                            <option>Desejável</option>
-                                        </select>
-                                    </th>
-                                    <th>Redes<br>
-                                        <select id="disciplina3" class="form-control select-tabela">
-                                            <option>Apto</option>
-                                            <option>Não apto</option>
-                                            <option>Desejável</option>
-                                        </select>
-                                    </th>
-                                    <th>Dispositivos móveis<br>
-                                        <select id="disciplina4" class="form-control select-tabela">
-                                            <option>Apto</option>
-                                            <option>Não apto</option>
-                                            <option>Desejável</option>
-                                        </select>
-                                    </th>
-                                    <tr>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                        <td>Exemplo</td>
-                                    </tr>
+                                <table id="nucleosConhecimento" class="table table-striped">
+                                    <thead>
+                                        <th>Código</th>
+                                        <th>Núcleo de conhecimento</th>
+                                    </thead>
                                 </table>
                             </div>
                         </div>
@@ -321,6 +244,9 @@
 
         <!-- jQuery -->
         <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+        <!-- DataTable -->
+        <script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 
         <!-- JS criado -->
         <script src="../js/perfil-docente/perfil-docente.js"></script>
