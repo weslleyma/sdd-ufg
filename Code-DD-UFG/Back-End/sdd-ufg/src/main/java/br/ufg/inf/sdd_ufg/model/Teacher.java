@@ -124,7 +124,7 @@ public class Teacher extends Entity<Teacher> {
 		this.birthDate = birthDate;
 	}
     
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_EMPTY)
 	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
 	public List<Clazz> getClazzes() {
 		return clazzes;
@@ -134,7 +134,7 @@ public class Teacher extends Entity<Teacher> {
 		this.clazzes = clazzes;
 	}
 
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_EMPTY)
 	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
 	public List<KnowledgeLevel> getKnowledgeLevels() {
 		return knowledgeLevels;

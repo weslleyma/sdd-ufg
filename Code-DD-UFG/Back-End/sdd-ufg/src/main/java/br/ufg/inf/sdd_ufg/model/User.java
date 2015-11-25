@@ -8,11 +8,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @javax.persistence.Entity
 @Table(name = "USR")
@@ -21,6 +24,7 @@ public class User extends Entity<User> {
 	private String username;
     private String password;
     private String email;
+    private Long teacherId;
     private Teacher teacher;
     private Boolean isAdmin;
     private String sessionToken;
@@ -52,6 +56,17 @@ public class User extends Entity<User> {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Transient
+	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("teacher_id")
+	public Long getTeacherId() {
+		return teacherId;
+	}
+	
+	public void setTeacher(Long teacherId) {
+		this.teacherId = teacherId;
 	}
 	
 	@OneToOne

@@ -44,7 +44,7 @@ public class Grade extends Entity<Grade> {
 
 	@Transient
 	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("course_id")
+	@JsonProperty("knowledge_id")
 	public Long getKnowledgeGroupId() {
 		return knowledgeGroupId;
 	}
@@ -64,7 +64,7 @@ public class Grade extends Entity<Grade> {
 		this.knowledgeGroup = knowledgeGroup;
 	}
 
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 50)
 	public String getName() {
 		return name;
 	}

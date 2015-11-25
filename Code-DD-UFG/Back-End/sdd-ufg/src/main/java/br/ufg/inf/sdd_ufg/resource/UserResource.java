@@ -40,7 +40,7 @@ public class UserResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveUserById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-    	if (!validateSession(request)) {
+    	if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
     	
@@ -54,7 +54,7 @@ public class UserResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllUsers(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -85,14 +85,19 @@ public class UserResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
 		try {
-			User user = retrieveUserFromJson(request);
-			user.setId(id);
-			userDao.update(user);
+			User jsonUser = retrieveUserFromJson(request);
+			User existingUser = userDao.findById(id, 1);
+			
+			existingUser.setEmail(jsonUser.getEmail());
+			existingUser.setPassword(jsonUser.getPassword());
+			existingUser.setIsAdmin(jsonUser.getIsAdmin());
+			
+			userDao.update(existingUser);
 		} catch (EntityExistsException eee) {
 			return getInsertErrorResponse();
 		} catch (IllegalArgumentException iae) {
@@ -108,11 +113,15 @@ public class UserResource extends AbstractResource {
 		Map<String, Object> content = getJSONContent(request);
 		
 		User user = new User();
-		user.setUsername(content.get("username").toString());
+		if (content.get("username") != null) {
+			user.setUsername(content.get("username").toString());
+		}
 		user.setPassword(content.get("password").toString());
 		user.setEmail(content.get("email").toString());
 		if (content.get("is_admin") != null) {
 			user.setIsAdmin(new Boolean(content.get("is_admin").toString()));
+		} else {
+			user.setIsAdmin(false);
 		}
 		if (content.get("teacher_id") != null) {
 			Teacher teacher = teacherDao.findById(new Long(content.get("teacher_id").toString()), 0);
@@ -125,7 +134,7 @@ public class UserResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		

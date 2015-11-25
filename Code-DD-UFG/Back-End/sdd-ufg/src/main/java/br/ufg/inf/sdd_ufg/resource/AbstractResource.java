@@ -63,7 +63,7 @@ public abstract class AbstractResource {
 		return contentMapped;
 	}
 	
-	protected Boolean validateSession(final HttpServletRequest request) {
+	protected User validateSession(final HttpServletRequest request) {
 		String token = request.getHeader("Session-Token");
 		
 		User user = userDao.findUserByToken(token);
@@ -72,11 +72,11 @@ public abstract class AbstractResource {
 			Long sessionDurationMs = new Date().getTime() - user.getTokenCreatedAt().getTime();
 			Long sessionDurationM = TimeUnit.MILLISECONDS.toMinutes(sessionDurationMs);
 			if (sessionDurationM.intValue() < SESSION_MAX_DURATION) {
-				return true;
+				return user;
 			}
 		}
 		
-		return false;
+		return null;
 	}
 	
 	protected Response getAuthenticationErrorResponse() {

@@ -51,7 +51,7 @@ public class ClazzResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveClazzById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
     	
@@ -65,7 +65,7 @@ public class ClazzResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllClazzs(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -81,7 +81,7 @@ public class ClazzResource extends AbstractResource {
 	
 	@POST
 	public Response insertClazz(@Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -101,7 +101,7 @@ public class ClazzResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateClazz(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -147,7 +147,7 @@ public class ClazzResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteClazz(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		

@@ -46,7 +46,7 @@ public class KnowledgeLevelResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveKnowledgeLevelById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-    	if (!validateSession(request)) {
+    	if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
     	
@@ -60,7 +60,7 @@ public class KnowledgeLevelResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllKnowledgeLevels(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -80,7 +80,7 @@ public class KnowledgeLevelResource extends AbstractResource {
 	
 	@POST
 	public Response insertKnowledgeLevel(@Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -100,7 +100,7 @@ public class KnowledgeLevelResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateKnowledgeLevel(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -137,7 +137,7 @@ public class KnowledgeLevelResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteKnowledgeLevel(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		

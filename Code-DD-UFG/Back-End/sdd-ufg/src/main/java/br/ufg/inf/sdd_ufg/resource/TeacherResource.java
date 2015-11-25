@@ -43,9 +43,13 @@ public class TeacherResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveTeacherById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		Teacher teacher = teacherDao.findById(id, 2);
+    	if (validateSession(request) == null) {
+			return getAuthenticationErrorResponse();
+		}
+    	
+    	Teacher teacher = teacherDao.findById(id, 2);
 		if (teacher == null) {
-			return Response.status(Response.Status.NOT_FOUND).build();
+			return getResourceNotFoundResponse();
 		}
 		return Response.ok(teacher)
 				.build();
@@ -53,10 +57,13 @@ public class TeacherResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllTeachers(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
+		if (validateSession(request) == null) {
+			return getAuthenticationErrorResponse();
+		}
+		
 		List<Teacher> teachers = teacherDao.findAll(0);
 		if (teachers == null || teachers.size() == 0) {
-			return Response.status(Response.Status.NOT_FOUND)
-					.build();
+			return getResourceNotFoundResponse();
 		}
 		if (page == null) {
 			page = 1;
@@ -69,6 +76,10 @@ public class TeacherResource extends AbstractResource {
 	
 	@POST
 	public Response insertTeacher(@Context final HttpServletRequest request) {
+		if (validateSession(request) == null) {
+			return getAuthenticationErrorResponse();
+		}
+		
 		Teacher teacher;
 		try {
 			teacher = retrieveTeacherFromJson(request);
@@ -78,8 +89,7 @@ public class TeacherResource extends AbstractResource {
 		} catch (EntityExistsException eee) {
 			return getInsertErrorResponse();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.build();
+			return getBadRequestResponse();
 		}
 		return Response.ok(teacher)
 				.build();
@@ -100,6 +110,10 @@ public class TeacherResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateTeacher(@PathParam("id") Long id, @Context final HttpServletRequest request) {
+		if (validateSession(request) == null) {
+			return getAuthenticationErrorResponse();
+		}
+		
 		Teacher teacher;
 		try {
 			teacher = retrieveTeacherFromJson(request);
@@ -108,11 +122,9 @@ public class TeacherResource extends AbstractResource {
 		} catch (EntityExistsException eee) {
 			return getInsertErrorResponse();
 		} catch (IllegalArgumentException iae) {
-			return Response.status(Response.Status.NOT_FOUND)
-					.build();
+			return getResourceNotFoundResponse();
 		} catch (Exception e) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.build();
+			return getBadRequestResponse();
 		}
 		return Response.ok(teacher)
 				.build();
@@ -127,7 +139,7 @@ public class TeacherResource extends AbstractResource {
 		teacher.setName(content.get("name").toString());
 		teacher.setRegistry(content.get("registry").toString());
 		teacher.setUrlLattes(content.get("url_lattes").toString());
-		teacher.setEntryDate(df.parse(content.get("entry_date").toString()));
+		teacher.setEntryDate(df.parse(content.get("date_entry").toString()));
 		teacher.setFormation(content.get("formation").toString());
 		teacher.setWorkload(new Integer(content.get("workload").toString()));
 		teacher.setAbout(content.get("about").toString());
@@ -141,11 +153,14 @@ public class TeacherResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteTeacher(@PathParam("id") Long id, @Context final HttpServletRequest request) {
+		if (validateSession(request) == null) {
+			return getAuthenticationErrorResponse();
+		}
+		
 		try {
 			teacherDao.delete(id);
 		} catch (IllegalArgumentException iae) {
-			return Response.status(Response.Status.NOT_FOUND)
-					.build();
+			return getResourceNotFoundResponse();
 		}
 		return Response.status(Response.Status.NO_CONTENT)
 				.build();

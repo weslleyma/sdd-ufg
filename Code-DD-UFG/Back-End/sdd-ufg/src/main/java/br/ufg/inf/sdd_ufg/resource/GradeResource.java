@@ -45,7 +45,7 @@ public class GradeResource extends AbstractResource {
     @GET
 	@Path("/{id}")
 	public Response retrieveGradeById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
     	
@@ -59,11 +59,11 @@ public class GradeResource extends AbstractResource {
     
 	@GET
     public Response retrieveAllGrades(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
-		List<Grade> grades = gradeDao.findAll(0);
+		List<Grade> grades = gradeDao.findAll(1);
 		if (page == null) {
 			page = 1;
 		}
@@ -83,7 +83,7 @@ public class GradeResource extends AbstractResource {
 	
 	@POST
 	public Response insertGrade(@Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -103,7 +103,7 @@ public class GradeResource extends AbstractResource {
 	@PUT
 	@Path("/{id}")
 	public Response updateGrade(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
@@ -141,7 +141,7 @@ public class GradeResource extends AbstractResource {
 	@DELETE
 	@Path("/{id}")
 	public Response deleteGrade(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (!validateSession(request)) {
+		if (validateSession(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
 		
