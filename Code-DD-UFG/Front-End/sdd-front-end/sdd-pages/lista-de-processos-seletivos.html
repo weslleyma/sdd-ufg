@@ -56,6 +56,9 @@
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
+    <!-- DataTables -->
+    <link href="../bower_components/datatables/media/css/jquery.dataTables.css" rel="stylesheet">
+
     <!-- Morris Charts CSS -->
     <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
 
@@ -208,42 +211,16 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table id="processosSeletivos" class="table table-hover">
                                     <thead>
-                                        <tr>
-                                            <th onclick="sort_table(people, 0, asc1); asc1 *= -1; asc2 = 1; asc3 = 1;">Processo Seletivo</th>
-                                            <th onclick="sort_table(people, 1, asc2); asc2 *= -1; asc3 = 1; asc1 = 1;">Ano</th>
-                                            <th onclick="sort_table(people, 2, asc3); asc3 *= -1; asc1 = 1; asc2 = 1;">Semestre</th>
-                                            <th></th>
-                                        </tr>
+                                        <th>Código</th>
+                                        <th>Semestre</th>
+                                        <th>Data de cadastro da turma</th>
+                                        <th>Data de inscrição do docente</th>
+                                        <th>Data da primeira distribuição</th>
+                                        <th>Data de inscrição substituta</th>
+                                        <th>Data de término</th>
                                     </thead>
-                                    <tbody id="people">
-                                        <tr>
-                                            <td>2013-2</td>
-                                            <td>2013</td>
-                                            <td>2</td>
-                                            <td><button type="button" class="btn btn-outline btn-link">Editar</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2014-1</td>
-                                            <td>2014</td>
-                                            <td>1</td>
-                                            <td><button type="button" class="btn btn-outline btn-link">Editar</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2014-2</td>
-                                            <td>2014</td>
-                                            <td>2</td>
-                                            <td><button type="button" class="btn btn-outline btn-link">Editar</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2015-1</td>
-                                            <td>2015</td>
-                                            <td>1</td>
-                                            <td><button type="button" class="btn btn-outline btn-link">Editar</button></td>
-                                        </tr>
-                                        
-                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.table-responsive -->
@@ -267,6 +244,12 @@
 
     <!-- jQuery -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- DataTable -->
+    <script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+
+    <!-- JS criado -->
+    <script src="../js/lista-processos-seletivos/processos-seletivos.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
