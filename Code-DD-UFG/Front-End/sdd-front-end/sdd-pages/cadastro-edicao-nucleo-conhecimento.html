@@ -148,10 +148,10 @@
                 <!-- /.navbar-static-side -->
             </nav>
 
-            <div id="page-wrapper">
+            <div id="page-wrapper" ng-controller="cadastroNucleoConhecimentoController">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Núcleos de Conhecimento <small>Cadastro</small></h1>
+                        <h1 class="page-header">Núcleos de Conhecimento <small ng-hide="hasData">Cadastro</small><small ng-show="hasData">Edição</small></h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -163,21 +163,23 @@
                         <i class="fa fa-home"></i>  <a href="lista-nucleo-conhecimento.html">Núcleos de Conhecimento</a>
                     </li>
                     <li class="active">
-                        <i class="fa fa-edit"></i> Cadastro
+                        <i class="fa fa-plus" ng-hide="hasData">&nbsp;Cadastro</i> 
+                        <i class="fa fa-edit" ng-show="hasData">&nbsp;Edição</i> 
                     </li>
                 </ol>
                 <!-- /.row -->
                 <div class="row">
-                    <div class="col-lg-6" ng-controller="cadastroNucleoConhecimentoController">
-                        <form role="form" name="novoNucleoForm" novalidate>
+                    <div class="col-lg-6" >
+                        <form role="form" name="novoNucleoForm" ng-submit="submitForm(novoNucleoForm.$valid)" novalidate>
                             <div ng-class="{'has-error': novoNucleoForm.nomeNucleo.$invalid && !novoNucleoForm.nomeNucleo.$pristine}" 
                                 class="form-group">
                                 <label>Nome do núcleo:</label>
-                                <input  ng-model="nucleo.nome" 
+                                <input  ng-model="nucleo.name" 
                                         type="text" 
                                         class="form-control" 
                                         placeholder="Nome do Núcleo" 
-                                        name="nomeNucleo" 
+                                        name="nomeNucleo"
+                                        id ="nomeNucleo"
                                         autofocus 
                                         required>
                                 <p class="help-block" ng-show="novoNucleoForm.nomeNucleo.$error.required && !novoNucleoForm.nomeNucleo.$pristine">Insira o nome do núcleo!</p>

@@ -44,6 +44,12 @@ $(document).ready(function(){
     } );
  
     $('#buttonRemove').click( function () {
+        
+        if (!selectedId) {
+            alert("Selecione um registro!");
+            return false;
+        }
+        
         console.log("Removendo núcleo de conhecimento com id: " +selectedId);
 
         //Abrindo requisição para remoção de núcleo de conhecimento
@@ -79,6 +85,26 @@ $(document).ready(function(){
             }
     	});
     } );
+    
+    
+    $('#buttonEdit').click( function () {
+        
+        if (!selectedId) {
+            alert("Selecione um registro!");
+            return false;
+        }
+        
+        console.log("Editar núcleo de conhecimento com id: " +selectedId);
+
+        //Abrindo requisição para remoção de núcleo de conhecimento
+        var editURL = 'http://private-e6e9d-sddufg.apiary-mock.com/knowledges/' +selectedId ;
+        console.log("Edit URL: " + editURL);
+        
+        window.location.href='../sdd-pages/cadastro-edicao-nucleo-conhecimento.html';
+
+    } );
+    
+    
 });
 
 
