@@ -87,22 +87,97 @@ $(document).ready(function(){
     } );
     
     
-    $('#buttonEdit').click( function () {
-        
+    $('#buttonEdit').click(function () {
+
         if (!selectedId) {
             alert("Selecione um registro!");
             return false;
         }
-        
-        console.log("Editar núcleo de conhecimento com id: " +selectedId);
+        console.log("Pegar os dados do nucleo com id: " + selectedId);
 
-        //Abrindo requisição para remoção de núcleo de conhecimento
-        var editURL = 'http://private-e6e9d-sddufg.apiary-mock.com/knowledges/' +selectedId ;
-        console.log("Edit URL: " + editURL);
-        
-        window.location.href='../sdd-pages/cadastro-edicao-nucleo-conhecimento.html';
+        var url = 'http://private-e6e9d-sddufg.apiary-mock.com/knowledges/' + selectedId;
+        console.log("URL: " + url);
 
-    } );
+        $.ajax({
+            url: url,
+            type: 'GET',
+            headers: {
+                "Session-Token": token
+            },
+            success: function (response) {
+                $('#editPopUp').attr('data-id', selectedId);
+                $('#editPopUp').attr('data-name', response.name);
+                $('#editPopUp').modal();
+            },
+            statusCode: {
+                403: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+                404: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+            }
+        });
+    });
+    
+    $('#submitAlteracoesModal').click(function () {
+
+        if (!selectedId) {
+            alert("Selecione um registro!");
+            return false;
+        }
+
+        console.log("Editar nucleo com id: " + selectedId);
+
+        $.ajax({
+            url: 'http://private-e6e9d-sddufg.apiary-mock.com/knowledges/' + selectedId,
+            type: 'PUT',
+            dataType: 'json',
+            headers: {
+                "Session-Token": token,
+                "Content-Type": 'application/json'
+            },
+            data: {
+                'id': selectedId,
+                'name': $("#name").val(),
+            },
+            success: function (response) {
+                console.log("Núcleo Editado com sucesso");
+                $('#editPopUp').modal('toggle');
+                $('#finalPopUpEdit').modal();
+            },
+            statusCode: {
+                201: function (response, status, xhr) {
+                    console.log("201");
+                    console.log(response);
+                },
+                400: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+                403: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+                404: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                }
+            },
+            complete: function (xhr) {
+
+            }
+        });
+
+    });
+
+    $('#editPopUp').on('show.bs.modal', function (event) {
+        $('#id').val($(this).attr('data-id'));
+        $('#name').val($(this).attr('data-name'));
+       
+    });
     
     
 });

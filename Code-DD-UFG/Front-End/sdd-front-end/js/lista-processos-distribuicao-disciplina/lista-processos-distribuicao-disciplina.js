@@ -121,17 +121,107 @@ $(document).ready(function () {
             alert("Selecione um registro!");
             return false;
         }
+        console.log("Pegar os dados de distribuição com id: " + selectedId);
+
+        var url = 'http://private-e6e9d-sddufg.apiary-mock.com/processes/' + selectedId;
+        console.log("URL: " + url);
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            headers: {
+                "Session-Token": token
+            },
+            success: function (response) {
+                $('#editPopUp').attr('data-id', selectedId);
+                $('#editPopUp').attr('data-semester', response.semester);
+                $('#editPopUp').attr('data-clazz_registry_date', response.clazz_registry_date);
+                $('#editPopUp').attr('data-teacher_intent_date', response.teacher_intent_date);
+                $('#editPopUp').attr('data-first_resolution_date', response.first_resolution_date);
+                $('#editPopUp').attr('data-substitute_distribution_date', response.substitute_distribution_date);
+                $('#editPopUp').attr('data-finish_date', response.finish_date);
+                $('#editPopUp').attr('data-clazzes', response.clazzes);
+                $('#editPopUp').modal();
+            },
+            statusCode: {
+                403: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+                404: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+            }
+        });
+    });
+    
+    $('#submitAlteracoesModal').click(function () {
+
+        if (!selectedId) {
+            alert("Selecione um registro!");
+            return false;
+        }
 
         console.log("Editar processo de distribuição com id: " + selectedId);
 
-        //Abrindo requisição para remoção de núcleo de conhecimento
-        var editURL = 'http://private-e6e9d-sddufg.apiary-mock.com/processes/' + selectedId;
-        console.log("Edit URL: " + editURL);
+        $.ajax({
+            url: 'http://private-e6e9d-sddufg.apiary-mock.com/processes/' + selectedId,
+            type: 'PUT',
+            dataType: 'json',
+            headers: {
+                "Session-Token": token,
+                "Content-Type": 'application/json'
+            },
+            data: {
+                'id': selectedId,
+                'semester': $("#semester").val(),
+                'clazz_registry_date': $('#clazz_registry_date').val(),
+                'teacher_intent_date' : $('#teacher_intent_date').val(),
+                'first_resolution_date': $('#first_resolution_date').val(),
+                'substitute_distribution_date': $('#substitute_distribution_date').val(),
+                'finish_date': $('#finish_date').val(),
+            },
+            success: function (response) {
+                console.log("Processo Editado com sucesso");
+                $('#editPopUp').modal('toggle');
+                $('#finalPopUpEdit').modal();
+            },
+            statusCode: {
+                201: function (response, status, xhr) {
+                    console.log("201");
+                    console.log(response);
+                },
+                400: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+                403: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+                404: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                }
+            },
+            complete: function (xhr) {
 
-        window.location.href = '../sdd-pages/criação-edição-de-processo-de-distribuição-de-disciplina.html';
+            }
+        });
 
     });
 
+    $('#editPopUp').on('show.bs.modal', function (event) {
+        $('#id').val($(this).attr('data-id'));
+        $('#semester').val($(this).attr('data-semester'));
+        $('#clazz_registry_date').val($(this).attr('data-clazz_registry_date'));
+        $('#teacher_intent_date').val($(this).attr('data-teacher_intent_date'));
+        $('#first_resolution_date').val($(this).attr('data-first_resolution_date'));
+        $('#substitute_distribution_date').val($(this).attr('data-substitute_distribution_date'));
+        $('#finish_date').val($(this).attr('data-finish_date'));
+        $('#clazzes').val($(this).attr('data-clazzes'));
+    });
 
 });
 
