@@ -17,24 +17,19 @@
     <!-- MetisMenu CSS -->
     <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Timeline CSS -->
-    <link href="../dist/css/timeline.css" rel="stylesheet">
-
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
-    <script src="../js/cadastro-de-docente/cadastro-de-docente.js"></script>
+    <script src="../js/cadastro_de_disciplina/cadastro_de_disciplina.js"></script>
 
     <!-- Datepicker -->
     <link href="../bower_components/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet">
+    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -197,6 +192,7 @@
                                             type="text" 
                                             class="form-control" 
                                             placeholder="INF00123" 
+                                            id="codigoDaDisciplina"
                                             name="codigoDaDisciplina" 
                                             autofocus 
                                             required>
@@ -208,7 +204,8 @@
                                     <input  ng-model="disciplina.nome" 
                                             type="text" 
                                             class="form-control" 
-                                            placeholder="Compiladores" 
+                                            placeholder="Compiladores"                                             
+                                            id="nomeDaDisciplina" 
                                             name="nomeDaDisciplina" 
                                             autofocus 
                                             required>
@@ -217,7 +214,7 @@
 
                                 <div class="form-group">
                                     <p class="help-block" style="margin-right: 10px;">Carga horária: </p>
-                                    <select class="form-control" id="seletorDeCargaHoraria">
+                                    <select class="form-control" id="seletorDeCargaHoraria" name="seletorDeCargaHoraria">
                                         <option>64 Horas</option>
                                     </select>                                    
                                 </div>
@@ -225,7 +222,7 @@
 
                                 <div class="form-group">
                                     <p class="help-block" style="margin-right: 10px;">Curso: </p>
-                                    <select class="form-control" id="seletorDoSemestre">
+                                    <select class="form-control" id="seletorDoSemestre" name="seletorDoSemestre">
                                         <option>Ciências da Computação</option>
                                     </select>                                    
                                 </div>
@@ -274,23 +271,26 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
 
-
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
 
     <!-- Datepicker -->
-        <script src="../bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-        <script src="../bower_components/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="../bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="../bower_components/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
 
-        <script type="text/javascript">
-        $(function(){
-            $('.datepicker').datepicker({
-              format: 'dd-mm-yyyy',
-              language: "pt-BR",
-              todayBtn: "linked"
-            });
+    <!-- SHA1 Plugin -->
+    <script src="https://rawgit.com/emn178/js-sha1/master/build/sha1.min.js"></script>
+
+
+    <script type="text/javascript">
+    $(function(){
+        $('.datepicker').datepicker({
+          format: 'dd-mm-yyyy',
+          language: "pt-BR",
+          todayBtn: "linked"
         });
-        </script>
+    });
+    </script>
 
 </body>
 
