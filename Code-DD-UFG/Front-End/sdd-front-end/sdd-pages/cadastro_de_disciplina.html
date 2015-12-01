@@ -40,7 +40,7 @@
 
 </head>
 
-<body>
+<body ng-app="cadastroDisciplina">
 
     <div id="wrapper">
 
@@ -183,10 +183,10 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel-body"  ng-controller="cadastroProcessoSeletivoController">
-                        <form role="form" name="novoProcessoSeletivoForm" novalidate>
+                    <div class="panel-body"  ng-controller="cadastroDisciplinaController">
+                        <form role="form" name="novaDisciplinaForm" ng-submit="submitForm(novaDisciplinaForm.$valid)" novalidate>
                             <fieldset>
-                                <div class="form-group" style="display: flex;">
+                                <div ng-class="{ 'has-error': novaDisciplinaForm.codigoDaDisciplina.$invalid && !novaDisciplinaForm.codigoDaDisciplina.$pristine}" class="form-group" style="display: flex;">
                                     <p class="help-block" style="margin-right: 10px;">Código: </p>
                                     <input  ng-model="disciplina.codigo" 
                                             type="text" 
@@ -196,10 +196,10 @@
                                             name="codigoDaDisciplina" 
                                             autofocus 
                                             required>
-                                    
+                                    <p  class="help-block" style="margin-left: 10px;" ng-show="novaDisciplinaForm.codigoDaDisciplina.$error.required && !novaDisciplinaForm.codigoDaDisciplina.$pristine">Insira seu nome completo!</p>
                                 </div>
 
-                                <div class="form-group" style="display: flex;">
+                                <div ng-class="{ 'has-error': novaDisciplinaForm.nomeDaDisciplina.$invalid && !novaDisciplinaForm.nomeDaDisciplina.$pristine}" class="form-group" style="display: flex;">
                                     <p class="help-block" style="margin-right: 10px;">Disciplina: </p>
                                     <input  ng-model="disciplina.nome" 
                                             type="text" 
@@ -209,7 +209,7 @@
                                             name="nomeDaDisciplina" 
                                             autofocus 
                                             required>
-                                    
+                                    <p  class="help-block" style="margin-left: 10px;" ng-show="novaDisciplinaForm.nomeDaDisciplina.$error.required && !novaDisciplinaForm.nomeDaDisciplina.$pristine">Insira seu nome completo!</p>
                                 </div>
 
                                 <div class="form-group">
@@ -228,7 +228,7 @@
                                 </div>
 
                                 <!-- Change this to a button or input when using this as a form -->
-                                <button class="btn btn-lg btn-success btn-block" type="button" data-toggle="modal" data-target="#finalPopUp">Cadastrar Disciplina</button>
+                                <button class="btn btn-lg btn-success btn-block" type="button" data-toggle="modal" data-target="#finalPopUp" ng-disabled="novaDisciplinaForm.$invalid">Cadastrar Disciplina</button>
 
                                 <div class="container">
                                     <!-- Modal -->
