@@ -59,8 +59,7 @@ app.controller('cadastroNucleoConhecimentoController', function ($scope, $http) 
                                     'knowledge_id': nucleo_id
                                 },
                                 success: function (response) {
-                                    console.log('Niveis de nucleos cadastrados \n\
-                                                para todos os professores com valor "3"');
+                                    console.log('Niveis de nucleos cadastrados para todos os professores com valor "3"');
                                 },
                                 statusCode: {
                                     403: function (response) {

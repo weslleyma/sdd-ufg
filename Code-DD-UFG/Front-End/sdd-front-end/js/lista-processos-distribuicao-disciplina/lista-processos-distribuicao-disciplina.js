@@ -222,6 +222,126 @@ $(document).ready(function () {
         $('#finish_date').val($(this).attr('data-finish_date'));
         $('#clazzes').val($(this).attr('data-clazzes'));
     });
+	
+	$('#buttonViewClazzes').click(function () {
+
+        if (!selectedId) {
+            alert("Selecione um registro!");
+            return false;
+        }
+        console.log("Pegar os dados de distribuição com id: " + selectedId);
+
+        var url = 'http://private-e6e9d-sddufg.apiary-mock.com/processes/' + selectedId;
+        console.log("URL: " + url);
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            headers: {
+                "Session-Token": token
+            },
+            success: function (response) {
+				
+				var clazzes = response.clazzes;
+				$('#viewClazzesPopUp').attr('data-length', clazzes.length);
+				
+				for(var i = 0; i < clazzes.length; i++) {
+					
+					var clazz_id = clazzes[i].id;
+					var grade_id = clazzes[i].grade_id;
+					
+					$('#viewClazzesPopUp').attr('data-workload-' + i, clazzes[i].workload);
+					$('#viewClazzesPopUp').attr('data-status-' + i, clazzes[i].status);
+					
+					var gradeURL = 'http://private-e6e9d-sddufg.apiary-mock.com/grades/' + grade_id;
+					
+					$.ajax({
+						url: gradeURL,
+						type: 'GET',
+						async: false,
+						headers: {
+							"Session-Token": token
+						},
+						success: function (response) {
+							$('#viewClazzesPopUp').attr('data-grade_name-' + i, response.name);
+							$('#viewClazzesPopUp').attr('data-course_name-' + i, response.course.name);
+							$('#viewClazzesPopUp').attr('data-knowledge_name-' + i, response.knowledge.name);
+						},
+						statusCode: {
+							403: function (response) {
+								console.log(response['status'] + ": " + response['responseJSON']['message']);
+								alert(response['status'] + ": " + response['responseJSON']['message']);
+								return false;
+							},
+							404: function (response) {
+								console.log(response['status'] + ": " + response['responseJSON']['message']);
+								alert(response['status'] + ": " + response['responseJSON']['message']);
+								return false;
+							},
+						}
+					});
+				}
+            },
+            statusCode: {
+                403: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+                404: function (response) {
+                    console.log(response['status'] + ": " + response['responseJSON']['message']);
+                    alert(response['status'] + ": " + response['responseJSON']['message']);
+                },
+            },
+			complete: function(xhr) {
+				$('#viewClazzesPopUp').modal();
+			}
+        });
+    });
+	
+	$('#viewClazzesPopUp').on('show.bs.modal', function (event) {
+		
+		var length = $(this).attr('data-length');
+		
+		$('#viewClazzesPopUp').find('.modal-body').first().empty();
+		$('#viewClazzesPopUp').find('.modal-body').first().append('Lista de turmas para esse Processo Seletivo:<br><br>')
+		
+        for (var i = 0; i < length; i++) {
+			$('#viewClazzesPopUp').find('.modal-body').first().append(
+									'<div><label>Turma ' + (i + 1) + ':</label></div>' +
+									'<div class="form-group"> ' + 
+                                        '<label>Disciplina</label>' +
+                                        '<input type="text" class="form-control" '+
+										'id="grade_name-' + i + '" name="grade_name-' + i + '" disabled ' +
+										'value="' + $(this).attr('data-grade_name-' + i) + '" />' +
+                                   ' </div>' +
+								   '<div class="form-group"> ' +
+                                        '<label>Curso</label>' +
+                                        '<input type="text" class="form-control" '+
+										'id="course_name-' + i + '" name="course_name-' + i + '" disabled ' +
+										'value="' + $(this).attr('data-course_name-' + i) + '" />' +
+                                   ' </div>' +
+								   '<div class="form-group"> ' +
+                                        '<label>Knowledge</label>' +
+                                        '<input type="text" class="form-control" '+
+										'id="knowledge_name-' + i + '" name="knowledge_name-' + i + '" disabled ' +
+										'value="' + $(this).attr('data-knowledge_name-' + i) + '" />' +
+                                   ' </div>' +
+								   '<div class="form-group"> ' +
+                                        '<label>Carga Horária</label>' +
+                                        '<input type="text" class="form-control" '+
+										'id="workload-' + i + '" name="workload-' + i + '" disabled ' +
+										'value="' + $(this).attr('data-workload-' + i) + '" />' +
+                                   ' </div>' +
+								   '<div class="form-group"> ' +
+                                        '<label>Status</label>' +
+                                        '<input type="text" class="form-control" '+
+										'id="status-' + i + '" name="status-' + i + '" disabled ' +
+										'value="' + $(this).attr('data-status-' + i) + '" />' +
+                                   ' </div>' +
+								   '<hr>');
+		}
+        
+    });
 
 });
 
