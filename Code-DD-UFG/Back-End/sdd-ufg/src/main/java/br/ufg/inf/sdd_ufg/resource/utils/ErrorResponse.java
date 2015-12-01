@@ -2,23 +2,23 @@ package br.ufg.inf.sdd_ufg.resource.utils;
 
 public class ErrorResponse {
 
-	private String status;
+	private Integer status;
 	private String message;
 	
 	public ErrorResponse() {
 		
 	}
 
-	public ErrorResponse(String status, String message) {
+	public ErrorResponse(Integer status, String message) {
 		this.status = status;
 		this.message = message;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

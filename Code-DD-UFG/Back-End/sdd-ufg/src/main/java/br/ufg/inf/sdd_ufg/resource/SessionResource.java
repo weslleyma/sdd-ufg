@@ -42,7 +42,7 @@ public class SessionResource extends AbstractResource {
 			
 			userDao.update(user);
 		} catch (Exception e) {
-			ErrorResponse errorResponse = new ErrorResponse(Response.Status.FORBIDDEN.toString()
+			ErrorResponse errorResponse = new ErrorResponse(Response.Status.FORBIDDEN.getStatusCode()
 					, "The user could not be authenticated: " + e.getMessage());
 			
 			return Response.status(Response.Status.FORBIDDEN)

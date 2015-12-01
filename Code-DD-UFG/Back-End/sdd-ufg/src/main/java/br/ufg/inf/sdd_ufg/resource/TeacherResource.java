@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.resource;
 
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -19,12 +20,14 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import br.ufg.inf.sdd_ufg.dao.KnowledgeGroupDao;
 import br.ufg.inf.sdd_ufg.dao.TeacherDao;
 import br.ufg.inf.sdd_ufg.model.KnowledgeGroup;
 import br.ufg.inf.sdd_ufg.model.KnowledgeLevel;
 import br.ufg.inf.sdd_ufg.model.Teacher;
+import br.ufg.inf.sdd_ufg.model.enums.HttpHeaders;
 import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 
 @Path("/teachers")
@@ -34,33 +37,35 @@ public class TeacherResource extends AbstractResource {
 	private final TeacherDao teacherDao;
 	private final KnowledgeGroupDao knowledgeGroupDao;
 
-    @Inject
-    public TeacherResource(final TeacherDao teacherDao, final KnowledgeGroupDao knowledgeGroupDao) {
-        this.teacherDao = teacherDao;
-        this.knowledgeGroupDao = knowledgeGroupDao;
-    }
-	
-    @GET
+	@Inject
+	public TeacherResource(final TeacherDao teacherDao,
+			final KnowledgeGroupDao knowledgeGroupDao) {
+		this.teacherDao = teacherDao;
+		this.knowledgeGroupDao = knowledgeGroupDao;
+	}
+
+	@GET
 	@Path("/{id}")
-	public Response retrieveTeacherById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-    	if (validateSession(request) == null) {
+	public Response retrieveTeacherById(@PathParam("id") Long id,
+			@Context final HttpServletRequest request) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-    	
-    	Teacher teacher = teacherDao.findById(id, 2);
+
+		Teacher teacher = teacherDao.findById(id, 2);
 		if (teacher == null) {
 			return getResourceNotFoundResponse();
 		}
-		return Response.ok(teacher)
-				.build();
+		return Response.ok(teacher).build();
 	}
-    
+
 	@GET
-    public Response retrieveAllTeachers(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
+	public Response retrieveAllTeachers(@QueryParam("page") Integer page,
+			@Context final HttpServletRequest request) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-		
+
 		List<Teacher> teachers = teacherDao.findAll(0);
 		if (teachers == null || teachers.size() == 0) {
 			return getResourceNotFoundResponse();
@@ -68,18 +73,19 @@ public class TeacherResource extends AbstractResource {
 		if (page == null) {
 			page = 1;
 		}
-		ResultSetResponse<Teacher> rsp = new ResultSetResponse<Teacher>(teachers, page);
-		
-		return Response.ok(rsp)
-				.build();
-    }
-	
+		ResultSetResponse<Teacher> rsp = new ResultSetResponse<Teacher>(
+				teachers, page);
+
+		return Response.ok(rsp).build();
+	}
+
 	@POST
-	public Response insertTeacher(@Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
+	public Response insertTeacher(@Context final HttpServletRequest request,
+			@Context UriInfo info) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-		
+
 		Teacher teacher;
 		try {
 			teacher = retrieveTeacherFromJson(request);
@@ -91,10 +97,9 @@ public class TeacherResource extends AbstractResource {
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
-		return Response.ok(teacher)
-				.build();
+		return Response.ok(teacher).build();
 	}
-	
+
 	private void fillKnowledgeLevels(Teacher teacher) {
 		List<KnowledgeGroup> knowledgeGroups = knowledgeGroupDao.findAll(0);
 		for (KnowledgeGroup kg : knowledgeGroups) {
@@ -102,18 +107,19 @@ public class TeacherResource extends AbstractResource {
 			kl.setLevel(3);
 			kl.setTeacher(teacher);
 			kl.setKnowledgeGroup(kg);
-			
+
 			teacher.getKnowledgeLevels().add(kl);
 		}
 	}
-	
+
 	@PUT
 	@Path("/{id}")
-	public Response updateTeacher(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
+	public Response updateTeacher(@PathParam("id") Long id,
+			@Context final HttpServletRequest request, @Context UriInfo info) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-		
+
 		Teacher teacher;
 		try {
 			teacher = retrieveTeacherFromJson(request);
@@ -126,15 +132,20 @@ public class TeacherResource extends AbstractResource {
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
-		return Response.ok(teacher)
+		URI location = info.getRequestUri();
+		return Response
+				.created(location)
+				.header(HttpHeaders.SESSION_TOKEN.toString(),
+						getLoggedUser(request).getSessionToken()).entity(teacher)
 				.build();
 	}
-	
-	private Teacher retrieveTeacherFromJson(final HttpServletRequest request) throws Exception {
+
+	private Teacher retrieveTeacherFromJson(final HttpServletRequest request)
+			throws Exception {
 		Map<String, Object> content = getJSONContent(request);
-		
+
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		
+
 		Teacher teacher = new Teacher();
 		teacher.setName(content.get("name").toString());
 		teacher.setRegistry(content.get("registry").toString());
@@ -146,23 +157,23 @@ public class TeacherResource extends AbstractResource {
 		teacher.setRg(content.get("rg").toString());
 		teacher.setCpf(content.get("cpf").toString());
 		teacher.setBirthDate(df.parse(content.get("birth_date").toString()));
-		
+
 		return teacher;
 	}
-	
+
 	@DELETE
 	@Path("/{id}")
-	public Response deleteTeacher(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
+	public Response deleteTeacher(@PathParam("id") Long id,
+			@Context final HttpServletRequest request) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-		
+
 		try {
 			teacherDao.delete(id);
 		} catch (IllegalArgumentException iae) {
 			return getResourceNotFoundResponse();
 		}
-		return Response.status(Response.Status.NO_CONTENT)
-				.build();
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 }

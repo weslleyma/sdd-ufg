@@ -72,7 +72,7 @@ public class SddUfgApplication extends Service<SddUfgConfiguration> {
     public void run(SddUfgConfiguration configuration, Environment environment) {
     	Injector injector = createInjector(configuration);
         
-    	environment.addFilter(injector.getInstance(PersistFilter.class), "/*");
+    	
     	environment.addResource(injector.getInstance(UserResource.class));
     	environment.addResource(injector.getInstance(CourseResource.class));
     	environment.addResource(injector.getInstance(ClazzSchedule.class));
@@ -81,6 +81,9 @@ public class SddUfgApplication extends Service<SddUfgConfiguration> {
     	environment.addResource(injector.getInstance(KnowledgeLevelResource.class));
     	environment.addResource(injector.getInstance(TeacherResource.class));
     	environment.addResource(injector.getInstance(SessionResource.class));
+    	
+    	environment.addFilter(injector.getInstance(PersistFilter.class), "/*");
+        environment.addFilter(injector.getInstance(AuthenticationRequestFilter.class), "/*");
     }
 
 }

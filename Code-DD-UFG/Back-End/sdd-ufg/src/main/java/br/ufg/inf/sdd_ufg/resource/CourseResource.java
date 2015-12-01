@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.resource;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +18,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import br.ufg.inf.sdd_ufg.dao.CourseDao;
 import br.ufg.inf.sdd_ufg.model.Course;
+import br.ufg.inf.sdd_ufg.model.enums.HttpHeaders;
 import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 
 @Path("/courses")
@@ -28,48 +31,38 @@ public class CourseResource extends AbstractResource {
 
 	private final CourseDao courseDao;
 
-    @Inject
-    public CourseResource(final CourseDao courseDao) {
-        this.courseDao = courseDao;
-    }
-	
-    @GET
+	@Inject
+	public CourseResource(final CourseDao courseDao) {
+		this.courseDao = courseDao;
+	}
+
+	@GET
 	@Path("/{id}")
-	public Response retrieveCourseById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-    	
-    	Course course = courseDao.findById(id, 1);
+	public Response retrieveCourseById(@PathParam("id") Long id,
+			@Context final HttpServletRequest request) {
+		Course course = courseDao.findById(id, 1);
 		if (course == null) {
 			return getResourceNotFoundResponse();
 		}
-		return Response.ok(course)
-				.build();
+		return Response.ok(course).build();
 	}
-    
+
 	@GET
-    public Response retrieveAllCourses(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-		
+	public Response retrieveAllCourses(@QueryParam("page") Integer page,
+			@Context final HttpServletRequest request) {
 		List<Course> courses = courseDao.findAll(0);
 		if (page == null) {
 			page = 1;
 		}
-		ResultSetResponse<Course> rsp = new ResultSetResponse<Course>(courses, page);
-		
-		return Response.ok(rsp)
-				.build();
-    }
-	
+		ResultSetResponse<Course> rsp = new ResultSetResponse<Course>(courses,
+				page);
+
+		return Response.ok(rsp).build();
+	}
+
 	@POST
-	public Response insertCourse(@Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-		
+	public Response insertCourse(@Context final HttpServletRequest request,
+			@Context UriInfo info) {
 		Course course;
 		try {
 			course = retrieveCourseFromJson(request);
@@ -79,17 +72,20 @@ public class CourseResource extends AbstractResource {
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
-		return Response.ok(course)
-				.build();
+
+		URI location = info.getBaseUriBuilder().path("/courses")
+				.path(course.getId().toString()).build();
+		return Response
+				.created(location)
+				.header(HttpHeaders.SESSION_TOKEN.toString(),
+						getLoggedUser(request).getSessionToken())
+				.entity(course).build();
 	}
-	
+
 	@PUT
 	@Path("/{id}")
-	public Response updateCourse(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-		
+	public Response updateCourse(@PathParam("id") Long id,
+			@Context final HttpServletRequest request, @Context UriInfo info) {
 		Course course;
 		try {
 			course = retrieveCourseFromJson(request);
@@ -102,32 +98,34 @@ public class CourseResource extends AbstractResource {
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
-		return Response.ok(course)
-				.build();
+
+		URI location = info.getRequestUri();
+		return Response
+				.created(location)
+				.header(HttpHeaders.SESSION_TOKEN.toString(),
+						getLoggedUser(request).getSessionToken())
+				.entity(course).build();
 	}
-	
-	private Course retrieveCourseFromJson(final HttpServletRequest request) throws Exception {
+
+	private Course retrieveCourseFromJson(final HttpServletRequest request)
+			throws Exception {
 		Map<String, Object> content = getJSONContent(request);
-		
+
 		Course course = new Course();
 		course.setName(content.get("name").toString());
-		
+
 		return course;
 	}
-	
+
 	@DELETE
 	@Path("/{id}")
-	public Response deleteCourse(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-		
+	public Response deleteCourse(@PathParam("id") Long id,
+			@Context final HttpServletRequest request) {
 		try {
 			courseDao.delete(id);
 		} catch (IllegalArgumentException iae) {
 			return getResourceNotFoundResponse();
 		}
-		return Response.status(Response.Status.NO_CONTENT)
-				.build();
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 }

@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.resource;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -17,59 +18,64 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import br.ufg.inf.sdd_ufg.dao.ClazzScheduleDao;
 import br.ufg.inf.sdd_ufg.model.ClazzSchedule;
+import br.ufg.inf.sdd_ufg.model.enums.HttpHeaders;
 import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 
-@Path("/clazzSchedules")
+@Path("/schedules")
 @Produces(MediaType.APPLICATION_JSON)
 public class ClazzScheduleResource extends AbstractResource {
 
 	private final ClazzScheduleDao clazzScheduleDao;
 
-    @Inject
-    public ClazzScheduleResource(final ClazzScheduleDao clazzScheduleDao) {
-        this.clazzScheduleDao = clazzScheduleDao;;
-    }
-	
-    @GET
+	@Inject
+	public ClazzScheduleResource(final ClazzScheduleDao clazzScheduleDao) {
+		this.clazzScheduleDao = clazzScheduleDao;
+		;
+	}
+
+	@GET
 	@Path("/{id}")
-	public Response retrieveClazzScheduleById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
+	public Response retrieveClazzScheduleById(@PathParam("id") Long id,
+			@Context final HttpServletRequest request) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-    	
-    	ClazzSchedule clazzSchedule = clazzScheduleDao.findById(id, 1);
+
+		ClazzSchedule clazzSchedule = clazzScheduleDao.findById(id, 1);
 		if (clazzSchedule == null) {
 			return getResourceNotFoundResponse();
 		}
-		return Response.ok(clazzSchedule)
-				.build();
+		return Response.ok(clazzSchedule).build();
 	}
-    
+
 	@GET
-    public Response retrieveAllClazzSchedules(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
+	public Response retrieveAllClazzSchedules(@QueryParam("page") Integer page,
+			@Context final HttpServletRequest request) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-		
+
 		List<ClazzSchedule> clazzSchedules = clazzScheduleDao.findAll(0);
 		if (page == null) {
 			page = 1;
 		}
-		ResultSetResponse<ClazzSchedule> rsp = new ResultSetResponse<ClazzSchedule>(clazzSchedules, page);
-		
-		return Response.ok(rsp)
-				.build();
-    }
-	
+		ResultSetResponse<ClazzSchedule> rsp = new ResultSetResponse<ClazzSchedule>(
+				clazzSchedules, page);
+
+		return Response.ok(rsp).build();
+	}
+
 	@POST
-	public Response insertClazzSchedule(@Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
+	public Response insertClazzSchedule(
+			@Context final HttpServletRequest request, @Context UriInfo info) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-		
+
 		ClazzSchedule clazzSchedule;
 		try {
 			clazzSchedule = retrieveClazzScheduleFromJson(request);
@@ -79,17 +85,24 @@ public class ClazzScheduleResource extends AbstractResource {
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
-		return Response.ok(clazzSchedule)
-				.build();
+		
+		URI location = info.getBaseUriBuilder().path("/schedules")
+				.path(clazzSchedule.getId().toString()).build();
+		return Response
+				.created(location)
+				.header(HttpHeaders.SESSION_TOKEN.toString(),
+						getLoggedUser(request).getSessionToken())
+				.entity(clazzSchedule).build();
 	}
-	
+
 	@PUT
 	@Path("/{id}")
-	public Response updateClazzSchedule(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
+	public Response updateClazzSchedule(@PathParam("id") Long id,
+			@Context final HttpServletRequest request, @Context UriInfo info) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-		
+
 		ClazzSchedule clazzSchedule;
 		try {
 			clazzSchedule = retrieveClazzScheduleFromJson(request);
@@ -102,34 +115,41 @@ public class ClazzScheduleResource extends AbstractResource {
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
-		return Response.ok(clazzSchedule)
-				.build();
+		URI location = info.getRequestUri();
+		return Response
+				.created(location)
+				.header(HttpHeaders.SESSION_TOKEN.toString(),
+						getLoggedUser(request).getSessionToken())
+				.entity(clazzSchedule).build();
 	}
-	
-	private ClazzSchedule retrieveClazzScheduleFromJson(final HttpServletRequest request) throws Exception {
+
+	private ClazzSchedule retrieveClazzScheduleFromJson(
+			final HttpServletRequest request) throws Exception {
 		Map<String, Object> content = getJSONContent(request);
-		
+
 		ClazzSchedule clazzSchedule = new ClazzSchedule();
-		clazzSchedule.setWeekDay(new Integer(content.get("week_day").toString()));
+		clazzSchedule
+				.setWeekDay(new Integer(content.get("week_day").toString()));
 		clazzSchedule.setStartTime(content.get("start_time").toString());
-		clazzSchedule.setWeekDay(new Integer(content.get("end_time").toString()));
-		
+		clazzSchedule
+				.setWeekDay(new Integer(content.get("end_time").toString()));
+
 		return clazzSchedule;
 	}
-	
+
 	@DELETE
 	@Path("/{id}")
-	public Response deleteClazzSchedule(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
+	public Response deleteClazzSchedule(@PathParam("id") Long id,
+			@Context final HttpServletRequest request) {
+		if (getLoggedUser(request) == null) {
 			return getAuthenticationErrorResponse();
 		}
-		
+
 		try {
 			clazzScheduleDao.delete(id);
 		} catch (IllegalArgumentException iae) {
 			return getResourceNotFoundResponse();
 		}
-		return Response.status(Response.Status.NO_CONTENT)
-				.build();
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 }

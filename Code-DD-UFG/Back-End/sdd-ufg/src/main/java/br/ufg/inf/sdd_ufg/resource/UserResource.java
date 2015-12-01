@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.resource;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +18,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import br.ufg.inf.sdd_ufg.dao.TeacherDao;
 import br.ufg.inf.sdd_ufg.dao.UserDao;
 import br.ufg.inf.sdd_ufg.model.Teacher;
 import br.ufg.inf.sdd_ufg.model.User;
+import br.ufg.inf.sdd_ufg.model.enums.HttpHeaders;
 import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 
 @Path("/users")
@@ -31,72 +34,70 @@ public class UserResource extends AbstractResource {
 	private final UserDao userDao;
 	private final TeacherDao teacherDao;
 
-    @Inject
-    public UserResource(final UserDao userDao, final TeacherDao teacherDao) {
-        this.userDao = userDao;
-        this.teacherDao = teacherDao;
-    }
-	
-    @GET
+	@Inject
+	public UserResource(final UserDao userDao, final TeacherDao teacherDao) {
+		this.userDao = userDao;
+		this.teacherDao = teacherDao;
+	}
+
+	@GET
 	@Path("/{id}")
-	public Response retrieveUserById(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-    	if (validateSession(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-    	
-    	User user = userDao.findById(id, 1);
+	public Response retrieveUserById(@PathParam("id") Long id,
+			@Context final HttpServletRequest request) {
+		User user = userDao.findById(id, 1);
 		if (user == null) {
 			return getResourceNotFoundResponse();
 		}
-		return Response.ok(user)
-				.build();
+		return Response.ok(user).build();
 	}
-    
+
 	@GET
-    public Response retrieveAllUsers(@QueryParam("page") Integer page, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-		
+	public Response retrieveAllUsers(@QueryParam("page") Integer page,
+			@Context final HttpServletRequest request) {
 		List<User> users = userDao.findAll(0);
 		if (page == null) {
 			page = 1;
 		}
 		ResultSetResponse<User> rsp = new ResultSetResponse<User>(users, page);
-		
-		return Response.ok(rsp)
-				.build();
-    }
-	
+
+		return Response.ok(rsp).build();
+	}
+
 	@POST
-	public Response insertUser(@Context final HttpServletRequest request) {
+	public Response insertUser(@Context final HttpServletRequest request,
+			@Context UriInfo info) {
+		User user;
 		try {
-			User user = retrieveUserFromJson(request);
+			user = retrieveUserFromJson(request);
 			userDao.insert(user);
 		} catch (EntityExistsException eee) {
 			return getInsertErrorResponse();
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
-		return Response.status(Response.Status.NO_CONTENT)
-				.build();
+
+		URI location = info.getBaseUriBuilder().path("/users")
+				.path(user.getId().toString()).build();
+		return Response
+				.created(location)
+				.header(HttpHeaders.SESSION_TOKEN.toString(),
+						getLoggedUser(request).getSessionToken())
+				.entity(user).build();
 	}
-	
+
 	@PUT
 	@Path("/{id}")
-	public Response updateUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-		
+	public Response updateUser(@PathParam("id") Long id,
+			@Context final HttpServletRequest request, @Context UriInfo info) {
+		User existingUser;
 		try {
 			User jsonUser = retrieveUserFromJson(request);
-			User existingUser = userDao.findById(id, 1);
-			
+			existingUser = userDao.findById(id, 1);
+
 			existingUser.setEmail(jsonUser.getEmail());
 			existingUser.setPassword(jsonUser.getPassword());
 			existingUser.setIsAdmin(jsonUser.getIsAdmin());
-			
+
 			userDao.update(existingUser);
 		} catch (EntityExistsException eee) {
 			return getInsertErrorResponse();
@@ -105,13 +106,18 @@ public class UserResource extends AbstractResource {
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
-		return Response.status(Response.Status.NO_CONTENT)
+		URI location = info.getRequestUri();
+		return Response
+				.created(location)
+				.header(HttpHeaders.SESSION_TOKEN.toString(),
+						getLoggedUser(request).getSessionToken()).entity(existingUser)
 				.build();
 	}
-	
-	private User retrieveUserFromJson(final HttpServletRequest request) throws Exception {
+
+	private User retrieveUserFromJson(final HttpServletRequest request)
+			throws Exception {
 		Map<String, Object> content = getJSONContent(request);
-		
+
 		User user = new User();
 		if (content.get("username") != null) {
 			user.setUsername(content.get("username").toString());
@@ -124,27 +130,24 @@ public class UserResource extends AbstractResource {
 			user.setIsAdmin(false);
 		}
 		if (content.get("teacher_id") != null) {
-			Teacher teacher = teacherDao.findById(new Long(content.get("teacher_id").toString()), 0);
+			Teacher teacher = teacherDao.findById(
+					new Long(content.get("teacher_id").toString()), 0);
 			user.setTeacher(teacher);
 		}
-		
+
 		return user;
 	}
-	
+
 	@DELETE
 	@Path("/{id}")
-	public Response deleteUser(@PathParam("id") Long id, @Context final HttpServletRequest request) {
-		if (validateSession(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-		
+	public Response deleteUser(@PathParam("id") Long id,
+			@Context final HttpServletRequest request) {
 		try {
 			userDao.delete(id);
 		} catch (IllegalArgumentException iae) {
 			return getResourceNotFoundResponse();
 		}
-		return Response.status(Response.Status.NO_CONTENT)
-				.build();
+		return Response.status(Response.Status.NO_CONTENT).build();
 	}
-	
+
 }
