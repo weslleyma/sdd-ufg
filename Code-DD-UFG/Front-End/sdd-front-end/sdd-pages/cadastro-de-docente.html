@@ -50,13 +50,12 @@
                         <h3 class="panel-title">Cadastro de Docente</h3>
                     </div>
                     <div class="panel-body"  ng-controller="cadastroDocenteController">
-                        <form role="form" name="novoDocenteForm" ng-submit="submitForm(novoDocenteForm.$valid)" novalidate>
+                        <form role="form" name="novoDocenteForm" novalidate>
                             <fieldset>
                                 <div ng-class="{ 'has-error': novoDocenteForm.nomeDocente.$invalid && !novoDocenteForm.nomeDocente.$pristine}" class="form-group">
                                     <input  ng-model="docente.nome" 
                                             type="text" 
                                             class="form-control" 
-                                            id="nomeDocente"
                                             placeholder="Nome completo" 
                                             name="nomeDocente" 
                                             autofocus 
@@ -67,7 +66,6 @@
                                     <input ng-model="docente.matricula" 
                                            class="form-control" 
                                            placeholder="Matrícula" 
-                                           id="matricula"
                                            name="matricula" 
                                            type="text" 
                                            required>
@@ -77,43 +75,28 @@
                                     <input ng-model="docente.dataIngresso" 
                                            class="form-control datepicker" 
                                            placeholder="Data de ingresso" 
-                                           id="dataIngresso"
                                            name="dataIngresso" 
                                            type="text" 
-                                           >
+                                           required>
                                     <p  class="help-block" ng-show="novoDocenteForm.dataIngresso.$error.required && !novoDocenteForm.dataIngresso.$pristine">Insira sua data de ingresso!</p>
                                 </div>
                                 <hr>
-                                <div ng-class="{ 'has-error': novoDocenteForm.username.$error.required && !novoDocenteForm.username.$pristine}" class="form-group">
-                                    <input ng-model="docente.username" 
-                                           class="form-control" 
-                                           placeholder="Usuário" 
-                                           name="username" 
-                                           type="text" 
-                                           id="username"
-                                           required>
-                                    <p  class="help-block" ng-show="novoDocenteForm.username.$error.required && !novoDocenteForm.username.$pristine">Insira um nome de usuário!</p>
-                                </div>
-                                <div ng-class="{ 'has-error': (novoDocenteForm.email.$error.required && !novoDocenteForm.email.$pristine) || (novoDocenteForm.email.$error.email && !novoDocenteForm.email.$pristine)}" class="form-group">
-                                    <input ng-model="docente.email" 
-                                           class="form-control" 
-                                           placeholder="E-mail" 
-                                           name="email" 
-                                           type="email" 
-                                           id="email"
-                                           required>
-                                    <p  class="help-block" ng-show="novoDocenteForm.email.$error.required && !novoDocenteForm.email.$pristine">Insira seu e-mail!</p>
-                                    <p  class="help-block" ng-show="novoDocenteForm.email.$error.email && !novoDocenteForm.email.$pristine">Insira um e-mail válido!</p>
-                                </div>
                                 <div ng-class="{ 'has-error': novoDocenteForm.senha.$error.required && !novoDocenteForm.senha.$pristine}" class="form-group">
                                     <input ng-model="docente.senha" 
                                            class="form-control" 
                                            placeholder="Senha" 
                                            name="senha" 
-                                           type="password" 
-                                           id="senha"
+                                           type="text" 
                                            required>
                                     <p  class="help-block" ng-show="novoDocenteForm.senha.$error.required && !novoDocenteForm.senha.$pristine">Insira sua senha!</p>
+                                </div>
+                                <div ng-class="{ 'has-error': novoDocenteForm.senhaRepetida.$error.required && !novoDocenteForm.senhaRepetida.$pristine}" class="form-group">
+                                    <input class="form-control" 
+                                           placeholder="Repita a senha" 
+                                           name="senhaRepetida" 
+                                           type="text" 
+                                           required>
+                                    <p  class="help-block" ng-show="novoDocenteForm.senhaRepetida.$error.required && !novoDocenteForm.senhaRepetida.$pristine">Insira novamente sua senha!</p>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button class="btn btn-lg btn-success btn-block" type="submit" ng-disabled="novoDocenteForm.$invalid">Cadastro</button>
@@ -146,10 +129,6 @@
     <!-- Datepicker -->
     <script src="../bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="../bower_components/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js"></script>
-
-    <!-- SHA1 Plugin -->
-    <script src="https://rawgit.com/emn178/js-sha1/master/build/sha1.min.js"></script>
-
 
     <script type="text/javascript">
     $(function(){

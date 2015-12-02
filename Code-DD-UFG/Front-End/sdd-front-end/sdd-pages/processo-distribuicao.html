@@ -26,9 +26,6 @@
     <!-- CSS criado -->
     <link href="../css/style.css" rel="stylesheet">
 
-    <!-- DataTables -->
-    <link href="../bower_components/datatables/media/css/jquery.dataTables.css" rel="stylesheet">
-
     <!-- Morris Charts CSS -->
     <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
 
@@ -48,7 +45,7 @@
 
         <div id="wrapper">
 
-            <!-- Navigation -->
+			<!-- Navigation -->
 			<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -184,7 +181,7 @@
                     <div class="row">
                         <div class="col-lg-5">
                             <label for="disciplina">Disciplina</label>
-                            <select name="disciplina" id="disciplina" class="form-control input-margin">
+                            <select name="disciplina" class="form-control input-margin">
                                 <option value="">Selecione uma disciplina</option>
                                 <option value="Algoritmos e Estrutura de Dados">Algoritmos e Estrutura de Dados</option>
                                 <option value="Introduçao a Programaçao">Introduçao a Programaçao</option>
@@ -199,7 +196,7 @@
                             </select>
                         </div>
                         <div class="col-lg-3">
-                            <label for="processoSeletivo">Número de inscritos</label>
+                            <label for="processoSeletivo">Numero de inscritos</label>
                             <input type="text" name="processoSeletivo" class="form-control input-margin" value="54" disabled>
                         </div>
                     </div>
@@ -207,16 +204,29 @@
                     <div id="resultadoInscricao"></div>
                     <br>
                     <div class="row">
-                        <table id="processosDistribuicao" class="table">
-                            <thead>
-                                <th>Código</th>
-                                <th>Semestre</th>
-                                <th>Data de cadastro da turma</th>
-                                <th>Data de inscrição do docente</th>
-                                <th>Data da primeira distribuição</th>
-                                <th>Data de inscrição substituta</th>
-                                <th>Data de término</th>
-                            </thead>
+                        <table id="disciplinasDisponiveis" class="table">
+                            <th>Indice de prioridade</th>
+                            <th>Docente</th>
+                            <th>Quantidade de vezes que ja ministrou</th>
+                            <th>Nucleo de conhecimento</th>
+                            <tr>
+                                <td>127</td>
+                                <td>Ciclano da Silva</td>
+                                <td>1</td>
+                                <td>Deseja ministrar</td>
+                            </tr>
+                            <tr>
+                                <td>123</td>
+                                <td>Fulano Jose</td>
+                                <td>3</td>
+                                <td>Pode ministrar</td>
+                            </tr>
+                            <tr>
+                                <td>119</td>
+                                <td>Beltrano Filho</td>
+                                <td>4</td>
+                                <td>Pode ministrar</td>
+                            </tr>
                         </table>
                     </div>
                     <br>
@@ -232,9 +242,6 @@
 
         <!-- jQuery -->
         <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-
-        <!-- DataTable -->
-        <script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
 
         <!-- Bootstrap Core JavaScript -->
         <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>

@@ -35,15 +35,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-<script>
-function myFunction() {
-    if (document.getElementById("myText").value == "") {
- alert("Preencha todos os campos!");
-    } else { 
-    alert("Processo Seletivo cadastrado com sucesso!");
-}
-}
-</script>
+
 </head>
 
 <body>
@@ -153,7 +145,7 @@ function myFunction() {
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Cadastro de Processos</h1>
+                    <h1 class="page-header">Cadastro de Núcleo de Conhecimento</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -162,42 +154,90 @@ function myFunction() {
                     <i class="fa fa-home"></i>  <a href="index.html">Início</a>
                 </li>
                 <li class="active">
-                    <i class="fa fa-edit"></i> Página base
+                    <i class="fa fa-edit"></i> Cadastro de Núcleo de Conhecimento
                 </li>
             </ol>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="col-lg-6">
-                    <div class="form-group">
-                                            <label>Processo Seletivo</label>
-                                            <select class="form-control">
-                                                <option>2013-2</option>
-                                                <option>2014-1</option>
-                                                <option>2014-2</option>
-                                                <option>2015-1</option>
-                                                <option>2014-2</option>
-                                            </select>
+                    <div class="panel-body"  ng-controller="cadastroNucleoDeConhecimentoController">
+                        <form role="form" name="novoNucleoDeConhecimentoForm" novalidate>
+                            <fieldset>
+                                <div class="form-group" style="display: flex;">
+                                    <p class="help-block" style="margin-right: 10px;">Nome: </p>
+                                    <input  ng-model="nucleo.nome" 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Núcleo de Conhecimento" 
+                                            name="nomeDoNucleo" 
+                                            autofocus 
+                                            required>
+                                    
+                                </div>
+
+                                <div class="form-group" style="display: -webkit-inline-box;">
+                                    <p class="help-block" style="margin-right: 10px;">Nível esperado: </p>
+                                    <input  ng-model="nucleo.nivelEsperado" 
+                                            type="text" 
+                                            class="form-control" 
+                                            placeholder="Nível de proficiência/desejo/aptidão" 
+                                            name="nivelEsperadoDoNucleo" 
+                                            autofocus 
+                                            required>                                 
+                                </div>
+                                <div class="form-group" style="float: right;">
+                                    <button class="btn btn-lg btn-success btn-block" type="submit">BUSCAR</button>
+                                </div>
+
+                                <div>      
+                                  <table class="table table-bordered">
+                                    <thead>
+                                      <tr>
+                                        <th>Núcleo de Conhecimento</th>
+                                        <th>Nível de proficiência/desejo/aptidão esperado</th>
+                                        <th>Docente</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>ENGENHARIA DE SOFTWARE</td>
+                                        <td>Estou apto a ministrar disciplinas desse núcleo(médio)</td>
+                                        <td>Professor 1</td>
+                                      </tr>
+                                      <tr>
+                                        <td>ENGENHARIA DE SOFTWARE</td>
+                                        <td>Estou apto a ministrar disciplinas desse núcleo(médio)</td>
+                                        <td>Professor 2</td>
+                                      </tr>
+                                      <tr>
+                                        <td>REDES</td>
+                                        <td>Desejo ministrar disciplinas desse núcleo(alto)</td>
+                                        <td>Professor 3</td>
+                                      </tr>
+                                      <tr>
+                                        <td>COMPUTAÇÃO UBÍQUA</td>
+                                        <td>Desejo ministrar disciplinas desse núcleo(alto)</td>
+                                        <td>Professor 4</td>
+                                      </tr>
+                                      <tr>
+                                        <td>BANCO DE DADOS</td>
+                                        <td>Desejo ministrar disciplinas desse núcleo(alto)</td>
+                                        <td>Professor 5</td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                        <br/>
+                    </div>
                 </div>
-                <div class="form-group">
-                                            <label>Disciplina</label>
-                                            <select class="form-control">
-                                                <option>Introdução à Programação</option>
-                                                <option>Lógica</option>
-                                                <option>Segurança</option>
-                                                <option>Gerência de Projeto</option>
-                                                <option>Integração 2</option>
-                                            </select>
-                </div>
-                 <div class="form-group">
-                                            <label>Horário</label>
-                                            <input class="form-control" id="myText" placeholder="Ex: 3N23 > Terça-Noturno-2º e 3º Horários">
-                                        </div>
-                        <button type="button" onclick="myFunction()" class="btn btn-success">Cadastrar Processo</button>
             </div>
         </div>
         <!-- /#page-wrapper -->
-</div>
+
+    </div>
     <!-- /#wrapper -->
 
     <!-- jQuery -->
