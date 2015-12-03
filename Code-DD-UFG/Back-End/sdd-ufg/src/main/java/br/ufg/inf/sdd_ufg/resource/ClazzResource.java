@@ -25,11 +25,14 @@ import br.ufg.inf.sdd_ufg.dao.ClazzDao;
 import br.ufg.inf.sdd_ufg.dao.ClazzScheduleDao;
 import br.ufg.inf.sdd_ufg.dao.DistributionProcessDao;
 import br.ufg.inf.sdd_ufg.dao.GradeDao;
+import br.ufg.inf.sdd_ufg.dao.TeacherDao;
 import br.ufg.inf.sdd_ufg.model.Clazz;
 import br.ufg.inf.sdd_ufg.model.ClazzSchedule;
 import br.ufg.inf.sdd_ufg.model.DistributionProcess;
 import br.ufg.inf.sdd_ufg.model.Grade;
+import br.ufg.inf.sdd_ufg.model.Teacher;
 import br.ufg.inf.sdd_ufg.model.enums.HttpHeaders;
+import br.ufg.inf.sdd_ufg.model.enums.StatusClazz;
 import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 
 @Path("/clazzes")
@@ -38,15 +41,18 @@ public class ClazzResource extends AbstractResource {
 
 	private final ClazzDao clazzDao;
 	private final GradeDao gradeDao;
+	private final TeacherDao teacherDao;
 	private final ClazzScheduleDao clazzScheduleDao;
 	private final DistributionProcessDao distributionProcessDao;
 
 	@Inject
 	public ClazzResource(final ClazzDao clazzDao, final GradeDao gradeDao,
+			final TeacherDao teacherDao,
 			final ClazzScheduleDao clazzScheduleDao,
 			final DistributionProcessDao distributionProcessDao) {
 		this.clazzDao = clazzDao;
 		this.gradeDao = gradeDao;
+		this.teacherDao = teacherDao;
 		this.clazzScheduleDao = clazzScheduleDao;
 		this.distributionProcessDao = distributionProcessDao;
 	}
@@ -140,6 +146,12 @@ public class ClazzResource extends AbstractResource {
 				content.get("process_id").toString()), 0);
 		clazz.setDistributionProcess(dp);
 
+		if (content.get("teacher_id") != null) {
+			Teacher teacher = teacherDao.findById(
+					new Long(content.get("teacher_id").toString()), 0);
+			clazz.setTeacher(teacher);
+		}
+
 		clazz.setClazzSchedules(new ArrayList<ClazzSchedule>());
 		ArrayList<Object> schedules = (ArrayList<Object>) content
 				.get("schedules");
@@ -157,6 +169,8 @@ public class ClazzResource extends AbstractResource {
 	public Response deleteClazz(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
 		try {
+			Clazz clazz = clazzDao.findById(id, 1);
+			clazz.setStatus(StatusClazz.CANCELED.toString());
 			clazzDao.delete(id);
 		} catch (IllegalArgumentException iae) {
 			return getResourceNotFoundResponse();

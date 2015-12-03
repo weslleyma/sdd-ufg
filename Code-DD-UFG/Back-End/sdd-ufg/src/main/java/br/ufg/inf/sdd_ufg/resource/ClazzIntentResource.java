@@ -20,85 +20,89 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
+import br.ufg.inf.sdd_ufg.dao.ClazzDao;
+import br.ufg.inf.sdd_ufg.dao.ClazzIntentDao;
 import br.ufg.inf.sdd_ufg.dao.TeacherDao;
-import br.ufg.inf.sdd_ufg.dao.UserDao;
+import br.ufg.inf.sdd_ufg.model.Clazz;
+import br.ufg.inf.sdd_ufg.model.ClazzIntent;
 import br.ufg.inf.sdd_ufg.model.Teacher;
-import br.ufg.inf.sdd_ufg.model.User;
 import br.ufg.inf.sdd_ufg.model.enums.HttpHeaders;
 import br.ufg.inf.sdd_ufg.resource.utils.ResultSetResponse;
 
-@Path("/users")
+@Path("/intents")
 @Produces(MediaType.APPLICATION_JSON)
-public class UserResource extends AbstractResource {
+public class ClazzIntentResource extends AbstractResource {
 
-	private final UserDao userDao;
+	private final ClazzIntentDao clazzIntentDao;
+	private final ClazzDao clazzDao;
 	private final TeacherDao teacherDao;
 
 	@Inject
-	public UserResource(final UserDao userDao, final TeacherDao teacherDao) {
-		this.userDao = userDao;
+	public ClazzIntentResource(final ClazzIntentDao clazzIntentDao,
+			final ClazzDao clazzDao,
+			final TeacherDao teacherDao) {
+		this.clazzIntentDao = clazzIntentDao;
+		this.clazzDao = clazzDao;
 		this.teacherDao = teacherDao;
 	}
 
 	@GET
 	@Path("/{id}")
-	public Response retrieveUserById(@PathParam("id") Long id,
+	public Response retrieveClazzById(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		User user = userDao.findById(id, 1);
-		if (user == null) {
+
+		ClazzIntent clazzIntent = clazzIntentDao.findById(id, 1);
+		if (clazzIntent == null) {
 			return getResourceNotFoundResponse();
 		}
-		return Response.ok(user).build();
+		return Response.ok(clazzIntent).build();
 	}
 
 	@GET
-	public Response retrieveAllUsers(@QueryParam("page") Integer page,
+	public Response retrieveAllClazzIntents(@QueryParam("page") Integer page,
 			@Context final HttpServletRequest request) {
-		List<User> users = userDao.findAll(0);
+
+		List<ClazzIntent> clazzIntents = clazzIntentDao.findAll(0);
 		if (page == null) {
 			page = 1;
 		}
-		ResultSetResponse<User> rsp = new ResultSetResponse<User>(users, page);
+		ResultSetResponse<ClazzIntent> rsp = new ResultSetResponse<ClazzIntent>(clazzIntents,
+				page);
 
 		return Response.ok(rsp).build();
 	}
 
 	@POST
-	public Response insertUser(@Context final HttpServletRequest request,
+	public Response insertClazzIntent(@Context final HttpServletRequest request,
 			@Context UriInfo info) {
-		User user;
+		ClazzIntent clazzIntentIntent;
 		try {
-			user = retrieveUserFromJson(request);
-			userDao.insert(user);
+			clazzIntentIntent = retrieveClazzIntentFromJson(request);
+			clazzIntentDao.insert(clazzIntentIntent);
 		} catch (EntityExistsException eee) {
 			return getInsertErrorResponse();
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
 
-		URI location = info.getBaseUriBuilder().path("/users")
-				.path(user.getId().toString()).build();
+		URI location = info.getBaseUriBuilder().path("/intents")
+				.path(clazzIntentIntent.getId().toString()).build();
 		return Response
 				.created(location)
 				.header(HttpHeaders.SESSION_TOKEN.toString(),
-						getLoggedUser(request).getSessionToken())
-				.entity(user).build();
+						getLoggedUser(request).getSessionToken()).entity(clazzIntentIntent)
+				.build();
 	}
 
 	@PUT
 	@Path("/{id}")
-	public Response updateUser(@PathParam("id") Long id,
+	public Response updateClazzIntent(@PathParam("id") Long id,
 			@Context final HttpServletRequest request, @Context UriInfo info) {
-		User existingUser;
+		ClazzIntent clazzIntent;
 		try {
-			User jsonUser = retrieveUserFromJson(request);
-			existingUser = userDao.findById(id, 1);
-
-			existingUser.setEmail(jsonUser.getEmail());
-			existingUser.setPassword(jsonUser.getPassword());
-			existingUser.setIsAdmin(jsonUser.getIsAdmin());
-
-			userDao.update(existingUser);
+			clazzIntent = retrieveClazzIntentFromJson(request);
+			clazzIntent.setId(id);
+			clazzIntentDao.update(clazzIntent);
 		} catch (EntityExistsException eee) {
 			return getInsertErrorResponse();
 		} catch (IllegalArgumentException iae) {
@@ -106,48 +110,41 @@ public class UserResource extends AbstractResource {
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
+
 		URI location = info.getRequestUri();
 		return Response
 				.created(location)
 				.header(HttpHeaders.SESSION_TOKEN.toString(),
-						getLoggedUser(request).getSessionToken()).entity(existingUser)
+						getLoggedUser(request).getSessionToken()).entity(clazzIntent)
 				.build();
 	}
 
-	private User retrieveUserFromJson(final HttpServletRequest request)
+	private ClazzIntent retrieveClazzIntentFromJson(final HttpServletRequest request)
 			throws Exception {
 		Map<String, Object> content = getJSONContent(request);
 
-		User user = new User();
-		if (content.get("username") != null) {
-			user.setUsername(content.get("username").toString());
-		}
-		user.setPassword(content.get("password").toString());
-		user.setEmail(content.get("email").toString());
-		if (content.get("is_admin") != null && getLoggedUser(request).getIsAdmin()) {
-			user.setIsAdmin(new Boolean(content.get("is_admin").toString()));
-		} else {
-			user.setIsAdmin(false);
-		}
-		if (content.get("teacher_id") != null) {
-			Teacher teacher = teacherDao.findById(
-					new Long(content.get("teacher_id").toString()), 0);
-			user.setTeacher(teacher);
-		}
+		ClazzIntent clazzIntent = new ClazzIntent();
 
-		return user;
+		Clazz clazz = clazzDao.findById(
+				new Long(content.get("clazz_id").toString()), 0);
+		clazzIntent.setClazz(clazz);
+		
+		Teacher teacher = teacherDao.findById(
+				new Long(content.get("teacher_id").toString()), 0);
+		clazzIntent.setTeacher(teacher);
+
+		return clazzIntent;
 	}
 
 	@DELETE
 	@Path("/{id}")
-	public Response deleteUser(@PathParam("id") Long id,
+	public Response deleteClazzIntent(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
 		try {
-			userDao.delete(id);
+			clazzIntentDao.delete(id);
 		} catch (IllegalArgumentException iae) {
 			return getResourceNotFoundResponse();
 		}
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
-
 }

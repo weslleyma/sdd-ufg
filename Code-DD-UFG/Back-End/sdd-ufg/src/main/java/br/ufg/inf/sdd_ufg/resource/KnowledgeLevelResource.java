@@ -116,11 +116,15 @@ public class KnowledgeLevelResource extends AbstractResource {
 			return getAuthenticationErrorResponse();
 		}
 
-		KnowledgeLevel knowledgeLevel;
+		KnowledgeLevel existingKL;
 		try {
-			knowledgeLevel = retrieveKnowledgeLevelFromJson(request);
-			knowledgeLevel.setId(id);
-			knowledgeLevelDao.update(knowledgeLevel);
+			
+			KnowledgeLevel jsonKL = retrieveKnowledgeLevelFromJson(request);
+			existingKL = knowledgeLevelDao.findById(id, 1);
+
+			existingKL.setLevel(jsonKL.getLevel());
+			existingKL.setId(id);
+			knowledgeLevelDao.update(existingKL);
 		} catch (EntityExistsException eee) {
 			return getInsertErrorResponse();
 		} catch (IllegalArgumentException iae) {
@@ -133,7 +137,7 @@ public class KnowledgeLevelResource extends AbstractResource {
 		return Response
 				.created(location)
 				.header(HttpHeaders.SESSION_TOKEN.toString(),
-						getLoggedUser(request).getSessionToken()).entity(knowledgeLevel)
+						getLoggedUser(request).getSessionToken()).entity(existingKL)
 				.build();
 	}
 
@@ -150,6 +154,7 @@ public class KnowledgeLevelResource extends AbstractResource {
 		KnowledgeGroup knowledgeGroup = knowledgeGroupDao.findById(new Long(
 				content.get("knowledge_id").toString()), 0);
 		knowledgeLevel.setKnowledgeGroup(knowledgeGroup);
+		knowledgeLevel.setLevel(new Integer(content.get("level").toString()));
 
 		return knowledgeLevel;
 	}
