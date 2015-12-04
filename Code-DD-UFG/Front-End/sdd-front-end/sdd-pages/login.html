@@ -48,21 +48,23 @@
                     <div class="panel-body"  ng-controller="loginController">
                         <form role="form" name="loginForm" ng-submit="submitForm(loginForm.$valid)" novalidate>
                             <fieldset>
-                                <div ng-class="{ 'has-error': loginForm.matricula.$invalid && !loginForm.matricula.$pristine}" class="form-group">
-                                    <input  ng-model="user.matricula" 
+                                <div ng-class="{ 'has-error': loginForm.username.$invalid && !loginForm.username.$pristine}" class="form-group">
+                                    <input  ng-model="user.username" 
                                             type="text" 
                                             class="form-control" 
-                                            placeholder="Matrícula" 
-                                            name="matricula" 
+                                            placeholder="Usuário" 
+                                            name="username" 
+                                            id="username"
                                             autofocus 
                                             required>
-                                    <p  class="help-block" ng-show="loginForm.matricula.$error.required && !loginForm.matricula.$pristine">Insira sua matrícula!</p>
+                                    <p  class="help-block" ng-show="loginForm.username.$error.required && !loginForm.username.$pristine">Insira sua matrícula!</p>
                                 </div>
                                 <div ng-class="{ 'has-error': loginForm.senha.$error.required && !loginForm.senha.$pristine}" class="form-group">
                                     <input ng-model="user.senha" 
                                            class="form-control" 
                                            placeholder="Senha" 
                                            name="senha" 
+                                           id="senha"
                                            type="password" 
                                            required>
                                     <p  class="help-block" ng-show="loginForm.senha.$error.required && !loginForm.senha.$pristine">Insira sua senha!</p>
@@ -104,6 +106,9 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+
+    <!-- SHA1 Plugin -->
+    <script src="https://rawgit.com/emn178/js-sha1/master/build/sha1.min.js"></script>
 
 </body>
 

@@ -9,7 +9,8 @@ app.controller('loginController', function($scope){
 			//console.log("Senha: " + $("#senha").val());
 			
             var senhaDigest = sha1($("#senha").val());
-            var timestamp = $.now()/1000;
+            var timestamp = Math.floor($.now()/1000);
+            console.log("timestamp " +timestamp);
             var auth_pass = sha1(senhaDigest+timestamp);
 
             console.log("Auth_pass: " +auth_pass);
