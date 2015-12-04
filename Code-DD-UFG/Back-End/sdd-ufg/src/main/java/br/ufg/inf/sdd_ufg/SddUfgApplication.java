@@ -21,8 +21,11 @@ import br.ufg.inf.sdd_ufg.jpa.KnowledgeGroupDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.KnowledgeLevelDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.TeacherDaoJpa;
 import br.ufg.inf.sdd_ufg.jpa.UserDaoJpa;
-import br.ufg.inf.sdd_ufg.model.ClazzSchedule;
+import br.ufg.inf.sdd_ufg.resource.ClazzIntentResource;
+import br.ufg.inf.sdd_ufg.resource.ClazzResource;
+import br.ufg.inf.sdd_ufg.resource.ClazzScheduleResource;
 import br.ufg.inf.sdd_ufg.resource.CourseResource;
+import br.ufg.inf.sdd_ufg.resource.DistributionProcessResource;
 import br.ufg.inf.sdd_ufg.resource.GradeResource;
 import br.ufg.inf.sdd_ufg.resource.KnowledgeGroupResource;
 import br.ufg.inf.sdd_ufg.resource.KnowledgeLevelResource;
@@ -75,7 +78,10 @@ public class SddUfgApplication extends Service<SddUfgConfiguration> {
     	
     	environment.addResource(injector.getInstance(UserResource.class));
     	environment.addResource(injector.getInstance(CourseResource.class));
-    	environment.addResource(injector.getInstance(ClazzSchedule.class));
+    	environment.addResource(injector.getInstance(ClazzResource.class));
+    	environment.addResource(injector.getInstance(ClazzIntentResource.class));
+    	environment.addResource(injector.getInstance(ClazzScheduleResource.class));
+    	environment.addResource(injector.getInstance(DistributionProcessResource.class));
     	environment.addResource(injector.getInstance(GradeResource.class));
     	environment.addResource(injector.getInstance(KnowledgeGroupResource.class));
     	environment.addResource(injector.getInstance(KnowledgeLevelResource.class));

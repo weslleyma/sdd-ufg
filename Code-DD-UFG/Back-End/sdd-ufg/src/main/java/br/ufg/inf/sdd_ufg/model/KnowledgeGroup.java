@@ -16,10 +16,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "KNOWLEDGE_GROUP")
 public class KnowledgeGroup extends Entity<KnowledgeGroup> {
 	
+	private String name;
 	private List<Grade> grades;
 	private List<KnowledgeLevel> knowledgeLevels;
-	private String name;
 
+	@Column(name = "NAME", length=100)
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	@JsonInclude(Include.NON_EMPTY)
 	@OneToMany( fetch = FetchType.EAGER,  mappedBy="knowledgeGroup", cascade=CascadeType.ALL, orphanRemoval=true )
     public List<Grade> getGrades() {
@@ -39,15 +48,6 @@ public class KnowledgeGroup extends Entity<KnowledgeGroup> {
 
 	public void setKnowledgeLevels(List<KnowledgeLevel> knowledgeLevels) {
 		this.knowledgeLevels = knowledgeLevels;
-	}
-
-	@Column(name = "NAME", length=100)
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 }

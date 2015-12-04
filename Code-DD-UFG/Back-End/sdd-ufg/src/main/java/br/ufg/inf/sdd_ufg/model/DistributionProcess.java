@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @javax.persistence.Entity
 @Table(name = "DISTRIBUTION_PROCESS")
 public class DistributionProcess extends Entity<DistributionProcess> {
@@ -23,7 +25,7 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 	private Date substituteDistribuitionDate;
 	private Date finishDate;
 	
-	@Column(name = "SEMESTER")
+	@Column(name = "SEMESTER", length = 15)
 	public String getSemester() {
 		return semester;
 	}
@@ -32,7 +34,7 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 		this.semester = semester;
 	}
 	
-	@OneToMany( fetch = FetchType.EAGER,  mappedBy="distributionProcess", cascade=CascadeType.ALL, orphanRemoval=true )
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="process", cascade=CascadeType.ALL, orphanRemoval=true )
 	public List<Clazz> getClazzes() {
 		return clazzes;
 	}
@@ -40,7 +42,8 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 	public void setClazzes(List<Clazz> clazzes) {
 		this.clazzes = clazzes;
 	}
-
+	
+	@JsonProperty("clazz_registry_date")
 	@Column(name="CLAZZ_REGISTRY_DATE")
 	@Temporal(value=TemporalType.DATE)
 	public Date getClazzRegistryDate() {
@@ -51,6 +54,7 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 		this.clazzRegistryDate = clazzRegistryDate;
 	}
 	
+	@JsonProperty("teacher_intent_date")
 	@Column(name="TEACHER_INTENT_DATE")
 	@Temporal(value=TemporalType.DATE)
 	public Date getTeacherIntentDate() {
@@ -61,6 +65,7 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 		this.teacherIntentDate = teacherIntentDate;
 	}
 	
+	@JsonProperty("first_resolution_date")
 	@Column(name="FIRST_RESOLUTION_DATE")
 	@Temporal(value=TemporalType.DATE)
 	public Date getFirstResolutionDate() {
@@ -71,6 +76,7 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 		this.firstResolutionDate = firstResolutionDate;
 	}
 	
+	@JsonProperty("substitute_distribution_date")
 	@Column(name="SUBSTITUTE_DIST_DATE")
 	@Temporal(value=TemporalType.DATE)
 	public Date getSubstituteDistribuitionDate() {
@@ -81,6 +87,7 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 		this.substituteDistribuitionDate = substituteDistribuitionDate;
 	}
 	
+	@JsonProperty("finish_date")
 	@Column(name="FINISH_DATE")
 	@Temporal(value=TemporalType.DATE)
 	public Date getFinishDate() {

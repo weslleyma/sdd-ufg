@@ -13,11 +13,11 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @javax.persistence.Entity
 @Table(name = "TEACHER")
 public class Teacher extends Entity<Teacher> {
-
     
     private String name;
     private String registry;
@@ -29,6 +29,7 @@ public class Teacher extends Entity<Teacher> {
     private String rg;
     private String cpf;
     private Date birthDate;
+    private List<ClazzIntent> intents;
     private List<Clazz> clazzes;
     private List<KnowledgeLevel> knowledgeLevels;
 	
@@ -50,6 +51,7 @@ public class Teacher extends Entity<Teacher> {
 		this.registry = registry;
 	}
 	
+	@JsonProperty("url_lattes")
 	@Column(name = "URL_LATTES", length=255)
 	public String getUrlLattes() {
 		return urlLattes;
@@ -59,6 +61,7 @@ public class Teacher extends Entity<Teacher> {
 		this.urlLattes = urlLattes;
 	}
 	
+	@JsonProperty("entry_date")
 	@Column(name = "ENTRY_DATE")
 	@Temporal(value=TemporalType.DATE)
 	public Date getEntryDate() {
@@ -114,6 +117,7 @@ public class Teacher extends Entity<Teacher> {
 		this.cpf = cpf;
 	}
 	
+	@JsonProperty("birth_date")
 	@Column(name = "BIRTH_DATE")
 	@Temporal(value=TemporalType.DATE)
 	public Date getBirthDate() {
@@ -123,7 +127,17 @@ public class Teacher extends Entity<Teacher> {
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-    
+	
+	@JsonInclude(Include.NON_EMPTY)
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<ClazzIntent> getIntents() {
+		return intents;
+	}
+
+	public void setIntents(List<ClazzIntent> intents) {
+		this.intents = intents;
+	}
+
 	@JsonInclude(Include.NON_EMPTY)
 	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
 	public List<Clazz> getClazzes() {
@@ -134,6 +148,7 @@ public class Teacher extends Entity<Teacher> {
 		this.clazzes = clazzes;
 	}
 
+	@JsonProperty("knowledge_levels")
 	@JsonInclude(Include.NON_EMPTY)
 	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
 	public List<KnowledgeLevel> getKnowledgeLevels() {

@@ -27,6 +27,7 @@ import br.ufg.inf.sdd_ufg.dao.DistributionProcessDao;
 import br.ufg.inf.sdd_ufg.dao.GradeDao;
 import br.ufg.inf.sdd_ufg.dao.TeacherDao;
 import br.ufg.inf.sdd_ufg.model.Clazz;
+import br.ufg.inf.sdd_ufg.model.ClazzIntent;
 import br.ufg.inf.sdd_ufg.model.ClazzSchedule;
 import br.ufg.inf.sdd_ufg.model.DistributionProcess;
 import br.ufg.inf.sdd_ufg.model.Grade;
@@ -62,9 +63,12 @@ public class ClazzResource extends AbstractResource {
 	public Response retrieveClazzById(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
 
-		Clazz clazz = clazzDao.findById(id, 1);
+		Clazz clazz = clazzDao.findById(id, 2);
 		if (clazz == null) {
 			return getResourceNotFoundResponse();
+		}
+		for (ClazzIntent ci : clazz.getIntents()) {
+			ci.setClazz(null);
 		}
 		return Response.ok(clazz).build();
 	}
@@ -144,7 +148,7 @@ public class ClazzResource extends AbstractResource {
 
 		DistributionProcess dp = distributionProcessDao.findById(new Long(
 				content.get("process_id").toString()), 0);
-		clazz.setDistributionProcess(dp);
+		clazz.setProcess(dp);
 
 		if (content.get("teacher_id") != null) {
 			Teacher teacher = teacherDao.findById(
@@ -152,13 +156,13 @@ public class ClazzResource extends AbstractResource {
 			clazz.setTeacher(teacher);
 		}
 
-		clazz.setClazzSchedules(new ArrayList<ClazzSchedule>());
+		clazz.setSchedules(new ArrayList<ClazzSchedule>());
 		ArrayList<Object> schedules = (ArrayList<Object>) content
 				.get("schedules");
 		for (Object schedule : schedules) {
 			ClazzSchedule clazzSchedule = clazzScheduleDao.findById(new Long(
 					schedule.toString()), 0);
-			clazz.getClazzSchedules().add(clazzSchedule);
+			clazz.getSchedules().add(clazzSchedule);
 		}
 
 		return clazz;

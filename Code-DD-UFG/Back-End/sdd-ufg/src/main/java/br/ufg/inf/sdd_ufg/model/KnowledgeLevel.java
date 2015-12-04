@@ -64,7 +64,7 @@ public class KnowledgeLevel extends Entity<KnowledgeLevel> {
 		this.knowledgeGroup = knowledgeGroup;
 	}
 
-	@Column(name = "LEVEL")
+	@Column(name = "LEVEL", length = 1)
 	public Integer getLevel() {
 		return level;
 	}

@@ -56,6 +56,7 @@ public class Grade extends Entity<Grade> {
 	@ManyToOne
 	@JoinColumn(name = "KNOWLEDGE_ID")
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("knowledge")
 	public KnowledgeGroup getKnowledgeGroup() {
 		return knowledgeGroup;
 	}
