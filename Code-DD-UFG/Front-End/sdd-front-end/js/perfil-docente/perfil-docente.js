@@ -9,9 +9,10 @@ $(document).ready(function() {
 
 	$('#quadroHorarios').DataTable({
 		ajax: {
-            url: 'http://45.55.147.9:8080/grades',
+            url: '/backend/grades',
 			type: 'GET',
 			dataType: 'JSON',
+			contentType: "application/json;",
 			headers: {
 				'Session-Token': session_token
 			},
@@ -31,9 +32,10 @@ $(document).ready(function() {
 
 	$('#nucleosConhecimento').DataTable({
 		ajax: {
-            url: 'http://45.55.147.9:8080/knowledges',
+            url: '/backend/knowledges',
 			type: 'GET',
 			dataType: 'JSON',
+			contentType: "application/json;",
 			headers: {
 				'Session-Token': session_token
 			},
