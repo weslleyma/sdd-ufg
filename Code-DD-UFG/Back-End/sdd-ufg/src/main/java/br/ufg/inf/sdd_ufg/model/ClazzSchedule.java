@@ -52,7 +52,7 @@ public class ClazzSchedule extends Entity<ClazzSchedule> {
 		return clazzes;
 	}
 
-	public void setClazz(List<Clazz> clazzes) {
+	public void setClazzes(List<Clazz> clazzes) {
 		this.clazzes = clazzes;
 	}
 
