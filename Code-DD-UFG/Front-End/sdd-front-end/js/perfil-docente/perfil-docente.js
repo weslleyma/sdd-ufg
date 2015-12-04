@@ -9,7 +9,7 @@ $(document).ready(function() {
 
 	$('#quadroHorarios').DataTable({
 		ajax: {
-            url: 'http://private-46f19-sddufg.apiary-mock.com/grades',
+            url: 'http://45.55.147.9:8080/grades',
 			type: 'GET',
 			dataType: 'JSON',
 			headers: {
@@ -31,7 +31,7 @@ $(document).ready(function() {
 
 	$('#nucleosConhecimento').DataTable({
 		ajax: {
-            url: 'http://private-46f19-sddufg.apiary-mock.com/knowledges',
+            url: 'http://45.55.147.9:8080/knowledges',
 			type: 'GET',
 			dataType: 'JSON',
 			headers: {

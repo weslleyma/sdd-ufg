@@ -16,7 +16,7 @@ app.controller('cadastroDocenteController', function($scope){
 			console.log("Token: " +token);
 
 			$.ajax({
-	            url: 'http://private-e6e9d-sddufg.apiary-mock.com/teachers',
+	            url: 'http://45.55.147.9:8080/teachers',
 	            type: 'POST',
 	            dataType: 'json',
 	            headers: {
@@ -67,7 +67,7 @@ app.controller('cadastroDocenteController', function($scope){
 						console.log("SenhaDigest: " +senhaDigest);
 
 						$.ajax({
-				            url: 'http://private-e6e9d-sddufg.apiary-mock.com/users',
+				            url: 'http://45.55.147.9:8080/users',
 				            type: 'POST',
 				            dataType: 'json',
 				            headers: {

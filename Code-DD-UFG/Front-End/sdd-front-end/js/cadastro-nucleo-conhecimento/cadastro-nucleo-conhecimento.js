@@ -10,7 +10,7 @@ app.controller('cadastroNucleoConhecimentoController', function ($scope, $http) 
             console.log("Token: " + token);
 
             $.ajax({
-                url: 'http://private-e6e9d-sddufg.apiary-mock.com/knowledges',
+                url: 'http://45.55.147.9:8080/knowledges',
                 type: 'PUT',
                 dataType: 'json',
                 headers: {
@@ -46,7 +46,7 @@ app.controller('cadastroNucleoConhecimentoController', function ($scope, $http) 
 
                         for (var i = 0; i < data.knowledge_levels.length; i++) {
                             $.ajax({
-                                url: 'http://private-e6e9d-sddufg.apiary-mock.com/knowledge_levels',
+                                url: 'http://45.55.147.9:8080/knowledge_levels',
                                 type: 'POST',
                                 dataType: 'json',
                                 headers: {

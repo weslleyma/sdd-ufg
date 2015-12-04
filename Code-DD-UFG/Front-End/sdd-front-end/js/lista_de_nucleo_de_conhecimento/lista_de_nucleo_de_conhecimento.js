@@ -7,7 +7,7 @@ $(document).ready(function(){
 	
 	var table = $("#dataTable-nucleosDeConhecimento").DataTable({
 		ajax: {
-			url: 'http://private-anon-33b49d585-sddufg.apiary-mock.com/knowledges',
+			url: 'http://45.55.147.9:8080/knowledges',
 		    type: 'GET',
 		    headers: {
 	    		"Content-Type": "application/json",
@@ -53,7 +53,7 @@ $(document).ready(function(){
         console.log("Removendo núcleo de conhecimento com id: " +selectedId);
 
         //Abrindo requisição para remoção de núcleo de conhecimento
-        var deleteUrl = 'http://private-e6e9d-sddufg.apiary-mock.com/knowledges/' +selectedId ;
+        var deleteUrl = 'http://45.55.147.9:8080/knowledges/' +selectedId ;
         console.log("Delete URL: " +deleteUrl);
 
     	$.ajax({
@@ -95,7 +95,7 @@ $(document).ready(function(){
         }
         console.log("Pegar os dados do nucleo com id: " + selectedId);
 
-        var url = 'http://private-e6e9d-sddufg.apiary-mock.com/knowledges/' + selectedId;
+        var url = 'http://45.55.147.9:8080/knowledges/' + selectedId;
         console.log("URL: " + url);
 
         $.ajax({
@@ -132,7 +132,7 @@ $(document).ready(function(){
         console.log("Editar nucleo com id: " + selectedId);
 
         $.ajax({
-            url: 'http://private-e6e9d-sddufg.apiary-mock.com/knowledges/' + selectedId,
+            url: 'http://45.55.147.9:8080/knowledges/' + selectedId,
             type: 'PUT',
             dataType: 'json',
             headers: {

@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 	$('#processosSeletivos').DataTable({
 		ajax: {
-			url: 'http://private-46f19-sddufg.apiary-mock.com/processes',
+			url: 'http://45.55.147.9:8080/processes',
 			type: 'GET',
 			dataType: 'JSON',
 			headers: {

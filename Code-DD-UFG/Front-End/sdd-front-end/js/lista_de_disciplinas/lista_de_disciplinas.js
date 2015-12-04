@@ -7,7 +7,7 @@ $(document).ready(function(){
 	
 	var table = $("#dataTable-disciplinas").DataTable({
 		ajax: {
-			url: 'http://private-anon-33b49d585-sddufg.apiary-mock.com/grades',
+			url: 'http://45.55.147.9:8080/grades',
 		    type: 'GET',
 		    headers: {
 	    		"Content-Type": "application/json",
@@ -55,7 +55,7 @@ $(document).ready(function(){
         console.log("Removendo disciplina com id: " + selectedId);
 
         //Abrindo requisição para remoção de núcleo de conhecimento
-        var deleteUrl = 'http://private-e6e9d-sddufg.apiary-mock.com/grades/' + selectedId ;
+        var deleteUrl = 'http://45.55.147.9:8080/grades/' + selectedId ;
         console.log("Delete URL: " + deleteUrl);
 
     	$.ajax({
@@ -97,7 +97,7 @@ $(document).ready(function(){
         }
         console.log("Pegar os dados do nucleo com id: " + selectedId);
 
-        var url = 'http://private-e6e9d-sddufg.apiary-mock.com/grade/' + selectedId;
+        var url = 'http://45.55.147.9:8080/grade/' + selectedId;
         console.log("URL: " + url);
 
         $.ajax({
@@ -134,7 +134,7 @@ $(document).ready(function(){
         console.log("Editar disciplina com id: " + selectedId);
 
         $.ajax({
-            url: 'http://private-e6e9d-sddufg.apiary-mock.com/grades/' + selectedId,
+            url: 'http://45.55.147.9:8080/grades/' + selectedId,
             type: 'PUT',
             dataType: 'json',
             headers: {

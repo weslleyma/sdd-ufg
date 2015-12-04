@@ -11,7 +11,7 @@ $(document).ready(function () {
     
     var table = $("#dataTable-listaProcessoDistribuicao").DataTable({
         ajax: {
-            url: 'http://private-anon-33b49d585-sddufg.apiary-mock.com/processes',
+            url: 'http://45.55.147.9:8080/processes',
             type: 'GET',
             headers: {
                 "Session-Token": token
@@ -81,7 +81,7 @@ $(document).ready(function () {
         console.log("Removendo processo de distribuicao com id: " + selectedId);
 
         //Abrindo requisição para remoção de núcleo de conhecimento
-        var deleteUrl = 'http://private-e6e9d-sddufg.apiary-mock.com/processes/' + selectedId;
+        var deleteUrl = 'http://45.55.147.9:8080/processes/' + selectedId;
         console.log("Delete URL: " + deleteUrl);
 
         $.ajax({
@@ -123,7 +123,7 @@ $(document).ready(function () {
         }
         console.log("Pegar os dados de distribuição com id: " + selectedId);
 
-        var url = 'http://private-e6e9d-sddufg.apiary-mock.com/processes/' + selectedId;
+        var url = 'http://45.55.147.9:8080/processes/' + selectedId;
         console.log("URL: " + url);
 
         $.ajax({
@@ -166,7 +166,7 @@ $(document).ready(function () {
         console.log("Editar processo de distribuição com id: " + selectedId);
 
         $.ajax({
-            url: 'http://private-e6e9d-sddufg.apiary-mock.com/processes/' + selectedId,
+            url: 'http://45.55.147.9:8080/processes/' + selectedId,
             type: 'PUT',
             dataType: 'json',
             headers: {
@@ -231,7 +231,7 @@ $(document).ready(function () {
         }
         console.log("Pegar os dados de distribuição com id: " + selectedId);
 
-        var url = 'http://private-e6e9d-sddufg.apiary-mock.com/processes/' + selectedId;
+        var url = 'http://45.55.147.9:8080/processes/' + selectedId;
         console.log("URL: " + url);
 
         $.ajax({
@@ -253,7 +253,7 @@ $(document).ready(function () {
 					$('#viewClazzesPopUp').attr('data-workload-' + i, clazzes[i].workload);
 					$('#viewClazzesPopUp').attr('data-status-' + i, clazzes[i].status);
 					
-					var gradeURL = 'http://private-e6e9d-sddufg.apiary-mock.com/grades/' + grade_id;
+					var gradeURL = 'http://45.55.147.9:8080/grades/' + grade_id;
 					
 					$.ajax({
 						url: gradeURL,
