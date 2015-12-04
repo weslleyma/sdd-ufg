@@ -139,10 +139,10 @@ $(document).ready(function(){
                 "Session-Token": token,
                 "Content-Type": 'application/json'
             },
-            data: {
+            data: JSON.stringify({
                 'id': selectedId,
                 'name': $("#name").val(),
-            },
+            }),
             success: function (response) {
                 console.log("Núcleo Editado com sucesso");
                 $('#editPopUp').modal('toggle');
