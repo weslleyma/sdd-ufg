@@ -53,37 +53,40 @@
                                             type="text" 
                                             class="form-control" 
                                             placeholder="Usuário" 
+<<<<<<< HEAD
                                             name="username" 
                                             id="username"
                                             autofocus 
                                             required>
                                     <p  class="help-block" ng-show="loginForm.username.$error.required && !loginForm.username.$pristine">Insira sua matrícula!</p>
+=======
+                                            id="username"
+                                            name="username" 
+                                            autofocus 
+                                            required>
+                                    <p  class="help-block" ng-show="loginForm.username.$error.required && !loginForm.username.$pristine">Insira seu usuário!</p>
+>>>>>>> parent of e93d0e7... #2527 - Montagem e estruturação de páginas
                                 </div>
                                 <div ng-class="{ 'has-error': loginForm.senha.$error.required && !loginForm.senha.$pristine}" class="form-group">
                                     <input ng-model="user.senha" 
                                            class="form-control" 
                                            placeholder="Senha" 
+<<<<<<< HEAD
                                            name="senha" 
                                            id="senha"
+=======
+                                           name="senha"
+                                           id="senha" 
+>>>>>>> parent of e93d0e7... #2527 - Montagem e estruturação de páginas
                                            type="password" 
                                            required>
                                     <p  class="help-block" ng-show="loginForm.senha.$error.required && !loginForm.senha.$pristine">Insira sua senha!</p>
-                                </div>
-                                <div class="checkbox">
-                                    <label>
-                                        <input name="remember" type="checkbox" value="Manter-me conectado">Manter-me conectado
-                                    </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button class="btn btn-lg btn-success btn-block" type="submit" ng-disabled="loginForm.$invalid">Login</button>
                             </fieldset>
                         </form>
                         <br/>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <a href="#">Esqueci a senha</a>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-lg-12">
                                 <a href="cadastro-de-docente.html">Novo cadastro</a>
