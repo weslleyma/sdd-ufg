@@ -16,14 +16,14 @@ app.controller('cadastroDocenteController', function($scope){
 			console.log("Token: " +token);
 
 			$.ajax({
-	            url: 'http://45.55.147.9:8080/teachers',
+	            url: '/backend/teachers',
 	            type: 'POST',
 	            dataType: 'json',
 	            headers: {
 					"Session-Token": token,
 					"Content-Type": 'application/json'
 	            },
-	            data: {
+	            data: JSON.stringify({
 	                'name': $("#nomeDocente").val(),
 				    'registry': $("#matricula").val(),
 				    'url_lattes': "",
@@ -34,7 +34,7 @@ app.controller('cadastroDocenteController', function($scope){
 				    'rg': "",
 				    'cpf': "",
 				    'birth_date': ""
-	            },
+	            }),
 	            success: function(response){
 	            	console.log("Success ajax1");
 	            }, 
@@ -67,19 +67,16 @@ app.controller('cadastroDocenteController', function($scope){
 						console.log("SenhaDigest: " +senhaDigest);
 
 						$.ajax({
-				            url: 'http://45.55.147.9:8080/users',
+				            url: '/backend/users',
 				            type: 'POST',
 				            dataType: 'json',
-				            headers: {
-						    	"Session-Token": token,
-						    	"Content-Type": 'application/json'
-						    },
-						    data: {
+				            contentType: 'application/json',
+						    data: JSON.stringify({
 						    	'username': $("#username").val(),
 						    	'password': senhaDigest,
 						    	'email': $("#email").val(),
 						    	'teacher_id': arr[2]
-						    },
+						    }),
 				            success: function(response){
 				            	console.log("Success ajax2");
 				            }, 
