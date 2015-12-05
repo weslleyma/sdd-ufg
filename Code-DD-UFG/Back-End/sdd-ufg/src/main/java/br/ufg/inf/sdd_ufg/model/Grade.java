@@ -1,8 +1,14 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -19,6 +25,7 @@ public class Grade extends Entity<Grade> {
 	private Long knowledgeGroupId;
 	private KnowledgeGroup knowledgeGroup;
 	private String name;
+	private List<Clazz> clazzes = new ArrayList<Clazz>();
 
 	@Transient
 	@JsonInclude(Include.NON_NULL)
@@ -73,5 +80,16 @@ public class Grade extends Entity<Grade> {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@JsonInclude(Include.NON_EMPTY)
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="grade", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<Clazz> getClazzes() {
+		return clazzes;
+	}
 
+	public void setClazzes(List<Clazz> clazzes) {
+		this.clazzes = clazzes;
+	}
+
+	
 }

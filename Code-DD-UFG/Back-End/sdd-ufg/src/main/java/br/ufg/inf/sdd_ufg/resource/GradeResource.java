@@ -49,9 +49,6 @@ public class GradeResource extends AbstractResource {
 	@Path("/{id}")
 	public Response retrieveGradeById(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
 
 		Grade grade = gradeDao.findById(id, 1);
 		if (grade == null) {
@@ -63,9 +60,6 @@ public class GradeResource extends AbstractResource {
 	@GET
 	public Response retrieveAllGrades(@QueryParam("page") Integer page,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
 
 		List<Grade> grades = gradeDao.findAll(1);
 		if (page == null) {
@@ -88,9 +82,6 @@ public class GradeResource extends AbstractResource {
 	@POST
 	public Response insertGrade(@Context final HttpServletRequest request,
 			@Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
 
 		Grade grade;
 		try {
@@ -114,9 +105,6 @@ public class GradeResource extends AbstractResource {
 	@Path("/{id}")
 	public Response updateGrade(@PathParam("id") Long id,
 			@Context final HttpServletRequest request, @Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
 
 		Grade grade;
 		try {
@@ -167,10 +155,6 @@ public class GradeResource extends AbstractResource {
 	@Path("/{id}")
 	public Response deleteGrade(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		try {
 			gradeDao.delete(id);
 		} catch (IllegalArgumentException iae) {
