@@ -147,10 +147,17 @@ public class GradeResource extends AbstractResource {
 
 		Course course = courseDao.findById(new Long(content.get("course_id")
 				.toString()), 0);
+		if (course == null) {
+			throw new NullPointerException();
+		}
 		grade.setCourse(course);
 
 		KnowledgeGroup knowledgeGroup = knowledgeGroupDao.findById(new Long(
 				content.get("knowledge_id").toString()), 0);
+		if (knowledgeGroup == null) {
+			throw new NullPointerException();
+		}
+		
 		grade.setKnowledgeGroup(knowledgeGroup);
 
 		return grade;

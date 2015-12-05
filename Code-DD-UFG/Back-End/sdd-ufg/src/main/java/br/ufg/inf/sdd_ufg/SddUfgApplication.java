@@ -49,7 +49,7 @@ public class SddUfgApplication extends Service<SddUfgConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<SddUfgConfiguration> bootstrap) {
-        bootstrap.setName("mr-api");
+        bootstrap.setName("sdd-ufg");
     }
     
     private Injector createInjector(final SddUfgConfiguration conf) {

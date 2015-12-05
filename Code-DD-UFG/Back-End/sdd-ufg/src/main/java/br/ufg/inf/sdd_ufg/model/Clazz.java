@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,8 +23,8 @@ public class Clazz extends Entity<Clazz> {
 	private Teacher teacher;
 	private Grade grade;
 	private DistributionProcess process;
-	private List<ClazzSchedule> schedules;
-	private List<ClazzIntent> intents;
+	private List<ClazzSchedule> schedules = new ArrayList<ClazzSchedule>();
+	private List<ClazzIntent> intents = new ArrayList<ClazzIntent>();
 	
 	@Column(name = "WORKLOAD", length = 3)
 	public Integer getWorkload() {

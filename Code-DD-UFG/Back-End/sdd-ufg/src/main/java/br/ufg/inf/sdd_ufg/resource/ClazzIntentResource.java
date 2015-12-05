@@ -127,10 +127,16 @@ public class ClazzIntentResource extends AbstractResource {
 
 		Clazz clazz = clazzDao.findById(
 				new Long(content.get("clazz_id").toString()), 0);
+		if (clazz == null) {
+			throw new NullPointerException();
+		}
 		clazzIntent.setClazz(clazz);
 		
 		Teacher teacher = teacherDao.findById(
 				new Long(content.get("teacher_id").toString()), 0);
+		if (teacher == null) {
+			throw new NullPointerException();
+		}
 		clazzIntent.setTeacher(teacher);
 
 		return clazzIntent;
