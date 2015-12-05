@@ -149,10 +149,18 @@ public class KnowledgeLevelResource extends AbstractResource {
 
 		Teacher teacher = teacherDao.findById(new Long(content
 				.get("teacher_id").toString()), 0);
+		
+		if (teacher == null) {
+			throw new NullPointerException();
+		}
 		knowledgeLevel.setTeacher(teacher);
 
 		KnowledgeGroup knowledgeGroup = knowledgeGroupDao.findById(new Long(
 				content.get("knowledge_id").toString()), 0);
+		if (knowledgeGroup == null) {
+			throw new NullPointerException();
+		}
+		
 		knowledgeLevel.setKnowledgeGroup(knowledgeGroup);
 		knowledgeLevel.setLevel(new Integer(content.get("level").toString()));
 

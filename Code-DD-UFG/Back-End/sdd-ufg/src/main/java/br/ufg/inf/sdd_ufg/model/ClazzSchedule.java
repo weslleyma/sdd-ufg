@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ public class ClazzSchedule extends Entity<ClazzSchedule> {
 	private Integer weekDay;
 	private String startTime;
 	private String endTime;
-	private List<Clazz> clazzes;
+	private List<Clazz> clazzes = new ArrayList<Clazz>();
 
 	@JsonProperty("week_day")
 	@Column(name = "WEEK_DAY", length = 1)

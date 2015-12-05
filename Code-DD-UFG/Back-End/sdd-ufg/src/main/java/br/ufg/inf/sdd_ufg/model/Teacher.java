@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +30,9 @@ public class Teacher extends Entity<Teacher> {
     private String rg;
     private String cpf;
     private Date birthDate;
-    private List<ClazzIntent> intents;
-    private List<Clazz> clazzes;
-    private List<KnowledgeLevel> knowledgeLevels;
+    private List<ClazzIntent> intents = new ArrayList<ClazzIntent>();
+    private List<Clazz> clazzes = new ArrayList<Clazz>();
+    private List<KnowledgeLevel> knowledgeLevels = new ArrayList<KnowledgeLevel>();
 	
 	@Column(name = "NAME", length = 100)
 	public String getName() {
@@ -61,7 +62,7 @@ public class Teacher extends Entity<Teacher> {
 		this.urlLattes = urlLattes;
 	}
 	
-	@JsonProperty("entry_date")
+	@JsonProperty("date_entry")
 	@Column(name = "ENTRY_DATE")
 	@Temporal(value=TemporalType.DATE)
 	public Date getEntryDate() {

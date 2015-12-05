@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,8 +18,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class KnowledgeGroup extends Entity<KnowledgeGroup> {
 	
 	private String name;
-	private List<Grade> grades;
-	private List<KnowledgeLevel> knowledgeLevels;
+	private List<Grade> grades = new ArrayList<Grade>();
+	private List<KnowledgeLevel> knowledgeLevels = new ArrayList<KnowledgeLevel>();
 
 	@Column(name = "NAME", length=100)
 	public String getName() {

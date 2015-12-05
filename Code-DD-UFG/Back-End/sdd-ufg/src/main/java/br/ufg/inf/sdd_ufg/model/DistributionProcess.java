@@ -1,5 +1,6 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DistributionProcess extends Entity<DistributionProcess> {
     
 	private String semester;
-	private List<Clazz> clazzes;
+	private List<Clazz> clazzes = new ArrayList<Clazz>();
 	private Date clazzRegistryDate;
 	private Date teacherIntentDate;
 	private Date firstResolutionDate;
