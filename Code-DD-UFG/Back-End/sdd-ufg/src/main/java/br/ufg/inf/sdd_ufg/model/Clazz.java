@@ -19,7 +19,7 @@ import br.ufg.inf.sdd_ufg.model.enums.StatusClazz;
 public class Clazz extends Entity<Clazz> {
 
 	private Integer workload;
-	private String status;
+	private String status = StatusClazz.PENDING.toString();
 	private Teacher teacher;
 	private Grade grade;
 	private DistributionProcess process;
@@ -37,7 +37,7 @@ public class Clazz extends Entity<Clazz> {
 
 	@Column(name = "STATUS", length = 12)
 	public String getStatus() {
-		if (status.equals(StatusClazz.CANCELED.toString())) {
+		if (StatusClazz.CANCELED.toString().equals(status)) {
 			return status;
 		} else if (teacher != null) {
 			return StatusClazz.FINISHED.toString();

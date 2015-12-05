@@ -144,10 +144,16 @@ public class ClazzResource extends AbstractResource {
 
 		Grade grade = gradeDao.findById(new Long(content.get("grade_id")
 				.toString()), 0);
+		if (grade == null) {
+			throw new NullPointerException();
+		}
 		clazz.setGrade(grade);
 
 		DistributionProcess dp = distributionProcessDao.findById(new Long(
 				content.get("process_id").toString()), 0);
+		if (dp == null) {
+			throw new NullPointerException();
+		}
 		clazz.setProcess(dp);
 
 		if (content.get("teacher_id") != null) {

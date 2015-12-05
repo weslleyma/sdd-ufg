@@ -34,7 +34,6 @@ public class ClazzScheduleResource extends AbstractResource {
 	@Inject
 	public ClazzScheduleResource(final ClazzScheduleDao clazzScheduleDao) {
 		this.clazzScheduleDao = clazzScheduleDao;
-		;
 	}
 
 	@GET
@@ -128,11 +127,9 @@ public class ClazzScheduleResource extends AbstractResource {
 		Map<String, Object> content = getJSONContent(request);
 
 		ClazzSchedule clazzSchedule = new ClazzSchedule();
-		clazzSchedule
-				.setWeekDay(new Integer(content.get("week_day").toString()));
+		clazzSchedule.setWeekDay(new Integer(content.get("week_day").toString()));
 		clazzSchedule.setStartTime(content.get("start_time").toString());
-		clazzSchedule
-				.setWeekDay(new Integer(content.get("end_time").toString()));
+		clazzSchedule.setEndTime(content.get("end_time").toString());
 
 		return clazzSchedule;
 	}
