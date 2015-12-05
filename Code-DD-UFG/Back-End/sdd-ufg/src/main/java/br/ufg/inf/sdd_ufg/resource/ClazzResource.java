@@ -143,7 +143,7 @@ public class ClazzResource extends AbstractResource {
 		clazz.setWorkload(new Integer(content.get("workload").toString()));
 
 		Grade grade = gradeDao.findById(new Long(content.get("grade_id")
-				.toString()), 0);
+				.toString()), 1);
 		if (grade == null) {
 			throw new NullPointerException();
 		}

@@ -19,12 +19,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DistributionProcess extends Entity<DistributionProcess> {
     
 	private String semester;
-	private List<Clazz> clazzes = new ArrayList<Clazz>();
 	private Date clazzRegistryDate;
 	private Date teacherIntentDate;
 	private Date firstResolutionDate;
 	private Date substituteDistribuitionDate;
 	private Date finishDate;
+	private List<Clazz> clazzes = new ArrayList<Clazz>();
 	
 	@Column(name = "SEMESTER", length = 15)
 	public String getSemester() {
@@ -33,15 +33,6 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 	
 	public void setSemester(String semester) {
 		this.semester = semester;
-	}
-	
-	@OneToMany( fetch = FetchType.EAGER,  mappedBy="process", cascade=CascadeType.ALL, orphanRemoval=true )
-	public List<Clazz> getClazzes() {
-		return clazzes;
-	}
-
-	public void setClazzes(List<Clazz> clazzes) {
-		this.clazzes = clazzes;
 	}
 	
 	@JsonProperty("clazz_registry_date")
@@ -99,6 +90,13 @@ public class DistributionProcess extends Entity<DistributionProcess> {
 		this.finishDate = finishDate;
 	}
 	
-	
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="process", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<Clazz> getClazzes() {
+		return clazzes;
+	}
+
+	public void setClazzes(List<Clazz> clazzes) {
+		this.clazzes = clazzes;
+	}
    
 }
