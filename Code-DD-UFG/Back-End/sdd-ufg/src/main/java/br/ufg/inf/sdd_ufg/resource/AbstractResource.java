@@ -7,11 +7,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Response;
+
+import br.ufg.inf.sdd_ufg.model.User;
+import br.ufg.inf.sdd_ufg.resource.utils.ErrorResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.ByteSource;
 
 public abstract class AbstractResource {
+	
 	public ByteSource getContent(final HttpServletRequest request) {
 		final ByteSource byteSource = new ByteSource() {
 	        @Override
@@ -47,5 +52,50 @@ public abstract class AbstractResource {
 		}
 		
 		return contentMapped;
+	}
+	
+	public User getLoggedUser(final HttpServletRequest request) {
+		User loggedUser = null;
+    	try {
+    		loggedUser = (User) request.getAttribute("Logged-User");
+    	} catch(Exception e) {}
+    	
+    	return loggedUser;
+	}
+	
+	protected Response getAuthenticationErrorResponse() {
+		ErrorResponse errorResponse = new ErrorResponse(Response.Status.FORBIDDEN.getStatusCode()
+				, "You have no permission to access this resource");
+		
+		return Response.status(Response.Status.FORBIDDEN)
+				.entity(errorResponse)
+				.build();
+	}
+	
+	protected Response getInsertErrorResponse() {
+		ErrorResponse errorResponse = new ErrorResponse(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()
+				, "Entity already exists.");
+		
+		return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+			.entity(errorResponse)
+			.build();
+	}
+	
+	protected Response getResourceNotFoundResponse() {
+		ErrorResponse errorResponse = new ErrorResponse(Response.Status.NOT_FOUND.getStatusCode()
+				, "Resource Not Found");
+		
+		return Response.status(Response.Status.NOT_FOUND)
+				.entity(errorResponse)
+				.build();
+	}
+	
+	protected Response getBadRequestResponse() {
+		ErrorResponse errorResponse = new ErrorResponse(Response.Status.BAD_REQUEST.getStatusCode()
+				, "Wrong arguments.");
+		
+		return Response.status(Response.Status.BAD_REQUEST)
+			.entity(errorResponse)
+			.build();
 	}
 }

@@ -1,44 +1,54 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @javax.persistence.Entity
 @Table(name = "KNOWLEDGE_GROUP")
 public class KnowledgeGroup extends Entity<KnowledgeGroup> {
 	
-	private Grade grade;
-	private Integer code;
 	private String name;
+	private List<Grade> grades = new ArrayList<Grade>();
+	private List<KnowledgeLevel> knowledgeLevels = new ArrayList<KnowledgeLevel>();
 
-	@ManyToOne
-    @JoinColumn(name = "GRADE_ID")
-    public Grade getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Grade grade) {
-		this.grade = grade;
-	}
-	
-	@Column(name = "CODE")
-	public Integer getCode() {
-		return code;
-	}
-
-	public void setCode(Integer code) {
-		this.code = code;
-	}
-
-	@Column(name = "NAME")
+	@Column(name = "NAME", length=100)
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@JsonInclude(Include.NON_EMPTY)
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="knowledgeGroup", cascade=CascadeType.ALL, orphanRemoval=true )
+    public List<Grade> getGrades() {
+		return grades;
+	}
+
+	public void setGrades(List<Grade> grades) {
+		this.grades = grades;
+	}
+	
+	@JsonInclude(Include.NON_EMPTY)
+	@JsonProperty("knowledge_levels")
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="knowledgeGroup", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<KnowledgeLevel> getKnowledgeLevels() {
+		return knowledgeLevels;
+	}
+
+	public void setKnowledgeLevels(List<KnowledgeLevel> knowledgeLevels) {
+		this.knowledgeLevels = knowledgeLevels;
 	}
 
 }

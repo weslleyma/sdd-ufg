@@ -1,33 +1,64 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import br.ufg.inf.sdd_ufg.model.enums.StatusClazz;
 
 @javax.persistence.Entity
 @Table(name = "CLAZZ")
 public class Clazz extends Entity<Clazz> {
 
-	private DistributionProcess distributionProcess;
-	private Grade grade;
-	private List<ClazzSchedule> clazzSchedules;
 	private Integer workload;
-	private Integer code;
+	private String status = StatusClazz.PENDING.toString();
+	private Teacher teacher;
+	private Grade grade;
+	private DistributionProcess process;
+	private List<ClazzSchedule> schedules = new ArrayList<ClazzSchedule>();
+	private List<ClazzIntent> intents = new ArrayList<ClazzIntent>();
+	
+	@Column(name = "WORKLOAD", length = 3)
+	public Integer getWorkload() {
+		return workload;
+	}
 
-	@ManyToOne
-	@JoinColumn(name = "DIST_PROCESS_ID")
-	public DistributionProcess getDistributionProcess() {
-		return distributionProcess;
+	public void setWorkload(Integer workload) {
+		this.workload = workload;
+	}
+
+	@Column(name = "STATUS", length = 12)
+	public String getStatus() {
+		if (StatusClazz.CANCELED.toString().equals(status)) {
+			return status;
+		} else if (teacher != null) {
+			return StatusClazz.FINISHED.toString();
+		} else if (intents.size() > 1) {
+			return StatusClazz.CONFLICT.toString();
+		}
+		return StatusClazz.PENDING.toString();
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
-	public void setDistributionProcess(DistributionProcess distributionProcess) {
-		this.distributionProcess = distributionProcess;
+	@ManyToOne
+	@JoinColumn(name = "TEACHER_ID")
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 	
 	@ManyToOne
@@ -40,31 +71,32 @@ public class Clazz extends Entity<Clazz> {
 		this.grade = grade;
 	}
 	
+	@ManyToOne
+	@JoinColumn(name = "DIST_PROCESS_ID")
+	public DistributionProcess getProcess() {
+		return process;
+	}
+	
+	public void setProcess(DistributionProcess process) {
+		this.process = process;
+	}
+	
+	@ManyToMany
+	public List<ClazzSchedule> getSchedules() {
+		return schedules;
+	}
+
+	public void setSchedules(List<ClazzSchedule> schedules) {
+		this.schedules = schedules;
+	}
+
 	@OneToMany( fetch = FetchType.EAGER,  mappedBy="clazz", cascade=CascadeType.ALL, orphanRemoval=true )
-	public List<ClazzSchedule> getClazzSchedules() {
-		return clazzSchedules;
+	public List<ClazzIntent> getIntents() {
+		return intents;
 	}
 
-	public void setClazzSchedules(List<ClazzSchedule> clazzSchedules) {
-		this.clazzSchedules = clazzSchedules;
-	}
-
-	@Column(name = "WORKLOAD")
-	public Integer getWorkload() {
-		return workload;
-	}
-
-	public void setWorkload(Integer workload) {
-		this.workload = workload;
-	}
-
-	@Column(name = "CODE")
-	public Integer getCode() {
-		return code;
-	}
-
-	public void setCode(Integer code) {
-		this.code = code;
+	public void setIntents(List<ClazzIntent> intents) {
+		this.intents = intents;
 	}
 
 }

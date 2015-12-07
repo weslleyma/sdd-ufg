@@ -1,29 +1,46 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @javax.persistence.Entity
 @Table(name = "USR")
 public class User extends Entity<User> {
 
-	private String userName;
+	private String username;
     private String password;
     private String email;
-    private Role role;
+    private Long teacherId;
+    private Teacher teacher;
+    private Boolean isAdmin;
+    private String sessionToken;
+    private Date tokenCreatedAt;
 
 	@Column(name="USRNAME", length = 50)
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 	
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
-	@Column(name="PSSWORD", length = 20)
+	@JsonIgnore
+	@Column(name="PSSWORD", length = 255)
 	public String getPassword() {
 		return password;
 	}
@@ -41,13 +58,56 @@ public class User extends Entity<User> {
 		this.email = email;
 	}
 	
-	@ManyToOne
-    @JoinColumn(name = "ROLE_ID")
-    public Role getRole() {
-		return role;
+	@Transient
+	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("teacher_id")
+	public Long getTeacherId() {
+		return teacherId;
+	}
+	
+	public void setTeacher(Long teacherId) {
+		this.teacherId = teacherId;
+	}
+	
+	@OneToOne
+	@JoinColumn(name = "TEACHER_ID")
+	public Teacher getTeacher() {
+		return teacher;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
+	@JsonProperty("is_admin")
+	@Column(name="IS_ADMIN", length=3)
+	@Type(type = "br.ufg.inf.sdd_ufg.hibernate.type.BooleanUserType")
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	@JsonIgnore
+	@Column(name="SESSION_TOKEN")
+	public String getSessionToken() {
+		return sessionToken;
+	}
+
+	public void setSessionToken(String sessionToken) {
+		this.sessionToken = sessionToken;
+	}
+
+	@JsonIgnore
+	@Column(name="TOKEN_CREATED_AT")
+	@Temporal(value=TemporalType.TIMESTAMP)
+	public Date getTokenCreatedAt() {
+		return tokenCreatedAt;
+	}
+
+	public void setTokenCreatedAt(Date tokenCreatedAt) {
+		this.tokenCreatedAt = tokenCreatedAt;
 	}
 }

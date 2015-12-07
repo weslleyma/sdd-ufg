@@ -1,54 +1,40 @@
 package br.ufg.inf.sdd_ufg.model;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @javax.persistence.Entity
 @Table(name = "TEACHER")
 public class Teacher extends Entity<Teacher> {
-
-	private User user;
-    private List<KnowledgeLevel> knowledgeLevels;
+    
     private String name;
     private String registry;
     private String urlLattes;
-    private LocalDate entryDate;
+    private Date entryDate;
     private String formation;
     private Integer workload;
     private String about;
     private String rg;
     private String cpf;
-    private LocalDate birthDate;
-    
-    @OneToOne
-    @JoinColumn(name = "USER_ID")
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+    private Date birthDate;
+    private List<ClazzIntent> intents = new ArrayList<ClazzIntent>();
+    private List<Clazz> clazzes = new ArrayList<Clazz>();
+    private List<KnowledgeLevel> knowledgeLevels = new ArrayList<KnowledgeLevel>();
 	
-	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
-	public List<KnowledgeLevel> getKnowledgeLevels() {
-		return knowledgeLevels;
-	}
-	
-	public void setKnowledgeLevels(List<KnowledgeLevel> knowledgeLevels) {
-		this.knowledgeLevels = knowledgeLevels;
-	}
-	
-	@Column(name = "NAME")
+	@Column(name = "NAME", length = 100)
 	public String getName() {
 		return name;
 	}
@@ -57,7 +43,7 @@ public class Teacher extends Entity<Teacher> {
 		this.name = name;
 	}
 	
-	@Column(name = "REGISTRY")
+	@Column(name = "REGISTRY", length = 30)
 	public String getRegistry() {
 		return registry;
 	}
@@ -66,7 +52,8 @@ public class Teacher extends Entity<Teacher> {
 		this.registry = registry;
 	}
 	
-	@Column(name = "URL_LATTES")
+	@JsonProperty("url_lattes")
+	@Column(name = "URL_LATTES", length=255)
 	public String getUrlLattes() {
 		return urlLattes;
 	}
@@ -75,17 +62,18 @@ public class Teacher extends Entity<Teacher> {
 		this.urlLattes = urlLattes;
 	}
 	
+	@JsonProperty("date_entry")
 	@Column(name = "ENTRY_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateUserType")
-	public LocalDate getEntryDate() {
+	@Temporal(value=TemporalType.DATE)
+	public Date getEntryDate() {
 		return entryDate;
 	}
 	
-	public void setEntryDate(LocalDate entryDate) {
+	public void setEntryDate(Date entryDate) {
 		this.entryDate = entryDate;
 	}
 	
-	@Column(name = "FORMATION")
+	@Column(name = "FORMATION", length = 30)
 	public String getFormation() {
 		return formation;
 	}
@@ -94,7 +82,7 @@ public class Teacher extends Entity<Teacher> {
 		this.formation = formation;
 	}
 	
-	@Column(name = "WORKLOAD")
+	@Column(name = "WORKLOAD", length = 3)
 	public Integer getWorkload() {
 		return workload;
 	}
@@ -130,15 +118,46 @@ public class Teacher extends Entity<Teacher> {
 		this.cpf = cpf;
 	}
 	
+	@JsonProperty("birth_date")
 	@Column(name = "BIRTH_DATE")
-	@Type(type="br.ufg.inf.sdd_ufg.hibernate.type.LocalDateUserType")
-	public LocalDate getBirthDate() {
+	@Temporal(value=TemporalType.DATE)
+	public Date getBirthDate() {
 		return birthDate;
 	}
 	
-	public void setBirthDate(LocalDate birthDate) {
+	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
 	}
-    
+	
+	@JsonInclude(Include.NON_EMPTY)
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<ClazzIntent> getIntents() {
+		return intents;
+	}
+
+	public void setIntents(List<ClazzIntent> intents) {
+		this.intents = intents;
+	}
+
+	@JsonInclude(Include.NON_EMPTY)
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<Clazz> getClazzes() {
+		return clazzes;
+	}
+
+	public void setClazzes(List<Clazz> clazzes) {
+		this.clazzes = clazzes;
+	}
+
+	@JsonProperty("knowledge_levels")
+	@JsonInclude(Include.NON_EMPTY)
+	@OneToMany( fetch = FetchType.EAGER,  mappedBy="teacher", cascade=CascadeType.ALL, orphanRemoval=true )
+	public List<KnowledgeLevel> getKnowledgeLevels() {
+		return knowledgeLevels;
+	}
+	
+	public void setKnowledgeLevels(List<KnowledgeLevel> knowledgeLevels) {
+		this.knowledgeLevels = knowledgeLevels;
+	}
    
 }
