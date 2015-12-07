@@ -73,6 +73,16 @@
                                            required>
                                     <p  class="help-block" ng-show="novoDocenteForm.matricula.$error.required && !novoDocenteForm.matricula.$pristine">Insira sua matrícula!</p>
                                 </div>
+                                <div ng-class="{ 'has-error': novoDocenteForm.dataNascimento.$error.required && !novoDocenteForm.dataNascimento.$pristine}" class="form-group">
+                                    <input ng-model="docente.dataIngresso" 
+                                           class="form-control datepicker" 
+                                           placeholder="Data de nascimento" 
+                                           id="dataNascimento"
+                                           name="dataNascimento" 
+                                           type="text" 
+                                           >
+                                    <p  class="help-block" ng-show="novoDocenteForm.dataIngresso.$error.required && !novoDocenteForm.dataIngresso.$pristine">Insira sua data de ingresso!</p>
+                                </div>
                                 <div ng-class="{ 'has-error': novoDocenteForm.dataIngresso.$error.required && !novoDocenteForm.dataIngresso.$pristine}" class="form-group">
                                     <input ng-model="docente.dataIngresso" 
                                            class="form-control datepicker" 

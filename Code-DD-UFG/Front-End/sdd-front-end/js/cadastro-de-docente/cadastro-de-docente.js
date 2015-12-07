@@ -7,6 +7,7 @@ app.controller('cadastroDocenteController', function($scope){
 			
 			console.log("Nome: " + $("#nomeDocente").val());
 			console.log("Matrícula: " + $("#matricula").val());
+			console.log("Data de nascimento: " + $("#dataNascimento").val());
 			console.log("Data de ingresso: " + $("#dataIngresso").val());
 			console.log("Username: " + $("#username").val());
 			console.log("E-mail: " + $("#email").val());
@@ -29,7 +30,7 @@ app.controller('cadastroDocenteController', function($scope){
 				    'about': "",
 				    'rg': "",
 				    'cpf': "",
-				    'birth_date': ""
+				    'birth_date': $("#dataNascimento").val()
 	            }),
 	            success: function(response){
 	            	console.log("Success ajax1");
