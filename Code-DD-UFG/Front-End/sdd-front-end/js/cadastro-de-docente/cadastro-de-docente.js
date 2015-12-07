@@ -12,15 +12,11 @@ app.controller('cadastroDocenteController', function($scope){
 			console.log("E-mail: " + $("#email").val());
 			console.log("Senha: " + $("#senha").val());
 
-			var token = sessionStorage.getItem("session_token");
-			console.log("Token: " +token);
-
 			$.ajax({
 	            url: '/backend/teachers',
 	            type: 'POST',
 	            dataType: 'json',
 	            headers: {
-					"Session-Token": token,
 					"Content-Type": 'application/json'
 	            },
 	            data: JSON.stringify({
