@@ -91,7 +91,7 @@ public class Teacher extends Entity<Teacher> {
 		this.workload = workload;
 	}
 	
-	@Column(name = "ABOUT")
+	@Column(name = "ABOUT", columnDefinition="TEXT")
 	public String getAbout() {
 		return about;
 	}
