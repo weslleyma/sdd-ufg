@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 	$('#processosSeletivos').DataTable({
 		ajax: {
-			url: 'http://45.55.147.9:8080/processes',
+			url: '/backend/processes',
 			type: 'GET',
 			dataType: 'JSON',
 			headers: {

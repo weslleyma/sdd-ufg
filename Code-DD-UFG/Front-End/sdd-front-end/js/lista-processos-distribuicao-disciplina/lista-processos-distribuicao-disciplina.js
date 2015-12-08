@@ -11,14 +11,12 @@ $(document).ready(function () {
     
     var table = $("#dataTable-listaProcessoDistribuicao").DataTable({
         ajax: {
-            url: 'http://45.55.147.9:8080/processes',
+            url: '/backend/processes',
             type: 'GET',
             headers: {
                 "Session-Token": token
             },
             dataType: 'json',
-            data: {
-            },
             statusCode: {
                 403: function (response) {
                     console.log(response['status'] + ": " + response['message']);
@@ -81,7 +79,7 @@ $(document).ready(function () {
         console.log("Removendo processo de distribuicao com id: " + selectedId);
 
         //Abrindo requisição para remoção de núcleo de conhecimento
-        var deleteUrl = 'http://45.55.147.9:8080/processes/' + selectedId;
+        var deleteUrl = '/backend/processes/' + selectedId;
         console.log("Delete URL: " + deleteUrl);
 
         $.ajax({
@@ -123,7 +121,7 @@ $(document).ready(function () {
         }
         console.log("Pegar os dados de distribuição com id: " + selectedId);
 
-        var url = 'http://45.55.147.9:8080/processes/' + selectedId;
+        var url = '/backend/processes/' + selectedId;
         console.log("URL: " + url);
 
         $.ajax({
@@ -166,14 +164,14 @@ $(document).ready(function () {
         console.log("Editar processo de distribuição com id: " + selectedId);
 
         $.ajax({
-            url: 'http://45.55.147.9:8080/processes/' + selectedId,
+            url: '/backend/processes/' + selectedId,
             type: 'PUT',
             dataType: 'json',
+            contentType: 'application/json',
             headers: {
-                "Session-Token": token,
-                "Content-Type": 'application/json'
+                "Session-Token": token
             },
-            data: {
+            data: JSON.stringify({
                 'id': selectedId,
                 'semester': $("#semester").val(),
                 'clazz_registry_date': $('#clazz_registry_date').val(),
@@ -181,7 +179,7 @@ $(document).ready(function () {
                 'first_resolution_date': $('#first_resolution_date').val(),
                 'substitute_distribution_date': $('#substitute_distribution_date').val(),
                 'finish_date': $('#finish_date').val(),
-            },
+            }),
             success: function (response) {
                 console.log("Processo Editado com sucesso");
                 $('#editPopUp').modal('toggle');
@@ -231,7 +229,7 @@ $(document).ready(function () {
         }
         console.log("Pegar os dados de distribuição com id: " + selectedId);
 
-        var url = 'http://45.55.147.9:8080/processes/' + selectedId;
+        var url = '/backend/processes/' + selectedId;
         console.log("URL: " + url);
 
         $.ajax({
@@ -253,7 +251,7 @@ $(document).ready(function () {
 					$('#viewClazzesPopUp').attr('data-workload-' + i, clazzes[i].workload);
 					$('#viewClazzesPopUp').attr('data-status-' + i, clazzes[i].status);
 					
-					var gradeURL = 'http://45.55.147.9:8080/grades/' + grade_id;
+					var gradeURL = '/backend/grades/' + grade_id;
 					
 					$.ajax({
 						url: gradeURL,

@@ -13,18 +13,18 @@ app.controller('cadastroDisciplinaController', function($scope){
 			console.log("Token: " + token);
 
 			$.ajax({
-	            url: 'http://45.55.147.9:8080/grades',
+	            url: '/backend/grades',
 	            type: 'POST',
 	            dataType: 'json',
+	            contentType: 'application/json',
 	            headers: {
-					"Session-Token": token,
-					"Content-Type": 'application/json'
+					"Session-Token": token
 	            },
-	            data: {
+	            data: JSON.stringify({
 	            	"name": $("#nomeDaDisciplina").val(),
 	            	"course_id": $("#seletorDoSemestre").val(),
 	            	"knowledge_id": 1
-	            },
+	            }),
 	            success: function(response){
 	            	console.log("Success ajax1");
 	            }, 
@@ -56,19 +56,19 @@ app.controller('cadastroDisciplinaController', function($scope){
 						console.log("SenhaDigest: " + senhaDigest);
 
 						$.ajax({
-				            url: 'http://45.55.147.9:8080/users',
+				            url: '/backend/users',
 				            type: 'POST',
 				            dataType: 'json',
+				            contentType: 'application/json',
 				            headers: {
-						    	"Session-Token": token,
-						    	"Content-Type": 'application/json'
+						    	"Session-Token": token
 						    },
-						    data: {
+						    data: JSON.stringify({
 						    	'username': $("#username").val(),
 						    	'password': senhaDigest,
 						    	'email': $("#email").val(),
 						    	'teacher_id': arr[2]
-						    },
+						    }),
 				            success: function(response){
 				            	console.log("Success ajax2");
 				            }, 

@@ -10,16 +10,16 @@ app.controller('cadastroNucleoConhecimentoController', function ($scope, $http) 
             console.log("Token: " + token);
 
             $.ajax({
-                url: 'http://45.55.147.9:8080/knowledges',
+                url: '/backend/knowledges',
                 type: 'PUT',
                 dataType: 'json',
+                contentType: 'application/json',
                 headers: {
-                    "Session-Token": token,
-                    "Content-Type": 'application/json'
+                    "Session-Token": token
                 },
-                data: {
+                data: JSON.stringify({
                     'name': $("#nomeNucleo").val(),
-                },
+                }),
                 success: function (response) {
                     console.log("Success");
                 },
@@ -46,18 +46,18 @@ app.controller('cadastroNucleoConhecimentoController', function ($scope, $http) 
 
                         for (var i = 0; i < data.knowledge_levels.length; i++) {
                             $.ajax({
-                                url: 'http://45.55.147.9:8080/knowledge_levels',
+                                url: '/backend/knowledge_levels',
                                 type: 'POST',
                                 dataType: 'json',
+                                contentType: 'application/json',
                                 headers: {
-                                    "Session-Token": sessionStorage.getItem("session_token"),
-                                    "Content-Type": 'application/json'
+                                    "Session-Token": sessionStorage.getItem("session_token")
                                 },
-                                data: {
+                                data: JSON.stringify({
                                     'level': data.knowledge_levels[i].id,
                                     'teacher_id': data.knowledge_levels[i].teacher.id,
                                     'knowledge_id': nucleo_id
-                                },
+                                }),
                                 success: function (response) {
                                     console.log('Niveis de nucleos cadastrados para todos os professores com valor "3"');
                                 },
