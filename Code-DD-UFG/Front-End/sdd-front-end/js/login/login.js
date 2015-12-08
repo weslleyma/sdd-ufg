@@ -19,6 +19,7 @@ app.controller('loginController', function($scope){
 	            url: '/backend/sessions',
 	            type: 'POST',
 	            dataType: 'json',
+	            contentType: 'application/json',
 	            data: JSON.stringify({
 	                'username': $("#username").val(),
 	                'auth_pass': auth_pass
