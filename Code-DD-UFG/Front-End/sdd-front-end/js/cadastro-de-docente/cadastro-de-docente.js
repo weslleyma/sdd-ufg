@@ -56,7 +56,7 @@ app.controller('cadastroDocenteController', function($scope){
 
 						// Pega o id do docente
 						var arr = location.split('/');
-						console.log("Array: " +arr[2]);
+						console.log("Array: " +arr[arr.lenght-1]);
 
 						var senhaDigest = sha1($("#senha").val());
 						console.log("SenhaDigest: " +senhaDigest);
