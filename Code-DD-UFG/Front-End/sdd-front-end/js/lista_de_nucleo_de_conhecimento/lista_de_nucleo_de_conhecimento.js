@@ -9,14 +9,11 @@ $(document).ready(function(){
 		ajax: {
 			url: '/backend/knowledges',
 		    type: 'GET',
+            contentType: 'application/json',
 		    headers: {
-	    		"Content-Type": "application/json",
 		    	"Session-Token": token
 		    },
 		    dataType: 'json',
-		    data: {
-		        
-		    },
 		    statusCode: {
 		    	403: function(response){
 		    		console.log(response['status'] +": " +response['message']);
@@ -135,9 +132,9 @@ $(document).ready(function(){
             url: '/backend/knowledges/' + selectedId,
             type: 'PUT',
             dataType: 'json',
+            contentType: 'application/json',
             headers: {
-                "Session-Token": token,
-                "Content-Type": 'application/json'
+                "Session-Token": token
             },
             data: JSON.stringify({
                 'id': selectedId,

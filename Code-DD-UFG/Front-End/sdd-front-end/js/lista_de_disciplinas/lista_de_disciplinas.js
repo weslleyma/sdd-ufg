@@ -7,16 +7,13 @@ $(document).ready(function(){
 	
 	var table = $("#dataTable-disciplinas").DataTable({
 		ajax: {
-			url: 'http://45.55.147.9:8080/grades',
+			url: '/backend/grades',
 		    type: 'GET',
+            contentType: 'application/json',
 		    headers: {
-	    		"Content-Type": "application/json",
 		    	"Session-Token": token
 		    },
 		    dataType: 'json',
-		    data: {
-		        
-		    },
 		    statusCode: {
 		    	403: function(response){
 		    		console.log(response['status'] +": " +response['message']);
@@ -55,7 +52,7 @@ $(document).ready(function(){
         console.log("Removendo disciplina com id: " + selectedId);
 
         //Abrindo requisição para remoção de núcleo de conhecimento
-        var deleteUrl = 'http://45.55.147.9:8080/grades/' + selectedId ;
+        var deleteUrl = '/backend/grades/' + selectedId ;
         console.log("Delete URL: " + deleteUrl);
 
     	$.ajax({
@@ -97,7 +94,7 @@ $(document).ready(function(){
         }
         console.log("Pegar os dados do nucleo com id: " + selectedId);
 
-        var url = 'http://45.55.147.9:8080/grade/' + selectedId;
+        var url = '/backend/grade/' + selectedId;
         console.log("URL: " + url);
 
         $.ajax({
@@ -134,17 +131,17 @@ $(document).ready(function(){
         console.log("Editar disciplina com id: " + selectedId);
 
         $.ajax({
-            url: 'http://45.55.147.9:8080/grades/' + selectedId,
+            url: '/backend/grades/' + selectedId,
             type: 'PUT',
             dataType: 'json',
+            contentType: 'application/json',
             headers: {
-                "Session-Token": token,
-                "Content-Type": 'application/json'
+                "Session-Token": token
             },
-            data: {
+            data: JSON.stringify({
                 'id': selectedId,
                 'name': $("#name").val(),
-            },
+            }),
             success: function (response) {
                 console.log("Núcleo Editado com sucesso");
                 $('#editPopUp').modal('toggle');

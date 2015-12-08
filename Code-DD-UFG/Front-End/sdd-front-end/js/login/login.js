@@ -16,13 +16,14 @@ app.controller('loginController', function($scope){
             console.log("Auth_pass: " +auth_pass);
 
             $.ajax({
-	            url: 'http://45.55.147.9:8080/sessions',
+	            url: '/backend/sessions',
 	            type: 'POST',
 	            dataType: 'json',
-	            data: {
+	            contentType: 'application/json',
+	            data: JSON.stringify({
 	                'username': $("#username").val(),
 	                'auth_pass': auth_pass
-	            },
+	            }),
 	            success: function(response){
 	            	var session_token = response['session_token'];
 	            	console.log("Resposta da API: " +session_token);

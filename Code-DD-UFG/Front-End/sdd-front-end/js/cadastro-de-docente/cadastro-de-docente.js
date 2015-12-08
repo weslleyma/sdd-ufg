@@ -7,33 +7,28 @@ app.controller('cadastroDocenteController', function($scope){
 			
 			console.log("Nome: " + $("#nomeDocente").val());
 			console.log("Matrícula: " + $("#matricula").val());
+			console.log("Data de nascimento: " + $("#dataNascimento").val());
 			console.log("Data de ingresso: " + $("#dataIngresso").val());
 			console.log("Username: " + $("#username").val());
 			console.log("E-mail: " + $("#email").val());
 			console.log("Senha: " + $("#senha").val());
 
-			var token = sessionStorage.getItem("session_token");
-			console.log("Token: " +token);
-
 			$.ajax({
 	            url: '/backend/teachers',
 	            type: 'POST',
 	            dataType: 'json',
-	            headers: {
-					"Session-Token": token,
-					"Content-Type": 'application/json'
-	            },
+	            contentType: 'application/json',
 	            data: JSON.stringify({
-	                'name': $("#nomeDocente").val(),
-				    'registry': $("#matricula").val(),
-				    'url_lattes': "",
-				    'date_entry': $("#dataIngresso").val(),
-				    'formation': "",
-				    'workload': "",
-				    'about': "",
-				    'rg': "",
-				    'cpf': "",
-				    'birth_date': ""
+	                "name": $("#nomeDocente").val(),
+				    "registry": $("#matricula").val(),
+				    "url_lattes": "",
+				    "date_entry": $("#dataIngresso").val(),
+				    "formation": "",
+				    "workload": 0,
+				    "about": "",
+				    "rg": "",
+				    "cpf": "",
+				    "birth_date": $("#dataNascimento").val()
 	            }),
 	            success: function(response){
 	            	console.log("Success ajax1");
