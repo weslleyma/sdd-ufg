@@ -19,10 +19,10 @@ app.controller('loginController', function($scope){
 	            url: '/backend/sessions',
 	            type: 'POST',
 	            dataType: 'json',
-	            data: {
+	            data: JSON.stringify({
 	                'username': $("#username").val(),
 	                'auth_pass': auth_pass
-	            },
+	            }),
 	            success: function(response){
 	            	var session_token = response['session_token'];
 	            	console.log("Resposta da API: " +session_token);
