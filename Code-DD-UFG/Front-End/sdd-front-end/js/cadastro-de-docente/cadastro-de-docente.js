@@ -17,20 +17,18 @@ app.controller('cadastroDocenteController', function($scope){
 	            url: '/backend/teachers',
 	            type: 'POST',
 	            dataType: 'json',
-	            headers: {
-					"Content-Type": 'application/json'
-	            },
+	            contentType: 'application/json',
 	            data: JSON.stringify({
-	                'name': $("#nomeDocente").val(),
-				    'registry': $("#matricula").val(),
-				    'url_lattes': "",
-				    'date_entry': $("#dataIngresso").val(),
-				    'formation': "",
-				    'workload': "",
-				    'about': "",
-				    'rg': "",
-				    'cpf': "",
-				    'birth_date': $("#dataNascimento").val()
+	                "name": $("#nomeDocente").val(),
+				    "registry": $("#matricula").val(),
+				    "url_lattes": "",
+				    "date_entry": $("#dataIngresso").val(),
+				    "formation": "",
+				    "workload": 0,
+				    "about": "",
+				    "rg": "",
+				    "cpf": "",
+				    "birth_date": $("#dataNascimento").val()
 	            }),
 	            success: function(response){
 	            	console.log("Success ajax1");
