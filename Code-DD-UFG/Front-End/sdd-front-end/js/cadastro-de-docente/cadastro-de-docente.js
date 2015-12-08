@@ -58,7 +58,7 @@ app.controller('cadastroDocenteController', function($scope){
 						var arr = location.split('/');
 						console.log("Tamanho do array: " +array.lenght);
 						var aux = (array.lenght)-1;
-						console.log("Tamanho do array - 1: " +aux;
+						console.log("Tamanho do array - 1: " +aux);
 						console.log("Array: " +arr[aux]);
 
 						var senhaDigest = sha1($("#senha").val());
