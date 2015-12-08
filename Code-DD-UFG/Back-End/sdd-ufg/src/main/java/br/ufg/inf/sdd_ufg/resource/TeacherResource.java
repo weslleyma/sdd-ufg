@@ -48,10 +48,6 @@ public class TeacherResource extends AbstractResource {
 	@Path("/{id}")
 	public Response retrieveTeacherById(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		Teacher teacher = teacherDao.findById(id, 2);
 		if (teacher == null) {
 			return getResourceNotFoundResponse();
@@ -62,10 +58,6 @@ public class TeacherResource extends AbstractResource {
 	@GET
 	public Response retrieveAllTeachers(@QueryParam("page") Integer page,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		List<Teacher> teachers = teacherDao.findAll(0);
 		if (teachers == null || teachers.size() == 0) {
 			return getResourceNotFoundResponse();
@@ -82,10 +74,6 @@ public class TeacherResource extends AbstractResource {
 	@POST
 	public Response insertTeacher(@Context final HttpServletRequest request,
 			@Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		Teacher teacher;
 		try {
 			teacher = retrieveTeacherFromJson(request);
@@ -97,7 +85,11 @@ public class TeacherResource extends AbstractResource {
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
-		return Response.ok(teacher).build();
+		return Response
+				.status(Response.Status.CREATED)
+				.header(HttpHeaders.LOCATION.toString(),
+						"/teachers/" + teacher.getId())
+				.entity(teacher).build();
 	}
 
 	private void fillKnowledgeLevels(Teacher teacher) {
@@ -116,10 +108,6 @@ public class TeacherResource extends AbstractResource {
 	@Path("/{id}")
 	public Response updateTeacher(@PathParam("id") Long id,
 			@Context final HttpServletRequest request, @Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		Teacher teacher;
 		try {
 			teacher = retrieveTeacherFromJson(request);
@@ -165,10 +153,6 @@ public class TeacherResource extends AbstractResource {
 	@Path("/{id}")
 	public Response deleteTeacher(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		try {
 			teacherDao.delete(id);
 		} catch (IllegalArgumentException iae) {

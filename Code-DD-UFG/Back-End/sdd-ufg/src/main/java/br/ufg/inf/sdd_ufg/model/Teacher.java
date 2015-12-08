@@ -100,7 +100,7 @@ public class Teacher extends Entity<Teacher> {
 		this.about = about;
 	}
 	
-	@Column(name = "RG")
+	@Column(name = "RG", length = 15)
 	public String getRg() {
 		return rg;
 	}
@@ -109,7 +109,7 @@ public class Teacher extends Entity<Teacher> {
 		this.rg = rg;
 	}
 	
-	@Column(name = "CPF")
+	@Column(name = "CPF", length = 20)
 	public String getCpf() {
 		return cpf;
 	}

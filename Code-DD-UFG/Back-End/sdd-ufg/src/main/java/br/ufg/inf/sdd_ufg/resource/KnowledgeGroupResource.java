@@ -46,10 +46,6 @@ public class KnowledgeGroupResource extends AbstractResource {
 	@Path("/{id}")
 	public Response retrieveKnowledgeGroupById(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		KnowledgeGroup knowledgeGroup = knowledgeGroupDao.findById(id, 1);
 		if (knowledgeGroup == null) {
 			return getResourceNotFoundResponse();
@@ -61,9 +57,6 @@ public class KnowledgeGroupResource extends AbstractResource {
 	public Response retrieveAllKnowledgeGroups(
 			@QueryParam("page") Integer page,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
 
 		List<KnowledgeGroup> knowledgeGroups = knowledgeGroupDao.findAll(0);
 		if (page == null) {
@@ -78,10 +71,6 @@ public class KnowledgeGroupResource extends AbstractResource {
 	@POST
 	public Response insertKnowledgeGroup(
 			@Context final HttpServletRequest request, @Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		KnowledgeGroup knowledgeGroup;
 		try {
 			knowledgeGroup = retrieveKnowledgeGroupFromJson(request);
@@ -121,10 +110,6 @@ public class KnowledgeGroupResource extends AbstractResource {
 	@Path("/{id}")
 	public Response updateKnowledgeGroup(@PathParam("id") Long id,
 			@Context final HttpServletRequest request, @Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		KnowledgeGroup knowledgeGroup;
 		try {
 			knowledgeGroup = retrieveKnowledgeGroupFromJson(request);
@@ -159,10 +144,6 @@ public class KnowledgeGroupResource extends AbstractResource {
 	@Path("/{id}")
 	public Response deleteKnowledgeGroup(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		try {
 			knowledgeGroupDao.delete(id);
 		} catch (IllegalArgumentException iae) {

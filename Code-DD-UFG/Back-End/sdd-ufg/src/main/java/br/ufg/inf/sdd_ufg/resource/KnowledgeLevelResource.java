@@ -50,10 +50,6 @@ public class KnowledgeLevelResource extends AbstractResource {
 	@Path("/{id}")
 	public Response retrieveKnowledgeLevelById(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		KnowledgeLevel knowledgeLevel = knowledgeLevelDao.findById(id, 1);
 		if (knowledgeLevel == null) {
 			return getResourceNotFoundResponse();
@@ -65,10 +61,6 @@ public class KnowledgeLevelResource extends AbstractResource {
 	public Response retrieveAllKnowledgeLevels(
 			@QueryParam("page") Integer page,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		List<KnowledgeLevel> knowledgeLevels = knowledgeLevelDao.findAll(0);
 		if (knowledgeLevels == null || knowledgeLevels.size() == 0) {
 			return Response.status(Response.Status.NOT_FOUND).build();
@@ -85,10 +77,6 @@ public class KnowledgeLevelResource extends AbstractResource {
 	@POST
 	public Response insertKnowledgeLevel(
 			@Context final HttpServletRequest request, @Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		KnowledgeLevel knowledgeLevel;
 		try {
 			knowledgeLevel = retrieveKnowledgeLevelFromJson(request);
@@ -112,10 +100,6 @@ public class KnowledgeLevelResource extends AbstractResource {
 	@Path("/{id}")
 	public Response updateKnowledgeLevel(@PathParam("id") Long id,
 			@Context final HttpServletRequest request, @Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		KnowledgeLevel existingKL;
 		try {
 			
@@ -171,10 +155,6 @@ public class KnowledgeLevelResource extends AbstractResource {
 	@Path("/{id}")
 	public Response deleteKnowledgeLevel(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		try {
 			knowledgeLevelDao.delete(id);
 		} catch (IllegalArgumentException iae) {

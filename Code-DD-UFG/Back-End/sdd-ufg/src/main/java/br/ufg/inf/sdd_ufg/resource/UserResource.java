@@ -76,12 +76,10 @@ public class UserResource extends AbstractResource {
 			return getBadRequestResponse();
 		}
 
-		URI location = info.getBaseUriBuilder().path("/users")
-				.path(user.getId().toString()).build();
 		return Response
-				.created(location)
-				.header(HttpHeaders.SESSION_TOKEN.toString(),
-						getLoggedUser(request).getSessionToken())
+				.status(Response.Status.CREATED)
+				.header(HttpHeaders.LOCATION.toString(),
+						"/users/" + user.getId())
 				.entity(user).build();
 	}
 
