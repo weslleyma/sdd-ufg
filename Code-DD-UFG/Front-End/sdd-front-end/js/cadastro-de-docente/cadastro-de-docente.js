@@ -56,7 +56,7 @@ app.controller('cadastroDocenteController', function($scope){
 
 						// Pega o id do docente
 						var arr = location.split('/');
-						console.log("Tamanho do array: " +arr.size();
+						console.log("Tamanho do array: " +arr.size());
 						var aux = (arr.size())-1;
 						console.log("Tamanho do array - 1: " +aux);
 						console.log("Array: " +arr[aux]);
