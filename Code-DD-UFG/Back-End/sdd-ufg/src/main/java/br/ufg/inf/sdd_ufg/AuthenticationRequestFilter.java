@@ -63,7 +63,8 @@ public class AuthenticationRequestFilter implements Filter {
 				return;
 			}
 		}
-		if (!httpRequest.getMethod().equals("POST") && !httpRequest.getContextPath().contains("users")) {
+		if (!httpRequest.getMethod().equals("POST") && (!httpRequest.getContextPath().contains("users")
+				|| !httpRequest.getContextPath().contains("teachers"))) {
 			buildErrorResponse(response);
 			return;
 		}

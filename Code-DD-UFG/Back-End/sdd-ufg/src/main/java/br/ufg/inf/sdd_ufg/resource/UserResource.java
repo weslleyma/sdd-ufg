@@ -71,17 +71,15 @@ public class UserResource extends AbstractResource {
 			user = retrieveUserFromJson(request);
 			userDao.insert(user);
 		} catch (EntityExistsException eee) {
-			return getInsertErrorResponse();
+			return getInsertErrorResponse(eee.getMessage());
 		} catch (Exception e) {
 			return getBadRequestResponse();
 		}
 
-		URI location = info.getBaseUriBuilder().path("/users")
-				.path(user.getId().toString()).build();
 		return Response
-				.created(location)
-				.header(HttpHeaders.SESSION_TOKEN.toString(),
-						getLoggedUser(request).getSessionToken())
+				.status(Response.Status.CREATED)
+				.header(HttpHeaders.LOCATION.toString(),
+						"/users/" + user.getId())
 				.entity(user).build();
 	}
 
@@ -100,7 +98,7 @@ public class UserResource extends AbstractResource {
 
 			userDao.update(existingUser);
 		} catch (EntityExistsException eee) {
-			return getInsertErrorResponse();
+			return getInsertErrorResponse(eee.getMessage());
 		} catch (IllegalArgumentException iae) {
 			return getResourceNotFoundResponse();
 		} catch (Exception e) {
@@ -121,6 +119,8 @@ public class UserResource extends AbstractResource {
 		User user = new User();
 		if (content.get("username") != null) {
 			user.setUsername(content.get("username").toString());
+		} else if (request.getMethod().equals("POST")) {
+			throw new NullPointerException();
 		}
 		user.setPassword(content.get("password").toString());
 		user.setEmail(content.get("email").toString());
@@ -129,11 +129,13 @@ public class UserResource extends AbstractResource {
 		} else {
 			user.setIsAdmin(false);
 		}
-		if (content.get("teacher_id") != null) {
-			Teacher teacher = teacherDao.findById(
-					new Long(content.get("teacher_id").toString()), 0);
-			user.setTeacher(teacher);
+		
+		Teacher teacher = teacherDao.findById(
+				new Long(content.get("teacher_id").toString()), 0);
+		if (teacher == null) {
+			throw new NullPointerException();
 		}
+		user.setTeacher(teacher);
 
 		return user;
 	}

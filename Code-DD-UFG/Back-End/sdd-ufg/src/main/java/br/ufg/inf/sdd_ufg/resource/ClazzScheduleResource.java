@@ -40,10 +40,6 @@ public class ClazzScheduleResource extends AbstractResource {
 	@Path("/{id}")
 	public Response retrieveClazzScheduleById(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		ClazzSchedule clazzSchedule = clazzScheduleDao.findById(id, 1);
 		if (clazzSchedule == null) {
 			return getResourceNotFoundResponse();
@@ -54,10 +50,6 @@ public class ClazzScheduleResource extends AbstractResource {
 	@GET
 	public Response retrieveAllClazzSchedules(@QueryParam("page") Integer page,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		List<ClazzSchedule> clazzSchedules = clazzScheduleDao.findAll(0);
 		if (page == null) {
 			page = 1;
@@ -71,10 +63,6 @@ public class ClazzScheduleResource extends AbstractResource {
 	@POST
 	public Response insertClazzSchedule(
 			@Context final HttpServletRequest request, @Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		ClazzSchedule clazzSchedule;
 		try {
 			clazzSchedule = retrieveClazzScheduleFromJson(request);
@@ -98,10 +86,6 @@ public class ClazzScheduleResource extends AbstractResource {
 	@Path("/{id}")
 	public Response updateClazzSchedule(@PathParam("id") Long id,
 			@Context final HttpServletRequest request, @Context UriInfo info) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		ClazzSchedule clazzSchedule;
 		try {
 			clazzSchedule = retrieveClazzScheduleFromJson(request);
@@ -138,10 +122,6 @@ public class ClazzScheduleResource extends AbstractResource {
 	@Path("/{id}")
 	public Response deleteClazzSchedule(@PathParam("id") Long id,
 			@Context final HttpServletRequest request) {
-		if (getLoggedUser(request) == null) {
-			return getAuthenticationErrorResponse();
-		}
-
 		try {
 			clazzScheduleDao.delete(id);
 		} catch (IllegalArgumentException iae) {

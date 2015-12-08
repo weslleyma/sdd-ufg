@@ -81,6 +81,15 @@ public abstract class AbstractResource {
 			.build();
 	}
 	
+	protected Response getInsertErrorResponse(String msg) {
+		ErrorResponse errorResponse = new ErrorResponse(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()
+				, msg);
+		
+		return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+			.entity(errorResponse)
+			.build();
+	}
+	
 	protected Response getResourceNotFoundResponse() {
 		ErrorResponse errorResponse = new ErrorResponse(Response.Status.NOT_FOUND.getStatusCode()
 				, "Resource Not Found");

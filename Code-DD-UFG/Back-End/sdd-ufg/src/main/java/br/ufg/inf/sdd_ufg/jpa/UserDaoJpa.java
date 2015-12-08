@@ -37,10 +37,7 @@ public class UserDaoJpa extends EntityDaoJpa<User> implements UserDao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public User preInsert(User user) {
-		String jpql = "from " + entityClass.getSimpleName() + " u where u.username = ?1";
-		if (user.getTeacher() != null) {
-			jpql += " or u.teacher = ?2 ";
-		}
+		String jpql = "from " + entityClass.getSimpleName() + " u where u.username = ?1 or u.teacher = ?2 ";
 		
 		Query query = getEntityManager().createQuery(jpql);
 		query.setParameter(1, user.getUsername());
@@ -49,7 +46,11 @@ public class UserDaoJpa extends EntityDaoJpa<User> implements UserDao {
 		}
 		List<User> users = (List<User>) query.getResultList();
 		if (users.size() == 1) {
-			throw new EntityExistsException();
+			if (user.getTeacher().getId().equals(users.get(0).getTeacher().getId())) {
+				throw new EntityExistsException("Teacher already associated with other user.");
+			} else {
+				throw new EntityExistsException("Username already used.");
+			}
 		} 
 		return super.preInsert(user);
 	}

@@ -1,7 +1,7 @@
 package br.ufg.inf.sdd_ufg.model.enums;
 
 public enum HttpHeaders {
-	SESSION_TOKEN("Session-Token");
+	LOCATION("Location"), SESSION_TOKEN("Session-Token");
 
     private final String name;       
 
