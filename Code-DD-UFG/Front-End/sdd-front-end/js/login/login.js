@@ -16,7 +16,7 @@ app.controller('loginController', function($scope){
             console.log("Auth_pass: " +auth_pass);
 
             $.ajax({
-	            url: 'http://45.55.147.9:8080/sessions',
+	            url: '/backend/sessions',
 	            type: 'POST',
 	            dataType: 'json',
 	            data: {
