@@ -16,7 +16,7 @@
 		<dropwizard.version>0.6.2</dropwizard.version>
 		<dropwizardhibernate.version>0.8.4</dropwizardhibernate.version>
 		<guice.version>3.0</guice.version>
-		<hibernate.version>4.2.20.Final</hibernate.version>
+		<hibernate.version>5.3.20.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
